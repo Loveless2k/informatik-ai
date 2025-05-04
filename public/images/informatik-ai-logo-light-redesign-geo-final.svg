@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="600" height="200" viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Modern AI Icon - Abstract Geometric Design -->
+  <g transform="translate(40, 40)">
+    <!-- Base geometric shapes -->
+    <rect x="60" y="35" width="60" height="60" rx="5" fill="#4fd1c5" transform="rotate(45 90 65)"/>
+    <circle cx="90" cy="65" r="30" fill="none" stroke="#0f172a" stroke-width="3"/>
+    
+    <!-- Dynamic elements -->
+    <path d="M90,35 L90,95" stroke="#0f172a" stroke-width="2.5" stroke-dasharray="4,4"/>
+    <path d="M60,65 L120,65" stroke="#0f172a" stroke-width="2.5" stroke-dasharray="4,4"/>
+    
+    <!-- Accent shapes -->
+    <circle cx="90" cy="65" r="8" fill="#0f172a"/>
+    <circle cx="90" cy="35" r="5" fill="#0f172a"/>
+    <circle cx="90" cy="95" r="5" fill="#0f172a"/>
+    <circle cx="60" cy="65" r="5" fill="#0f172a"/>
+    <circle cx="120" cy="65" r="5" fill="#0f172a"/>
+    
+    <!-- Abstract data flow -->
+    <path d="M60,35 Q75,50 90,35" stroke="#0f172a" stroke-width="1.5" fill="none"/>
+    <path d="M90,35 Q105,50 120,35" stroke="#0f172a" stroke-width="1.5" fill="none"/>
+    <path d="M60,95 Q75,80 90,95" stroke="#0f172a" stroke-width="1.5" fill="none"/>
+    <path d="M90,95 Q105,80 120,95" stroke="#0f172a" stroke-width="1.5" fill="none"/>
+    
+    <!-- Animated pulse effect -->
+    <circle cx="90" cy="65" r="40" fill="none" stroke="#0f172a" stroke-width="1" opacity="0.3">
+      <animate attributeName="r" values="40;50;40" dur="3s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.3;0;0.3" dur="3s" repeatCount="indefinite"/>
+    </circle>
+  </g>
+
+  <!-- Text with modern typography and proper spacing -->
+  <g>
+    <text x="190" y="120" font-family="Arial, sans-serif" font-size="62" font-weight="bold" fill="#ffffff">InformatiK</text>
+    <text x="500" y="120" font-family="Arial, sans-serif" font-size="62" font-weight="bold" fill="#ffffff">-</text>
+    <text x="530" y="120" font-family="Arial, sans-serif" font-size="62" font-weight="bold" fill="#4fd1c5">AI</text>
+  </g>
+</svg>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="600" height="200" viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Robot head with brain -->
+  <g transform="translate(60, 20) scale(0.8)">
+    <!-- Robot body base -->
+    <path d="M75 180 L125 180 L125 160 L75 160 Z" fill="#0f172a"/>
+    
+    <!-- Robot head -->
+    <rect x="50" y="60" width="100" height="100" rx="30" fill="#0f172a"/>
+    
+    <!-- Antennas -->
+    <line x1="70" y1="60" x2="70" y2="40" stroke="#0f172a" stroke-width="5"/>
+    <circle cx="70" cy="35" r="5" fill="#0f172a"/>
+    
+    <line x1="130" y1="60" x2="130" y2="40" stroke="#0f172a" stroke-width="5"/>
+    <circle cx="130" cy="35" r="5" fill="#0f172a"/>
+    
+    <!-- Brain outline -->
+    <path d="M75 80 C75 70, 85 65, 95 70 C105 65, 115 70, 115 80 C125 85, 125 95, 115 100 C125 105, 125 115, 115 120 C115 130, 105 135, 95 130 C85 135, 75 130, 75 120 C65 115, 65 105, 75 100 C65 95, 65 85, 75 80 Z" fill="none" stroke="#4fd1c5" stroke-width="5"/>
+    
+    <!-- Brain details -->
+    <path d="M95 70 L95 130" stroke="#4fd1c5" stroke-width="3"/>
+    <path d="M75 100 C80 95, 90 95, 95 100" stroke="#4fd1c5" stroke-width="3"/>
+    <path d="M115 100 C110 95, 100 95, 95 100" stroke="#4fd1c5" stroke-width="3"/>
+  </g>
+  
+  <!-- Text as paths to ensure consistent rendering -->
+  <g>
+    <!-- "Informatik" text -->
+    <path d="M210 120 V80 H220 V120 Z" fill="#0f172a"/> <!-- I -->
+    <path d="M230 120 V90 H240 V120 Z M230 80 H240 V85 H230 Z" fill="#0f172a"/> <!-- n -->
+    <path d="M250 120 V90 H260 V120 Z M250 80 H260 V85 H250 Z M260 90 Q270 85, 270 95 V120 H280 V95 Q280 80, 260 85 Z" fill="#0f172a"/> <!-- f -->
+    <path d="M290 120 V80 H300 V120 Z M300 80 Q320 80, 320 95 V105 Q320 120, 300 120 H290 Z M300 110 H305 Q310 110, 310 105 V95 Q310 90, 305 90 H300 Z" fill="#0f172a"/> <!-- o -->
+    <path d="M330 120 V90 H340 V120 Z M330 80 H340 V85 H330 Z M340 90 Q350 85, 350 95 V120 H360 V95 Q360 80, 340 85 Z" fill="#0f172a"/> <!-- r -->
+    <path d="M370 120 V90 H380 V120 Z M370 80 H380 V85 H370 Z M380 90 Q390 85, 390 95 V120 H400 V95 Q400 80, 380 85 Z" fill="#0f172a"/> <!-- m -->
+    <path d="M410 120 V80 H420 V120 Z M420 80 Q440 80, 440 95 V105 Q440 120, 420 120 H410 Z M420 110 H425 Q430 110, 430 105 V95 Q430 90, 425 90 H420 Z" fill="#0f172a"/> <!-- a -->
+    <path d="M450 120 V80 H460 V120 Z" fill="#0f172a"/> <!-- t -->
+    <path d="M470 120 V80 H480 V120 Z" fill="#0f172a"/> <!-- i -->
+    <path d="M490 120 V80 H500 V120 Z M500 80 L510 100 L520 80 V120 H510 V100 L500 120 Z" fill="#0f172a"/> <!-- k -->
+    
+    <!-- Hyphen -->
+    <path d="M530 100 H550" stroke="#0f172a" stroke-width="5" stroke-linecap="round"/> <!-- - -->
+    
+    <!-- "AI" text -->
+    <path d="M560 120 L570 80 H580 L590 120 H580 L578 110 H572 L570 120 Z M573 100 H577 L575 90 Z" fill="#4fd1c5"/> <!-- A -->
+    <path d="M600 120 V80 H610 V120 Z" fill="#4fd1c5"/> <!-- I -->
+  </g>
+</svg>

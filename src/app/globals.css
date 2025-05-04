@@ -1,0 +1,510 @@
+/* Estilos globales */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Importar estilos para efectos tecnológicos y red neural */
+@import '../styles/tech-effects.css';
+@import '../styles/neural-network.css';
+
+:root {
+  /* Light mode variables */
+  --background: #ffffff;
+  --foreground: #171717;
+
+  /* Modern color palette for Informatik-AI */
+  --primary: #1e40af;      /* Blue-800 - Deeper primary brand color */
+  --primary-dark: #1e3a8a; /* Blue-900 - Darker shade for hover */
+  --primary-light: #3b82f6; /* Blue-500 - Lighter shade for accents */
+
+  --secondary: #0d9488;    /* Teal-600 - Secondary brand color */
+  --secondary-dark: #0f766e; /* Teal-700 - Darker shade for hover */
+  --secondary-light: #14b8a6; /* Teal-500 - Lighter shade for accents */
+
+  --accent: #f59e0b;       /* Amber-500 - Vibrant accent color for highlights */
+  --accent-dark: #d97706;  /* Amber-600 - Darker accent for hover */
+
+  --success: #10b981;      /* Emerald-500 - Success messages */
+  --warning: #f59e0b;      /* Amber-500 - Warning messages */
+  --error: #ef4444;        /* Red-500 - Error messages */
+
+  --gray-light: #f8fafc;   /* Slate-50 - Light background */
+  --gray-medium: #94a3b8;  /* Slate-400 - Medium gray for text */
+  --gray-dark: #1e293b;    /* Slate-800 - Dark gray for text */
+  --gray-darker: #0f172a;  /* Slate-900 - Darker gray for backgrounds */
+
+  /* Card and container backgrounds */
+  --card-bg: #ffffff;
+  --container-bg: #f8fafc;
+  --header-bg: rgba(255, 255, 255, 0.8);
+  --footer-bg: #f1f5f9;
+
+  /* Borders */
+  --border-color: #e2e8f0;
+  --border-color-hover: #cbd5e1;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+  /* Gradients */
+  --gradient-primary: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  --gradient-cta: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
+  --gradient-hero: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, var(--secondary) 100%);
+  --gradient-card: linear-gradient(to bottom right, var(--gray-light), white);
+
+  /* Animation durations */
+  --transition-fast: 150ms;
+  --transition-normal: 300ms;
+  --transition-slow: 500ms;
+
+  /* Spacing system */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2rem;
+  --space-6: 3rem;
+  --space-7: 4rem;
+  --space-8: 6rem;
+  --space-9: 8rem;
+}
+
+/* Dark mode variables */
+.dark {
+  --background: #0f172a;    /* Slate-900 */
+  --foreground: #f8fafc;    /* Slate-50 */
+
+  /* Adjusted colors for dark mode */
+  --primary: #3b82f6;       /* Blue-500 - Brighter in dark mode */
+  --primary-dark: #2563eb;  /* Blue-600 - Adjusted for dark mode */
+  --primary-light: #60a5fa; /* Blue-400 - Lighter for dark mode */
+
+  --secondary: #14b8a6;     /* Teal-500 - Brighter in dark mode */
+  --secondary-dark: #0d9488;/* Teal-600 - Adjusted for dark mode */
+  --secondary-light: #2dd4bf;/* Teal-400 - Lighter for dark mode */
+
+  --accent: #fbbf24;        /* Amber-400 - Brighter in dark mode */
+  --accent-dark: #f59e0b;   /* Amber-500 - Adjusted for dark mode */
+
+  --success: #34d399;       /* Emerald-400 - Brighter for dark mode */
+  --warning: #fbbf24;       /* Amber-400 - Brighter for dark mode */
+  --error: #f87171;         /* Red-400 - Brighter for dark mode */
+
+  --gray-light: #1e293b;    /* Slate-800 - Dark mode light gray */
+  --gray-medium: #64748b;   /* Slate-500 - Dark mode medium gray */
+  --gray-dark: #e2e8f0;     /* Slate-200 - Dark mode dark gray */
+  --gray-darker: #f8fafc;   /* Slate-50 - Dark mode darker gray */
+
+  /* Card and container backgrounds */
+  --card-bg: #1e293b;       /* Slate-800 */
+  --container-bg: #0f172a;  /* Slate-900 */
+  --header-bg: rgba(15, 23, 42, 0.8); /* Slate-900 with opacity */
+  --footer-bg: #0f172a;     /* Slate-900 */
+
+  /* Borders */
+  --border-color: #334155;  /* Slate-700 */
+  --border-color-hover: #475569; /* Slate-600 */
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+
+  /* Gradients adjusted for dark mode */
+  --gradient-primary: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+  --gradient-cta: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
+  --gradient-hero: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, var(--secondary) 100%);
+  --gradient-card: linear-gradient(to bottom right, var(--gray-light), #1e293b);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* Removed media query for dark mode as we're using class-based dark mode */
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+/* Smooth scrolling for the entire site */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Smooth theme transitions */
+html, body, * {
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+/* Disable transitions for specific elements that shouldn't animate */
+.no-transition,
+.no-transition * {
+  transition: none !important;
+}
+
+/* Improved Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+h2 {
+  font-size: 2.5rem;
+  letter-spacing: -0.02em;
+}
+
+h3 {
+  font-size: 2rem;
+  letter-spacing: -0.01em;
+}
+
+h4 {
+  font-size: 1.5rem;
+}
+
+p {
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Text gradient utility */
+.text-gradient-primary {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-gradient-cta {
+  background: var(--gradient-cta);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Animations */
+/* Animaciones mejoradas con más impacto */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(40px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(40px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideInLeft {
+  from { transform: translateX(-40px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+@keyframes bounce-subtle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-slow {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Animation utility classes */
+.animate-fade-in {
+  animation: fadeIn var(--transition-normal) ease-in-out;
+}
+
+.animate-slide-up {
+  animation: slideUp var(--transition-normal) ease-out;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight var(--transition-normal) ease-out;
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft var(--transition-normal) ease-out;
+}
+
+.animate-pulse {
+  animation: pulse 2s infinite;
+}
+
+.animate-bounce-subtle {
+  animation: bounce-subtle 3s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 4s ease-in-out infinite;
+}
+
+/* Animaciones al hacer scroll */
+.animate-in {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* Hover animations - más pronunciadas */
+.hover-lift {
+  transition: transform var(--transition-normal) ease-in-out;
+}
+
+.hover-lift:hover {
+  transform: translateY(-8px);
+}
+
+.hover-shadow {
+  transition: box-shadow var(--transition-normal) ease-in-out;
+}
+
+.hover-shadow:hover {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* Additional animations */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+  100% { transform: translateY(0px); }
+}
+
+@keyframes float-delay {
+  0% { transform: translateY(-10px); }
+  50% { transform: translateY(10px); }
+  100% { transform: translateY(-10px); }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes spin-slow-reverse {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
+@keyframes blob {
+  0% { transform: scale(1); }
+  33% { transform: scale(1.2); }
+  66% { transform: scale(0.9); }
+  100% { transform: scale(1); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-delay {
+  animation: float-delay 8s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+.animate-spin-slow-reverse {
+  animation: spin-slow-reverse 25s linear infinite;
+}
+
+.animate-blob {
+  animation: blob 7s infinite;
+}
+
+.animation-delay-2000 {
+  animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+/* Grid background */
+.bg-grid-white {
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+}
+
+.dark .bg-grid-white {
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+}
+
+.bg-grid-gray-200 {
+  background-image: linear-gradient(to right, rgba(229, 231, 235, 0.5) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(229, 231, 235, 0.5) 1px, transparent 1px);
+}
+
+.dark .bg-grid-gray-200 {
+  background-image: linear-gradient(to right, rgba(71, 85, 105, 0.3) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(71, 85, 105, 0.3) 1px, transparent 1px);
+}
+
+/* Animaciones para la línea de tiempo y FAQs */
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.animate-fade-in-scale {
+  animation: fadeInScale var(--transition-normal) ease-out;
+}
+
+@keyframes expandVertical {
+  from { max-height: 0; opacity: 0; }
+  to { max-height: 500px; opacity: 1; }
+}
+
+.animate-expand {
+  animation: expandVertical var(--transition-normal) ease-out;
+}
+
+/* Animaciones para el CTA innovador */
+@keyframes particle {
+  0% { transform: translate(0, 0); opacity: 1; }
+  100% { transform: translate(var(--x, 50px), var(--y, 50px)); opacity: 0; }
+}
+
+.animate-particle {
+  animation: particle 0.8s ease-out forwards;
+}
+
+@keyframes glow {
+  0% { box-shadow: 0 0 5px rgba(59, 130, 246, 0.5); }
+  50% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.8); }
+  100% { box-shadow: 0 0 5px rgba(59, 130, 246, 0.5); }
+}
+
+.animate-glow {
+  animation: glow 2s infinite;
+}
+
+@keyframes rotate3d {
+  0% { transform: perspective(1000px) rotateX(0) rotateY(0); }
+  50% { transform: perspective(1000px) rotateX(10deg) rotateY(10deg); }
+  100% { transform: perspective(1000px) rotateX(0) rotateY(0); }
+}
+
+.animate-rotate-3d {
+  animation: rotate3d 8s ease-in-out infinite;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+/* Curva de aceleración suave para animaciones */
+.ease-out-cubic {
+  transition-timing-function: cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+/* Animaciones de flotación */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float-delay {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.animate-float-delay {
+  animation: float 8s ease-in-out 1s infinite;
+}
+
+/* Animaciones de líneas para la página de casos de éxito */
+@keyframes draw-line {
+  0% {
+    stroke-dashoffset: 1000;
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0.2;
+  }
+}
+
+.animate-draw-line-1 {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: draw-line 8s ease-in-out forwards;
+}
+
+.animate-draw-line-2 {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: draw-line 8s ease-in-out 0.5s forwards;
+}
+
+.animate-draw-line-3 {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: draw-line 8s ease-in-out 1s forwards;
+}
+
+.animate-draw-line-4 {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: draw-line 8s ease-in-out 1.5s forwards;
+}

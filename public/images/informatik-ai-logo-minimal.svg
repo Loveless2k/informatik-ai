@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="600" height="200" viewBox="0 0 600 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Minimal AI icon -->
+  <g transform="translate(40, 20) scale(0.8)">
+    <!-- Minimal geometric robot head -->
+    <rect x="55" y="65" width="90" height="90" rx="15" fill="#0f172a"/>
+    
+    <!-- Minimal base -->
+    <rect x="75" y="155" width="50" height="15" rx="2" fill="#0f172a"/>
+    
+    <!-- Minimal details -->
+    <rect x="70" y="85" width="20" height="10" rx="5" fill="#4fd1c5"/>
+    <rect x="110" y="85" width="20" height="10" rx="5" fill="#4fd1c5"/>
+    
+    <!-- Circuit pattern -->
+    <line x1="75" y1="115" x2="125" y2="115" stroke="#4fd1c5" stroke-width="2"/>
+    <line x1="75" y1="125" x2="125" y2="125" stroke="#4fd1c5" stroke-width="2"/>
+    <line x1="75" y1="135" x2="125" y2="135" stroke="#4fd1c5" stroke-width="2"/>
+    
+    <!-- Circuit nodes -->
+    <circle cx="85" cy="115" r="3" fill="#4fd1c5"/>
+    <circle cx="115" cy="115" r="3" fill="#4fd1c5"/>
+    <circle cx="95" cy="125" r="3" fill="#4fd1c5"/>
+    <circle cx="105" cy="125" r="3" fill="#4fd1c5"/>
+    <circle cx="100" cy="135" r="3" fill="#4fd1c5"/>
+  </g>
+  
+  <!-- Text with clean typography and proper spacing -->
+  <g>
+    <text x="190" y="120" font-family="Arial, sans-serif" font-size="60" font-weight="bold" fill="#0f172a">Informatik</text>
+    <text x="480" y="120" font-family="Arial, sans-serif" font-size="60" font-weight="bold" fill="#0f172a">-</text>
+    <text x="510" y="120" font-family="Arial, sans-serif" font-size="60" font-weight="bold" fill="#4fd1c5">AI</text>
+  </g>
+</svg>

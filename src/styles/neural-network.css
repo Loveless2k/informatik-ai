@@ -1,0 +1,63 @@
+/* Estilos para la red neural */
+
+@keyframes pulse {
+  0% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0) translateX(0);
+  }
+  25% {
+    transform: translateY(-10px) translateX(5px);
+  }
+  50% {
+    transform: translateY(0) translateX(10px);
+  }
+  75% {
+    transform: translateY(10px) translateX(5px);
+  }
+  100% {
+    transform: translateY(0) translateX(0);
+  }
+}
+
+.neural-node {
+  animation: pulse 3s infinite ease-in-out;
+}
+
+.neural-node-active {
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.neural-connection {
+  stroke-dasharray: 5;
+  stroke-dashoffset: 0;
+  animation: dash 30s linear infinite;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: 1000;
+  }
+}
+
+/* Optimizaciones para dispositivos con preferencia de reducción de movimiento */
+@media (prefers-reduced-motion: reduce) {
+  .neural-node,
+  .neural-node-active,
+  .neural-connection {
+    animation: none;
+  }
+}
