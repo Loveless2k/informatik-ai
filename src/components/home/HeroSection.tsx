@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Button from '@/components/ui/Button';
 import { motion, useAnimation } from 'framer-motion';
 import NeuralNetworkBackground from '@/components/ui/NeuralNetworkBackground';
@@ -11,6 +11,24 @@ const HeroSection = () => {
   const [isButtonHovered, setIsButtonHovered] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
+  // Estado para el texto rotativo
+  const [phraseIndex, setPhraseIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [text, setText] = useState('');
+  const [typingSpeed, setTypingSpeed] = useState(150);
+
+  // Lista de frases para mostrar
+  const phrases = [
+    "Formación In Company",
+    "Asesoría Estratégica",
+    "Desarrollo de Cursos",
+    "Automatizaciones",
+    "Desarrollo a Medida"
+  ];
+
+  // Referencia para cancelar el timeout
+  const typingTimeout = useRef<NodeJS.Timeout | null>(null);
+
   // Obtener el tema actual
   let themeContext;
   try {
@@ -19,6 +37,43 @@ const HeroSection = () => {
     themeContext = { theme: 'light' };
   }
   const isDarkMode = themeContext?.theme === 'dark';
+
+  // Efecto para el texto de escritura
+  useEffect(() => {
+    if (!isMounted) return;
+
+    const currentPhrase = phrases[phraseIndex];
+
+    // Lógica para escribir y borrar texto
+    if (!isDeleting && text === currentPhrase) {
+      // Pausa antes de empezar a borrar
+      typingTimeout.current = setTimeout(() => {
+        setIsDeleting(true);
+        setTypingSpeed(80); // Más rápido al borrar
+      }, 1500);
+    } else if (isDeleting && text === '') {
+      // Cambiar a la siguiente frase
+      setIsDeleting(false);
+      setPhraseIndex((phraseIndex + 1) % phrases.length);
+      setTypingSpeed(150); // Velocidad normal al escribir
+    } else {
+      // Escribir o borrar un carácter
+      typingTimeout.current = setTimeout(() => {
+        setText(prev => {
+          if (isDeleting) {
+            return prev.substring(0, prev.length - 1);
+          } else {
+            return currentPhrase.substring(0, prev.length + 1);
+          }
+        });
+      }, typingSpeed);
+    }
+
+    // Limpiar timeout al desmontar
+    return () => {
+      if (typingTimeout.current) clearTimeout(typingTimeout.current);
+    };
+  }, [isMounted, text, isDeleting, phraseIndex, phrases, typingSpeed]);
 
   // Controles de animación
   const controls = useAnimation();
@@ -104,20 +159,21 @@ const HeroSection = () => {
               initial="initial"
               animate="animate"
             />
-            <motion.h1
-              className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-white text-glow"
-              variants={fadeInUp}
-            >
-              Transformando Negocios con{' '}
-              <span className={`text-transparent bg-clip-text ${
-                isDarkMode
-                  ? 'bg-gradient-to-r from-blue-400 via-blue-300 to-teal-300'
-                  : 'bg-gradient-to-r from-blue-300 via-blue-200 to-teal-200'
-              }`}>
-                Soluciones de IA
-              </span>{' '}
-              Inteligentes
-            </motion.h1>
+            <motion.div variants={fadeInUp}>
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-white w-full text-center mb-2">
+                Impulsando negocios con inteligencia artificial
+              </h1>
+              <div className="relative min-h-[1.2em] text-5xl md:text-6xl lg:text-7xl font-extrabold w-full text-center">
+                <div className="inline-flex justify-center items-center relative">
+                  <span className="bg-gradient-to-r from-[#00B4DB] via-[#48D1CC] to-[#00BFFF] text-transparent bg-clip-text">
+                    {text || ""}
+                  </span>
+                  <span
+                    className="inline-block h-[1em] border-r-4 border-[#48D1CC] animate-blink ml-1"
+                  ></span>
+                </div>
+              </div>
+            </motion.div>
           </div>
 
           <motion.p
@@ -138,35 +194,20 @@ const HeroSection = () => {
               onMouseLeave={() => setIsButtonHovered(false)}
             >
               <Button
-                href="/services"
-                variant="gradient"
-                size="xl"
-                icon={
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
-                }
-                iconPosition="right"
-                className={`rounded-full shadow-xl data-button h-[64px] flex items-center text-2xl font-bold px-12 ${
-                  isDarkMode
-                    ? 'bg-gradient-to-r from-blue-600 to-blue-800 hover:from-blue-500 hover:to-blue-700'
-                    : 'bg-gradient-to-r from-blue-700 to-blue-900 hover:from-blue-600 hover:to-blue-800'
-                }`}
-              >
-                Explorar Nuestros Servicios
-              </Button>
+              href="/services"
+              size="lg"
+              className="hover-lift hover-shadow bg-gradient-to-r from-[#0ea5e9] to-[#14b8a6] border-0 px-8 py-4 text-xl font-bold"
+            >
+              Explorar Nuestros Servicios
+            </Button>
             </motion.div>
 
             {/* Botón secundario con borde brillante - Alineado verticalmente */}
             <Button
               href="/contact"
               variant="outline"
-              size="xl"
-              className={`rounded-full border-2 glow-border h-[56px] flex items-center self-center ${
-                isDarkMode
-                  ? 'border-blue-400/50 text-blue-300 hover:bg-blue-900/30'
-                  : 'border-blue-300/50 text-blue-200 hover:bg-blue-800/20'
-              }`}
+              size="lg"
+              className="hover-lift hover-shadow bg-white text-[#0f172a] border-0 px-8 py-4 text-xl font-bold transition-all duration-300 hover:bg-opacity-90 hover:scale-105 shadow-md hover:shadow-lg"
             >
               Contáctanos
             </Button>
@@ -187,3 +228,4 @@ const HeroSection = () => {
 };
 
 export default HeroSection;
+

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="800" height="200" viewBox="0 0 800 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Tree/Leaf Elements -->
+  <path d="M230 120C230 120 210 90 190 80C170 70 150 80 140 100C130 120 140 150 160 160C180 170 210 160 220 140" fill="none" stroke="#1E2A3B" stroke-width="12"/>
+  <path d="M180 70C180 70 200 50 220 60C240 70 250 100 240 120" fill="none" stroke="#1E2A3B" stroke-width="12"/>
+  <path d="M160 50C160 50 180 30 200 40C220 50 230 80 220 100" fill="none" stroke="#1E2A3B" stroke-width="12"/>
+  <path d="M140 70C140 70 160 50 180 60C200 70 210 100 200 120" fill="none" stroke="#1E2A3B" stroke-width="12"/>
+  <path d="M120 90C120 90 140 70 160 80C180 90 190 120 180 140" fill="none" stroke="#1E2A3B" stroke-width="12"/>
+  <path d="M140 140C140 140 120 110 100 100C80 90 60 100 50 120C40 140 50 170 70 180C90 190 120 180 130 160" fill="none" stroke="#1E2A3B" stroke-width="12"/>
+  
+  <!-- Circuit/Tech Elements -->
+  <path d="M280 100C280 100 300 120 320 120C340 120 360 100 360 100" fill="none" stroke="#1EAEC5" stroke-width="12"/>
+  <path d="M320 120C320 120 320 150 320 170" fill="none" stroke="#1EAEC5" stroke-width="12"/>
+  <circle cx="280" cy="100" r="10" fill="#1EAEC5"/>
+  <circle cx="360" cy="100" r="10" fill="#1EAEC5"/>
+  <circle cx="320" cy="170" r="10" fill="#1EAEC5"/>
+  
+  <!-- Text Elements -->
+  <path d="M420 70V170H440V70H420Z" fill="#1E2A3B"/>
+  <path d="M460 70V90H480V150H460V170H520V150H500V90H520V70H460Z" fill="#1E2A3B"/>
+  <path d="M540 70V170H560V130H600V110H560V90H600V70H540Z" fill="#1E2A3B"/>
+  <path d="M620 70V90H640V150H620V170H680V150H660V90H680V70H620Z" fill="#1E2A3B"/>
+  <path d="M700 70V90H720V110H700V130H720V150H700V170H740V70H700Z" fill="#1E2A3B"/>
+  <path d="M760 70V170H780V130H800V110H780V90H800V70H760Z" fill="#1E2A3B"/>
+  <path d="M820 70V90H840V150H820V170H880V150H860V90H880V70H820Z" fill="#1E2A3B"/>
+  <path d="M900 70V170H920V70H900Z" fill="#1E2A3B"/>
+  <path d="M940 70V170H960V130H980V110H960V90H980V70H940Z" fill="#1E2A3B"/>
+  
+  <!-- K-AI Highlight -->
+  <path d="M700 70V90H720V110H700V130H720V150H700V170H740V70H700Z" fill="#1EAEC5"/>
+  <path d="M760 70V170H780V130H800V110H780V90H800V70H760Z" fill="#1EAEC5"/>
+  <path d="M820 70V90H840V150H820V170H880V150H860V90H880V70H820Z" fill="#1EAEC5"/>
+  <path d="M900 70V170H920V70H900Z" fill="#1EAEC5"/>
+</svg>

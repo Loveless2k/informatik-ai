@@ -20,14 +20,14 @@ const HeroSection = () => {
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 animate-fade-in">
             Transformando Negocios Con Soluciones de IA Inteligentes
           </h1>
-          <p className="text-xl md:text-2xl mb-10 text-blue-100 animate-slide-up" style={{ animationDelay: '0.2s' }}>
+          <p className="text-2xl md:text-3xl mb-10 text-blue-100 animate-slide-up leading-relaxed" style={{ animationDelay: '0.2s' }}>
             Potenciando tu transformación digital con tecnologías de inteligencia artificial y aprendizaje automático de vanguardia.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center animate-slide-up" style={{ animationDelay: '0.4s' }}>
             <Button
               href="/services"
               size="lg"
-              className="hover-lift hover-shadow bg-gradient-to-r from-blue-600 to-blue-500 border-0 px-8 py-4 text-lg"
+              className="hover-lift hover-shadow bg-gradient-to-r from-[#0ea5e9] to-[#14b8a6] border-0 px-8 py-4 text-lg font-semibold"
             >
               Explorar Nuestros Servicios
             </Button>
@@ -35,7 +35,7 @@ const HeroSection = () => {
               href="/contact"
               variant="outline"
               size="lg"
-              className="hover-lift hover-shadow bg-transparent text-white border-2 border-white/70 hover:bg-white/10 px-8 py-4 text-lg"
+              className="hover-lift hover-shadow bg-white text-[#0f172a] border-0 px-8 py-4 text-xl font-bold transition-all duration-300 hover:bg-opacity-90 hover:scale-105 shadow-md hover:shadow-lg"
             >
               Contáctanos
             </Button>
@@ -66,3 +66,7 @@ const HeroSection = () => {
 };
 
 export default HeroSection;
+
+
+
+
