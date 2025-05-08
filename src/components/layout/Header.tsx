@@ -66,7 +66,7 @@ const Header = () => {
             <Link href="/" className="flex items-center">
               <div className="relative h-17 w-[280px]">
                 <Image
-                  src="/images/informatik-ai-logo-hero-colors-light.svg"
+                  src="/images/logos/logoInformatik-ai.png"
                   alt="Informatik-AI Logo (Light Mode)"
                   width={280}
                   height={70}
@@ -76,7 +76,7 @@ const Header = () => {
                   priority
                 />
                 <Image
-                  src="/images/informatik-ai-logo-hero-colors-dark.svg"
+                  src="/images/logos/logoInformatik-ai2.png"
                   alt="Informatik-AI Logo (Dark Mode)"
                   width={280}
                   height={70}

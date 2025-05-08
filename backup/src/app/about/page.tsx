@@ -83,7 +83,7 @@ const AboutPage = () => {
               </p>
             </div>
             <div className="p-6">
-              <h3 className="text-xl font-bold mb-1">Dr. Alex Martinez</h3>
+              <h3 className="text-xl font-bold mb-1">Especialista. Camila Bañares</h3>
               <p className="text-blue-600 mb-4">CEO & Co-Founder</p>
               <p className="text-gray-600">
                 AI researcher with 15+ years of experience in machine learning and business strategy.
