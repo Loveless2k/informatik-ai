@@ -39,7 +39,7 @@ const Header = () => {
             <div className="flex items-center">
               {/* Logo moderno perfecto */}
               <Image
-                src="/images/logos/logoInformatik-ai.png"
+                src="/images/informatik-ai-logo-modern-perfect.svg"
                 alt="Informatik-AI Logo"
                 width={300}
                 height={100}

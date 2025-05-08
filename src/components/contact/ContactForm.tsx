@@ -66,7 +66,7 @@ const ContactForm = () => {
   };
 
   return (
-    <div>
+    <div id="contact-form">
       {formStatus.type === 'success' ? (
         <div className="bg-green-900/30 border border-green-700 text-green-300 px-6 py-4 rounded-lg mb-6 animate-fade-in">
           <div className="flex items-center">

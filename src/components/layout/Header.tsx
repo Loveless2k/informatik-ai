@@ -8,12 +8,22 @@ import MobileMenu from '@/components/ui/MobileMenu';
 import ThemeToggle from '@/components/ui/ThemeToggle';
 import SearchBar from '@/components/ui/SearchBar';
 import DataStreamButton from '@/components/ui/buttons/DataStreamButton';
+import { useTheme } from '@/context/ThemeContext';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  // We're using a single logo now, so we don't need to check for dark mode
+  // Usar el contexto de tema de manera segura
+  let themeContext;
+  try {
+    themeContext = useTheme();
+  } catch (error) {
+    // Si el contexto no está disponible, asumimos tema claro por defecto
+    themeContext = { theme: 'light' };
+  }
+
+  const isDarkMode = themeContext.theme === 'dark';
 
   // Handle scroll effect for transparent to solid header
   useEffect(() => {
@@ -56,11 +66,23 @@ const Header = () => {
             <Link href="/" className="flex items-center">
               <div className="relative h-17 w-[280px]">
                 <Image
-                  src="/images/logos/logoInformatik-ai.png"
-                  alt="Informatik-AI Logo"
+                  src="/images/informatik-ai-logo-hero-colors-light.svg"
+                  alt="Informatik-AI Logo (Light Mode)"
                   width={280}
                   height={70}
-                  className="absolute top-0 left-0 h-20 w-auto"
+                  className={`absolute top-0 left-0 h-17 w-auto transition-opacity ${
+                    isDarkMode ? 'opacity-0' : 'opacity-100'
+                  }`}
+                  priority
+                />
+                <Image
+                  src="/images/informatik-ai-logo-hero-colors-dark.svg"
+                  alt="Informatik-AI Logo (Dark Mode)"
+                  width={280}
+                  height={70}
+                  className={`absolute top-0 left-0 h-17 w-auto transition-opacity ${
+                    isDarkMode ? 'opacity-100' : 'opacity-0'
+                  }`}
                   priority
                 />
               </div>
