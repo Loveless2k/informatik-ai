@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import SectionHeading from '@/components/ui/SectionHeading';
+import React, { useState, useRef, useEffect } from 'react';
+import { AnimatePresence } from 'framer-motion';
+import { useTheme } from '@/context/ThemeContext';
 
 const faqs = [
   {
@@ -41,78 +41,122 @@ const faqs = [
 
 const ServiceFaq = () => {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const faqsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const { theme } = useTheme();
+  const isDarkMode = theme === 'dark';
 
-  const toggleFaq = (index: number) => {
-    setActiveIndex(activeIndex === index ? null : index);
-  };
+  // Efecto para animar la entrada de los elementos FAQ
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.remove('opacity-0', 'translate-y-8');
+            entry.target.classList.add('opacity-100', 'translate-y-0');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    faqsRef.current.forEach((el) => {
+      if (el) observer.observe(el);
+    });
+
+    return () => {
+      faqsRef.current.forEach((el) => {
+        if (el) observer.unobserve(el);
+      });
+    };
+  }, []);
 
   return (
-    <section className="py-20 bg-slate-50 relative">
+    <section className={`py-20 ${isDarkMode ? 'bg-gray-900' : 'bg-slate-50'} relative`}>
       {/* Patrón de fondo sutil */}
-      <div className="absolute inset-0 bg-grid-slate-200 bg-[length:20px_20px] opacity-30"></div>
+      <div className={`absolute inset-0 ${
+        isDarkMode ? 'bg-grid-gray-800' : 'bg-grid-slate-200'
+      } bg-[length:20px_20px] ${
+        isDarkMode ? 'opacity-20' : 'opacity-30'
+      }`}></div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <SectionHeading
-          title="Preguntas Frecuentes"
-          subtitle="Respuestas a las dudas más comunes sobre nuestros servicios"
-          centered
-          className="mb-16"
-        />
+        {/* Título con gradiente */}
+        <div className="mt-8 mb-12 text-center">
+          <h2 className="text-4xl font-bold mb-4">
+            <span className="bg-gradient-to-r from-[#00B4DB] via-[#48D1CC] to-[#00BFFF] text-transparent bg-clip-text">
+              Preguntas Frecuentes
+            </span>
+          </h2>
+          <div className="w-40 h-1 bg-gradient-to-r from-[#00B4DB] via-[#48D1CC] to-[#00BFFF] rounded-full mx-auto"></div>
+          <p className={`mt-4 text-lg ${isDarkMode ? 'text-gray-300' : 'text-slate-600'} max-w-2xl mx-auto`}>
+            Respuestas a las dudas más comunes sobre nuestros servicios
+          </p>
+        </div>
 
-        <div className="max-w-3xl mx-auto">
+        {/* FAQs */}
+        <div className="max-w-3xl mx-auto mt-16">
           {faqs.map((faq, index) => (
-            <motion.div
+            <div
               key={index}
-              className="mb-4"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.4, delay: index * 0.1 }}
+              ref={(el: HTMLDivElement | null) => { faqsRef.current[index] = el }}
+              className="opacity-0 translate-y-8 transition-all duration-700 ease-out mb-6"
+              style={{ transitionDelay: `${index * 150}ms` }}
             >
-              <button
-                className={`w-full text-left p-5 rounded-lg flex justify-between items-center transition-all duration-300 ${
-                  activeIndex === index
-                    ? 'bg-white shadow-lg border-l-4 border-blue-500'
-                    : 'bg-white/80 hover:bg-white hover:shadow-md'
-                }`}
-                onClick={() => toggleFaq(index)}
+              <div
+                className={`p-6 rounded-xl shadow-sm border ${
+                  isDarkMode
+                    ? 'border-[#48D1CC]/20 bg-gray-800'
+                    : 'border-[#00B4DB]/10 bg-white'
+                } overflow-hidden
+                  transform transition-all duration-300 hover:shadow-md hover:-translate-y-1 relative group`}
               >
-                <span className="text-lg font-medium text-slate-800">{faq.question}</span>
-                <svg
-                  className={`w-5 h-5 text-blue-500 transition-transform duration-300 ${
-                    activeIndex === index ? 'transform rotate-180' : ''
-                  }`}
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 9l-7 7-7-7"
-                  ></path>
-                </svg>
-              </button>
+                {/* Decoración de fondo */}
+                <div className="absolute -right-16 -bottom-16 w-32 h-32 bg-gradient-to-br from-[#00B4DB]/10 to-[#48D1CC]/10 rounded-full opacity-10 group-hover:scale-150 transition-transform duration-500 dark:opacity-20"></div>
 
-              <AnimatePresence>
-                {activeIndex === index && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: 'auto' }}
-                    exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="overflow-hidden"
+                <div className="relative z-10">
+                  <button
+                    className="flex justify-between items-center w-full text-left"
+                    onClick={() => setActiveIndex(activeIndex === index ? null : index)}
                   >
-                    <div className="p-5 bg-white border-l-4 border-blue-100 rounded-b-lg shadow-inner">
-                      <p className="text-slate-700">{faq.answer}</p>
+                    <h3 className={`text-xl font-bold ${
+                      isDarkMode ? 'text-white' : 'text-gray-800'
+                    }`}>{faq.question}</h3>
+                    <span className={`${
+                      isDarkMode ? 'text-[#48D1CC]' : 'text-[#00B4DB]'
+                    } text-2xl transform transition-transform duration-300`}>
+                      {activeIndex === index ? '−' : '+'}
+                    </span>
+                  </button>
+
+                  <AnimatePresence>
+                    <div
+                      className={`mt-4 ${
+                        isDarkMode ? 'text-gray-300' : 'text-gray-600'
+                      } overflow-hidden transition-all duration-300 ${
+                        activeIndex === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                      }`}
+                    >
+                      <p className="leading-relaxed">{faq.answer}</p>
                     </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </motion.div>
+                  </AnimatePresence>
+                </div>
+              </div>
+            </div>
           ))}
+        </div>
+
+        {/* CTA */}
+        <div className="mt-20 text-center">
+          <a  href="/contact"
+
+            className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-[#00B4DB] to-[#48D1CC] text-white rounded-lg shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-300 cursor-pointer font-bold relative overflow-hidden group"
+            style={{ boxShadow: '0 10px 15px -3px rgba(0, 197, 197, 0.2), 0 4px 6px -4px rgba(0, 197, 197, 0.2)' }}
+          >
+            {/* Efecto de brillo en hover */}
+            <span className="absolute inset-0 bg-gradient-to-r from-white to-transparent opacity-0 group-hover:opacity-20 transition-opacity duration-300"></span>
+            <span className="text-lg">¿Tienes Más Preguntas? Contáctanos</span>
+          </a>
         </div>
       </div>
     </section>
