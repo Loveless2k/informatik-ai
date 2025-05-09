@@ -1,14 +1,27 @@
 import Link from 'next/link';
+import { useTheme } from '@/context/ThemeContext';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
+  // Usar el contexto de tema
+  const { theme } = useTheme();
+  const isDarkMode = theme === 'dark';
+
   return (
-    <footer className="bg-gradient-to-b from-gray-900 to-blue-950 text-white relative overflow-hidden">
+    <footer className={`relative overflow-hidden ${
+      isDarkMode
+        ? 'bg-black text-white'
+        : 'bg-[#007D84] text-white'
+    }`}>
       {/* Abstract shapes in background */}
       <div className="absolute inset-0 overflow-hidden opacity-5">
-        <div className="absolute -top-24 -right-24 w-96 h-96 bg-blue-500 rounded-full filter blur-3xl"></div>
-        <div className="absolute bottom-1/4 left-1/3 w-80 h-80 bg-indigo-500 rounded-full filter blur-3xl"></div>
+        <div className={`absolute -top-24 -right-24 w-96 h-96 rounded-full filter blur-3xl ${
+          isDarkMode ? 'bg-[#00F0FF]' : 'bg-[#E0FBFF]'
+        }`}></div>
+        <div className={`absolute bottom-1/4 left-1/3 w-80 h-80 rounded-full filter blur-3xl ${
+          isDarkMode ? 'bg-[#48D1CC]' : 'bg-[#48D1CC]'
+        }`}></div>
       </div>
 
       {/* Grid pattern overlay */}
@@ -19,10 +32,18 @@ const Footer = () => {
           {/* Company Info */}
           <div className="col-span-1 lg:col-span-1">
             <div className="flex items-center mb-4">
-              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center text-white font-bold text-xl mr-2 shadow-md">
+              <div className={`w-10 h-10 rounded-lg flex items-center justify-center text-white font-bold text-xl mr-2 shadow-md ${
+                isDarkMode
+                  ? 'bg-gradient-to-br from-[#00F0FF] to-[#48D1CC]'
+                  : 'bg-gradient-to-br from-[#00B4DB] to-[#48D1CC]'
+              }`}>
                 IA
               </div>
-              <h3 className="text-xl font-bold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">
+              <h3 className={`text-xl font-bold bg-clip-text text-transparent ${
+                isDarkMode
+                  ? 'bg-gradient-to-r from-[#00F0FF] to-[#48D1CC]'
+                  : 'bg-gradient-to-r from-white to-[#E0FBFF]'
+              }`}>
                 Informatik-AI
               </h3>
             </div>
@@ -68,17 +89,27 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div className="col-span-1">
-            <h3 className="text-lg font-semibold mb-5 text-blue-300">Enlaces Rápidos</h3>
+            <h3 className={`text-lg font-semibold mb-5 ${
+              isDarkMode ? 'text-[#00F0FF]' : 'text-white'
+            }`}>Enlaces Rápidos</h3>
             <ul className="space-y-3">
               <li>
-                <Link href="/" className="text-gray-300 hover:text-white transition-colors flex items-center group">
-                  <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                <Link href="/" className={`hover:text-white transition-colors flex items-center group ${
+                  isDarkMode ? 'text-gray-300' : 'text-[#E0FBFF]'
+                }`}>
+                  <span className={`w-1.5 h-1.5 rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity ${
+                    isDarkMode ? 'bg-[#00F0FF]' : 'bg-[#E0FBFF]'
+                  }`}></span>
                   Inicio
                 </Link>
               </li>
               <li>
-                <Link href="/about" className="text-gray-300 hover:text-white transition-colors flex items-center group">
-                  <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                <Link href="/about" className={`hover:text-white transition-colors flex items-center group ${
+                  isDarkMode ? 'text-gray-300' : 'text-[#E0FBFF]'
+                }`}>
+                  <span className={`w-1.5 h-1.5 rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity ${
+                    isDarkMode ? 'bg-[#00F0FF]' : 'bg-[#E0FBFF]'
+                  }`}></span>
                   Nosotros
                 </Link>
               </li>
@@ -111,7 +142,9 @@ const Footer = () => {
 
           {/* Services */}
           <div className="col-span-1">
-            <h3 className="text-lg font-semibold mb-5 text-blue-300">Nuestros Servicios</h3>
+            <h3 className={`text-lg font-semibold mb-5 ${
+              isDarkMode ? 'text-[#00F0FF]' : 'text-white'
+            }`}>Nuestros Servicios</h3>
             <ul className="space-y-3">
               <li>
                 <Link href="/services#ai-consulting" className="text-gray-300 hover:text-white transition-colors flex items-center group">
@@ -148,7 +181,9 @@ const Footer = () => {
 
           {/* Contact Info */}
           <div className="col-span-1">
-            <h3 className="text-lg font-semibold mb-5 text-blue-300">Contáctanos</h3>
+            <h3 className={`text-lg font-semibold mb-5 ${
+              isDarkMode ? 'text-[#00F0FF]' : 'text-white'
+            }`}>Contáctanos</h3>
             <address className="not-italic space-y-4">
               <p className="text-gray-300 flex items-start group">
                 <span className="w-8 h-8 rounded-full bg-gray-800 group-hover:bg-blue-600 flex items-center justify-center mr-3 transition-colors duration-300">
@@ -179,24 +214,34 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-400 text-sm">
+        <div className={`mt-12 pt-8 flex flex-col md:flex-row justify-between items-center border-t ${
+          isDarkMode ? 'border-gray-800' : 'border-[#006A70]'
+        }`}>
+          <p className={`text-sm ${
+            isDarkMode ? 'text-gray-400' : 'text-[#E0FBFF]'
+          }`}>
             &copy; {currentYear} Informatik-AI. Todos los derechos reservados.
           </p>
           <div className="mt-6 md:mt-0">
             <ul className="flex flex-wrap gap-6 text-sm justify-center">
               <li>
-                <Link href="/privacy-policy" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="/privacy-policy" className={`transition-colors ${
+                  isDarkMode ? 'text-gray-400 hover:text-white' : 'text-[#E0FBFF] hover:text-white'
+                }`}>
                   Política de Privacidad
                 </Link>
               </li>
               <li>
-                <Link href="/terms-of-service" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="/terms-of-service" className={`transition-colors ${
+                  isDarkMode ? 'text-gray-400 hover:text-white' : 'text-[#E0FBFF] hover:text-white'
+                }`}>
                   Términos de Servicio
                 </Link>
               </li>
               <li>
-                <Link href="/cookies" className="text-gray-400 hover:text-white transition-colors">
+                <Link href="/cookies" className={`transition-colors ${
+                  isDarkMode ? 'text-gray-400 hover:text-white' : 'text-[#E0FBFF] hover:text-white'
+                }`}>
                   Cookies
                 </Link>
               </li>

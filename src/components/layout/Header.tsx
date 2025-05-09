@@ -56,8 +56,12 @@ const Header = () => {
   return (
     <div className={`sticky top-0 z-50 transition-all duration-500 ${
       scrolled
-        ? 'bg-white dark:bg-gray-900 shadow-lg dark:shadow-gray-900/30 py-2.5 sm:py-3 md:py-4'
-        : 'bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl py-3 sm:py-4 md:py-5'
+        ? isDarkMode
+          ? 'bg-black shadow-lg shadow-[#00F0FF]/10 py-2.5 sm:py-3 md:py-4'
+          : 'bg-[#E0FBFF] shadow-lg shadow-[#007D84]/10 py-2.5 sm:py-3 md:py-4'
+        : isDarkMode
+          ? 'bg-black/80 backdrop-blur-xl py-3 sm:py-4 md:py-5'
+          : 'bg-[#E0FBFF]/80 backdrop-blur-xl py-3 sm:py-4 md:py-5'
     }`}>
       <div className="container mx-auto px-4 max-w-7xl">
         <div className="flex justify-between items-center h-20">
@@ -95,7 +99,11 @@ const Header = () => {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-gray-700 dark:text-gray-200 hover:text-secondary dark:hover:text-secondary-light font-medium"
+                className={`font-medium transition-colors ${
+                  isDarkMode
+                    ? 'text-white hover:text-[#00F0FF]'
+                    : 'text-[#111111] hover:text-[#007D84]'
+                }`}
               >
                 {link.label}
               </Link>
@@ -114,7 +122,9 @@ const Header = () => {
 
             {/* Mobile Menu Button */}
             <button
-              className="md:hidden text-gray-700 dark:text-gray-200 focus:outline-none p-2"
+              className={`md:hidden focus:outline-none p-2 ${
+                isDarkMode ? 'text-white' : 'text-[#111111]'
+              }`}
               onClick={toggleMenu}
               aria-label="Toggle menu"
             >

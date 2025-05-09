@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { useTheme } from '@/context/ThemeContext';
 
 type ButtonProps = {
   children: React.ReactNode;
@@ -34,13 +35,27 @@ const Button = ({
   // Base styles
   const baseStyles = 'inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 shadow-sm hover:shadow-md';
 
-  // Variant styles
+  // Get theme context
+  const { theme } = useTheme();
+  const isDarkMode = theme === 'dark';
+
+  // Variant styles based on theme
   const variantStyles = {
-    primary: 'bg-primary text-white hover:bg-primary-dark focus:ring-primary-light',
-    secondary: 'bg-secondary text-white hover:bg-secondary-dark focus:ring-secondary-light',
-    accent: 'bg-accent text-white hover:bg-accent-dark focus:ring-accent',
-    outline: 'bg-transparent border-2 border-primary text-primary hover:bg-primary/5 focus:ring-primary',
-    gradient: 'bg-gradient-to-r from-[#00B4DB] to-[#48D1CC] text-white hover:from-[#00a0c2] hover:to-[#3ec0c0] focus:ring-[#00B4DB]',
+    primary: isDarkMode
+      ? 'bg-[#00F0FF] text-black hover:bg-[#00D6E4] focus:ring-[#48F0FF]'
+      : 'bg-[#007D84] text-white hover:bg-[#006A70] focus:ring-[#00B4DB]',
+    secondary: isDarkMode
+      ? 'bg-[#00B4DB] text-white hover:bg-[#0099B8] focus:ring-[#48D1CC]'
+      : 'bg-[#00B4DB] text-white hover:bg-[#0099B8] focus:ring-[#48D1CC]',
+    accent: isDarkMode
+      ? 'bg-white text-black hover:bg-gray-200 focus:ring-white'
+      : 'bg-black text-white hover:bg-gray-800 focus:ring-black',
+    outline: isDarkMode
+      ? 'bg-transparent border-2 border-[#00F0FF] text-[#00F0FF] hover:bg-[#00F0FF]/10 focus:ring-[#00F0FF]'
+      : 'bg-transparent border-2 border-[#007D84] text-[#007D84] hover:bg-[#007D84]/10 focus:ring-[#007D84]',
+    gradient: isDarkMode
+      ? 'bg-gradient-to-r from-[#00F0FF] to-[#48D1CC] text-black hover:from-[#00D6E4] hover:to-[#3ec0c0] focus:ring-[#00F0FF]'
+      : 'bg-gradient-to-r from-[#007D84] to-[#00B4DB] text-white hover:from-[#006A70] hover:to-[#0099B8] focus:ring-[#007D84]',
   };
 
   // Size styles

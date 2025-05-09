@@ -1,0 +1,161 @@
+/* Utilidades para el nuevo sistema de temas */
+
+/* Botones */
+.btn-primary {
+  @apply py-3 px-6 rounded-lg font-medium transition-all;
+  @apply dark:bg-[#00F0FF] dark:text-black dark:hover:bg-[#00D6E4];
+  @apply bg-[#007D84] text-white hover:bg-[#006A70];
+}
+
+.btn-secondary {
+  @apply py-3 px-6 rounded-lg font-medium border-2 transition-all;
+  @apply dark:border-[#00F0FF] dark:text-[#00F0FF] dark:hover:bg-[#00F0FF]/10;
+  @apply border-[#007D84] text-[#007D84] hover:bg-[#007D84]/10;
+}
+
+.btn-outline {
+  @apply py-3 px-6 rounded-lg font-medium border transition-all;
+  @apply dark:border-white dark:text-white dark:hover:bg-white/10;
+  @apply border-black text-black hover:bg-black/5;
+}
+
+.btn-accent {
+  @apply py-3 px-6 rounded-lg font-medium transition-all;
+  @apply dark:bg-white dark:text-black dark:hover:bg-gray-200;
+  @apply bg-black text-white hover:bg-gray-800;
+}
+
+/* Tarjetas */
+.card {
+  @apply p-6 rounded-xl shadow-md transition-all;
+  @apply dark:bg-[#111111] dark:text-white;
+  @apply bg-white text-[#111111];
+}
+
+.card-hover {
+  @apply hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300;
+}
+
+/* Contenedores */
+.container-theme {
+  @apply p-8 rounded-2xl transition-all;
+  @apply dark:bg-black dark:text-white;
+  @apply bg-[#E0FBFF] text-[#111111];
+}
+
+.section-theme {
+  @apply py-16 transition-all;
+  @apply dark:bg-black dark:text-white;
+  @apply bg-[#E0FBFF] text-[#111111];
+}
+
+/* Textos */
+.text-primary {
+  @apply dark:text-[#00F0FF] text-[#007D84];
+}
+
+.text-secondary {
+  @apply dark:text-[#A0A0A0] text-[#444444];
+}
+
+.heading-xl {
+  @apply text-5xl font-semibold text-center mb-6 font-outfit;
+  @apply dark:text-[#00F0FF] text-[#007D84];
+}
+
+.heading-lg {
+  @apply text-4xl font-semibold text-center mb-5 font-outfit;
+  @apply dark:text-[#00F0FF] text-[#007D84];
+}
+
+.heading-md {
+  @apply text-3xl font-semibold text-center mb-4 font-outfit;
+  @apply dark:text-[#00F0FF] text-[#007D84];
+}
+
+.heading-sm {
+  @apply text-2xl font-semibold text-center mb-3 font-outfit;
+  @apply dark:text-[#00F0FF] text-[#007D84];
+}
+
+.subtitle-lg {
+  @apply text-xl text-center mb-8 leading-relaxed font-outfit;
+  @apply dark:text-[#A0A0A0] text-[#444444];
+}
+
+.subtitle-md {
+  @apply text-lg text-center mb-6 leading-relaxed font-outfit;
+  @apply dark:text-[#A0A0A0] text-[#444444];
+}
+
+/* Bordes */
+.border-theme {
+  @apply border transition-colors;
+  @apply dark:border-[#333333] dark:hover:border-[#444444];
+  @apply border-[#B0E5F0] hover:border-[#80D0E0];
+}
+
+/* Fondos */
+.bg-primary {
+  @apply dark:bg-[#00F0FF] dark:text-black;
+  @apply bg-[#007D84] text-white;
+}
+
+.bg-secondary {
+  @apply dark:bg-[#111111] dark:text-white;
+  @apply bg-white text-[#111111];
+}
+
+.bg-accent {
+  @apply dark:bg-white dark:text-black;
+  @apply bg-black text-white;
+}
+
+/* Gradientes */
+.gradient-primary {
+  @apply dark:bg-gradient-to-r dark:from-[#00F0FF] dark:to-[#48D1CC];
+  @apply bg-gradient-to-r from-[#007D84] to-[#00B4DB];
+}
+
+.text-gradient-theme {
+  @apply dark:bg-gradient-to-r dark:from-[#00F0FF] dark:to-[#48D1CC];
+  @apply bg-gradient-to-r from-[#007D84] to-[#00B4DB];
+  @apply bg-clip-text text-transparent;
+}
+
+/* Efectos de hover */
+.hover-lift {
+  @apply transition-transform duration-300 hover:-translate-y-1;
+}
+
+.hover-glow {
+  @apply transition-all duration-300;
+  @apply dark:hover:shadow-[0_0_15px_rgba(0,240,255,0.5)];
+  @apply hover:shadow-[0_0_15px_rgba(0,125,132,0.5)];
+}
+
+/* Inputs */
+.input-theme {
+  @apply px-4 py-2 rounded-lg border transition-all outline-none w-full;
+  @apply dark:bg-[#111111] dark:border-[#333333] dark:text-white dark:focus:border-[#00F0FF];
+  @apply bg-white border-[#B0E5F0] text-[#111111] focus:border-[#007D84];
+}
+
+/* Listas */
+.list-theme {
+  @apply space-y-2 list-disc pl-5;
+}
+
+/* Divisores */
+.divider-theme {
+  @apply w-full h-px my-8;
+  @apply dark:bg-[#333333];
+  @apply bg-[#B0E5F0];
+}
+
+/* Badges */
+.badge-theme {
+  @apply px-3 py-1 rounded-full text-sm font-medium;
+  @apply dark:bg-[#00F0FF]/20 dark:text-[#00F0FF];
+  @apply bg-[#007D84]/20 text-[#007D84];
+}

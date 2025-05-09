@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTheme } from '@/context/ThemeContext';
 
 type SectionProps = {
   children: React.ReactNode;
@@ -13,10 +14,15 @@ const Section = ({
   id,
   background = 'white',
 }: SectionProps) => {
+  // Get theme context
+  const { theme } = useTheme();
+  const isDarkMode = theme === 'dark';
+
+  // Background styles based on theme
   const backgroundStyles = {
-    white: 'bg-white',
-    light: 'bg-gray-50',
-    dark: 'bg-gray-900 text-white',
+    white: isDarkMode ? 'bg-[#111111] text-white' : 'bg-white text-[#111111]',
+    light: isDarkMode ? 'bg-black text-white' : 'bg-[#E0FBFF] text-[#111111]',
+    dark: isDarkMode ? 'bg-black text-white' : 'bg-[#007D84] text-white',
   };
 
   return (
