@@ -40,7 +40,7 @@ const Button = ({
     secondary: 'bg-secondary text-white hover:bg-secondary-dark focus:ring-secondary-light',
     accent: 'bg-accent text-white hover:bg-accent-dark focus:ring-accent',
     outline: 'bg-transparent border-2 border-primary text-primary hover:bg-primary/5 focus:ring-primary',
-    gradient: 'bg-gradient-to-r from-primary to-secondary text-white hover:from-primary-dark hover:to-secondary-dark focus:ring-primary',
+    gradient: 'bg-gradient-to-r from-[#00B4DB] to-[#48D1CC] text-white hover:from-[#00a0c2] hover:to-[#3ec0c0] focus:ring-[#00B4DB]',
   };
 
   // Size styles
