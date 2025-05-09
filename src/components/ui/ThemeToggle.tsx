@@ -65,6 +65,19 @@ const ThemeToggle = () => {
     }
   }, [themeContext]);
 
+  // No renderizar nada hasta que el componente esté montado en el cliente
+  if (!mounted) {
+    return null;
+  }
+
+  // Valores predeterminados para diferentes tamaños de pantalla
+  const getToggleDistance = () => {
+    if (typeof window !== 'undefined') {
+      return isDark ? (window.innerWidth < 640 ? 12 : window.innerWidth < 768 ? 14 : 16) : 0;
+    }
+    return isDark ? 16 : 0; // Valor predeterminado para SSR
+  };
+
   return (
     <motion.button
     id='theme-toggle'
@@ -78,7 +91,7 @@ const ThemeToggle = () => {
       <motion.div
         className="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full flex items-center justify-center shadow-md"
         animate={{
-          x: isDark ? (window.innerWidth < 640 ? 12 : window.innerWidth < 768 ? 14 : 16) : 0,
+          x: getToggleDistance(),
           backgroundColor: isDark ? '#fbbf24' : '#1e40af',
         }}
         transition={{ type: 'spring', stiffness: 500, damping: 30 }}

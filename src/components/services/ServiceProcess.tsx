@@ -3,6 +3,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import SectionHeading from '@/components/ui/SectionHeading';
+import { useTheme } from '@/context/ThemeContext';
 
 const processSteps = [
   {
@@ -87,10 +88,33 @@ const processSteps = [
 ];
 
 const ServiceProcess = () => {
+  const { theme } = useTheme();
+  const isDarkMode = theme === 'dark';
+
+  // Definir colores alternativos para modo oscuro
+  const getDarkModeColors = (step: string): string => {
+    const darkModeColors = {
+      'bg-blue-100': 'bg-blue-900/30',
+      'bg-purple-100': 'bg-purple-900/30',
+      'bg-teal-100': 'bg-teal-900/30',
+      'bg-orange-100': 'bg-orange-900/30',
+      'bg-indigo-100': 'bg-indigo-900/30',
+      'bg-green-100': 'bg-green-900/30',
+      'border-blue-200': 'border-blue-700',
+      'border-purple-200': 'border-purple-700',
+      'border-teal-200': 'border-teal-700',
+      'border-orange-200': 'border-orange-700',
+      'border-indigo-200': 'border-indigo-700',
+      'border-green-200': 'border-green-700'
+    };
+
+    return isDarkMode ? darkModeColors[step] || step : step;
+  };
+
   return (
-    <section className="py-20 bg-white relative">
+    <section className={`py-20 ${isDarkMode ? 'bg-gray-900' : 'bg-white'} relative`}>
       {/* Patrón de fondo */}
-      <div className="absolute inset-0 bg-grid-slate-100 bg-[length:20px_20px] opacity-30"></div>
+      <div className={`absolute inset-0 ${isDarkMode ? 'bg-grid-slate-800' : 'bg-grid-slate-100'} bg-[length:20px_20px] ${isDarkMode ? 'opacity-20' : 'opacity-30'}`}></div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <SectionHeading
@@ -104,25 +128,25 @@ const ServiceProcess = () => {
           {processSteps.map((step, index) => (
             <motion.div
               key={index}
-              className={`border ${step.borderColor} rounded-xl p-6 ${step.color} relative overflow-hidden group hover:shadow-lg transition-all duration-300`}
+              className={`border ${getDarkModeColors(step.borderColor)} rounded-xl p-6 ${getDarkModeColors(step.color)} relative overflow-hidden group ${isDarkMode ? 'hover:shadow-lg hover:shadow-blue-900/20' : 'hover:shadow-lg'} transition-all duration-300`}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <div className="absolute -right-4 -top-4 w-24 h-24 bg-white/20 rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700"></div>
+              <div className={`absolute -right-4 -top-4 w-24 h-24 ${isDarkMode ? 'bg-blue-500/10' : 'bg-white/20'} rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700`}></div>
 
               <div className="flex items-start mb-4">
-                <div className="mr-4 p-3 rounded-lg bg-white shadow-md">
+                <div className={`mr-4 p-3 rounded-lg ${isDarkMode ? 'bg-gray-800' : 'bg-white'} shadow-md`}>
                   {step.icon}
                 </div>
-                <span className={`text-5xl font-bold ${step.textColor} opacity-20`}>{step.number}</span>
+                <span className={`text-5xl font-bold ${step.textColor} ${isDarkMode ? 'opacity-30' : 'opacity-20'}`}>{step.number}</span>
               </div>
 
               <h3 className={`text-xl font-bold mb-3 ${step.textColor}`}>{step.title}</h3>
-              <p className="text-slate-700">{step.description}</p>
+              <p className={`${isDarkMode ? 'text-gray-300' : 'text-slate-700'}`}>{step.description}</p>
 
-              <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-white to-transparent opacity-30"></div>
+              <div className={`absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent ${isDarkMode ? 'via-blue-700/30' : 'via-white'} to-transparent opacity-30`}></div>
             </motion.div>
           ))}
         </div>
@@ -134,7 +158,7 @@ const ServiceProcess = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.6 }}
         >
-          <p className="text-lg text-slate-700 max-w-3xl mx-auto">
+          <p className={`text-lg ${isDarkMode ? 'text-gray-300' : 'text-slate-700'} max-w-3xl mx-auto`}>
             Nuestro proceso está diseñado para ser flexible y adaptarse a las necesidades específicas de cada cliente,
             asegurando una colaboración efectiva y resultados de alta calidad.
           </p>

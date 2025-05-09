@@ -1,46 +1,87 @@
-import React from 'react';
+
+'use client';
+
 import Section from '@/components/ui/Section';
 import SectionHeading from '@/components/ui/SectionHeading';
 import Image from 'next/image';
 import OrgChart from '@/components/about/OrgChart';
-import type { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'About Us | Informatik-AI',
-  description: 'Learn about Informatik-AI, our mission, vision, and the team behind our innovative AI solutions for businesses.',
-};
+import React, { useEffect } from 'react';
+import { motion, useAnimation } from 'framer-motion';
+import NeuralNetworkBackground from '@/components/ui/NeuralNetworkBackground';
 
 const AboutPage = () => {
+
+  const controls = useAnimation();
+
+  const fadeInUp = {
+    hidden: { opacity: 0, y: 40 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.9,
+        ease: [0.22, 1, 0.36, 1],
+      },
+    },
+  };
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  useEffect(() => {
+    controls.start('visible');
+  }, [controls]);
+
   return (
     <>
       {/* Hero Section */}
-      <section className="relative py-20 overflow-hidden bg-white dark:bg-gray-900">
-        {/* Fondo minimalista */}
-        <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] bg-[length:60px_60px] opacity-[0.03] dark:opacity-[0.05]"></div>
+ <section className="relative py-32 md:py-44 overflow-hidden code-lines-bg bg-gradient-to-br from-gray-950 via-gray-900 to-gray-800">
+      {/* Efecto de resplandor superior */}
+      <div className="absolute top-0 left-1/4 w-1/2 h-1/3 rounded-full filter blur-[120px] bg-blue-900/30"></div>
 
-        {/* Elementos decorativos minimalistas */}
-        <div className="absolute top-0 right-0 w-1/4 h-1/4 bg-gradient-to-br from-[#00B4DB]/5 to-transparent rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-1/5 h-1/5 bg-gradient-to-tr from-[#00B4DB]/5 to-transparent rounded-full blur-3xl"></div>
+      {/* Fondo de red neuronal */}
+      <NeuralNetworkBackground />
 
-        {/* Animated particles */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-[#00B4DB]/10 rounded-full filter blur-3xl animate-pulse" style={{ animationDuration: '8s' }}></div>
-          <div className="absolute bottom-1/3 right-1/4 w-80 h-80 bg-[#48D1CC]/10 rounded-full filter blur-3xl animate-pulse" style={{ animationDuration: '12s' }}></div>
+      {/* Patrón de cuadrícula y scan */}
+      <div className="absolute inset-0 bg-grid-white/[0.03] bg-[length:40px_40px]"></div>
+      <div className="scan-effect absolute inset-0 opacity-30"></div>
+      <div className="matrix-bg absolute inset-0 opacity-10"></div>
+
+      {/* Contenido central animado */}
+      <motion.div
+        className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8"
+        initial="hidden"
+        animate={controls}
+        variants={staggerContainer}
+      >
+        <div className="max-w-5xl mx-auto text-center">
+          <motion.h1
+            className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-white mb-6"
+            variants={fadeInUp}
+          >
+            Sobre Informatik-AI
+          </motion.h1>
+          <motion.p
+            className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto"
+            variants={fadeInUp}
+          >
+            Nuestra misión es transformar empresas a través del poder de la inteligencia artificial.
+          </motion.p>
         </div>
+      </motion.div>
 
-        <div className="max-w-7xl relative z-10 mx-auto px-4 sm:px-6">
-          <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-white w-full text-center mb-2">
-          Sobre Informatik-AI
-          </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
-              Nuestra misión es transformar empresas a través del poder de la inteligencia artificial.
-            </p>
-          </div>
-        </div>
-
-
-      </section>
+      {/* Elementos decorativos pulsantes */}
+      <div className="absolute bottom-10 left-10 w-20 h-20 border border-blue-500/20 rounded-full animate-pulse" style={{ animationDuration: '8s' }}></div>
+      <div className="absolute top-20 right-10 w-32 h-32 border border-teal-500/10 rounded-full animate-pulse" style={{ animationDuration: '12s' }}></div>
+    </section>
 
       {/* Our Story Section */}
       <section className="py-20 bg-white dark:bg-gray-900 relative overflow-hidden">
@@ -226,7 +267,7 @@ const AboutPage = () => {
   </h3>
   <p className="text-[#00B4DB] dark:text-[#48D1CC] mb-4">CEO & Co-Fundadora de Informatik-AI</p>
   <p className="text-gray-600 dark:text-gray-300">
-                 Ingeniera en informatica con mensión en ciber seguridad  y divulgadora líder en Inteligencia Artificial en Latinoamérica. Fundadora de <strong>CamiDevAI</strong>, combina experiencia técnica con una poderosa comunidad digital para acercar la IA a miles de personas y empresas. 
+                 Ingeniera en informatica con mensión en ciber seguridad  y divulgadora líder en Inteligencia Artificial en Latinoamérica. Fundadora de <strong>CamiDevAI</strong>, combina experiencia técnica con una poderosa comunidad digital para acercar la IA a miles de personas y empresas.
                     </p>
                 </div>
               </div>
@@ -333,7 +374,7 @@ const AboutPage = () => {
         {/* Fondo mejorado */}
         <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] bg-[length:60px_60px] opacity-[0.03] dark:opacity-[0.05]"></div>
         <div className="absolute inset-0 bg-gradient-to-br from-[#00B4DB]/[0.02] to-[#48D1CC]/[0.02] dark:from-[#00B4DB]/[0.03] dark:to-[#48D1CC]/[0.03]"></div>
-        
+
         {/* Elementos decorativos */}
         <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-br from-[#00B4DB]/5 to-transparent rounded-full blur-3xl"></div>
         <div className="absolute bottom-0 left-0 w-1/4 h-1/4 bg-gradient-to-tr from-[#00B4DB]/5 to-transparent rounded-full blur-3xl"></div>
@@ -355,7 +396,7 @@ const AboutPage = () => {
           <div className="relative mt-20">
             {/* Línea conectora central */}
             <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#00B4DB] to-[#48D1CC] hidden lg:block"></div>
-            
+
             <div className="space-y-24 lg:space-y-0 relative">
               {/* Valor 1 - Integridad */}
               <div className="flex flex-col lg:flex-row items-center lg:items-start">
@@ -369,7 +410,7 @@ const AboutPage = () => {
                     </p>
                   </div>
                 </div>
-                
+
                 <div className="lg:w-16 relative flex justify-center order-1 lg:order-2 mb-6 lg:mb-0">
                   <div className="w-16 h-16 rounded-full bg-gradient-to-r from-[#00B4DB] to-[#48D1CC] flex items-center justify-center shadow-lg shadow-[#00B4DB]/20 dark:shadow-[#48D1CC]/20 z-10 transition-transform duration-300 hover:scale-110">
                     <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -378,14 +419,14 @@ const AboutPage = () => {
                   </div>
                   <div className="hidden lg:block absolute w-16 h-0.5 bg-gradient-to-r from-transparent via-[#00B4DB] to-transparent right-full top-1/2 transform -translate-y-1/2"></div>
                 </div>
-                
+
                 <div className="lg:w-1/2 lg:pl-16 order-3"></div>
               </div>
-              
+
               {/* Valor 2 - Innovación */}
               <div className="flex flex-col lg:flex-row items-center lg:items-start">
                 <div className="lg:w-1/2 lg:pr-16 order-2 lg:order-1"></div>
-                
+
                 <div className="lg:w-16 relative flex justify-center order-1 lg:order-2 mb-6 lg:mb-0">
                   <div className="w-16 h-16 rounded-full bg-gradient-to-r from-[#00B4DB] to-[#48D1CC] flex items-center justify-center shadow-lg shadow-[#00B4DB]/20 dark:shadow-[#48D1CC]/20 z-10 transition-transform duration-300 hover:scale-110">
                     <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -394,7 +435,7 @@ const AboutPage = () => {
                   </div>
                   <div className="hidden lg:block absolute w-16 h-0.5 bg-gradient-to-r from-[#00B4DB] via-transparent to-transparent left-full top-1/2 transform -translate-y-1/2"></div>
                 </div>
-                
+
                 <div className="lg:w-1/2 lg:pl-16 lg:text-left order-3">
                   <div className="transform transition-all duration-500 hover:-translate-y-2">
                     <h3 className="text-2xl font-bold mb-4 text-gray-800 dark:text-white inline-flex items-center">
@@ -406,7 +447,7 @@ const AboutPage = () => {
                   </div>
                 </div>
               </div>
-              
+
               {/* Valor 3 */}
               <div className="flex flex-col lg:flex-row items-center lg:items-start">
                 <div className="lg:w-1/2 lg:pr-16 lg:text-right order-2 lg:order-1">
@@ -419,7 +460,7 @@ const AboutPage = () => {
                     </p>
                   </div>
                 </div>
-                
+
                 <div className="lg:w-16 relative flex justify-center order-1 lg:order-2 mb-6 lg:mb-0">
                   <div className="w-16 h-16 rounded-full bg-gradient-to-r from-[#00B4DB] to-[#48D1CC] flex items-center justify-center shadow-lg shadow-[#00B4DB]/20 dark:shadow-[#48D1CC]/20 z-10 transition-transform duration-300 hover:scale-110">
                     <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -428,7 +469,7 @@ const AboutPage = () => {
                   </div>
                   <div className="hidden lg:block absolute w-16 h-0.5 bg-gradient-to-r from-transparent via-[#00B4DB] to-transparent right-full top-1/2 transform -translate-y-1/2"></div>
                 </div>
-                
+
                 <div className="lg:w-1/2 lg:pl-16 order-3"></div>
               </div>
             </div>

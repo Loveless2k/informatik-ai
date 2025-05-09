@@ -8,12 +8,20 @@ const CtaSection = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
   const [isButtonAnimating, setIsButtonAnimating] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
   const sectionRef = useRef(null);
   const controls = useAnimation();
   const isInView = useInView(sectionRef, { once: false, amount: 0.3 });
 
+  // Efecto para detectar montaje en el cliente
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
   // Efecto para manejar el movimiento del mouse para el efecto parallax
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
     const handleMouseMove = (e) => {
       const { clientX, clientY } = e;
       const x = (clientX / window.innerWidth) - 0.5;
@@ -38,6 +46,8 @@ const CtaSection = () => {
 
   // Efecto para la animación periódica del botón
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
     if (isInView) {
       const interval = setInterval(() => {
         setIsButtonAnimating(true);
@@ -109,6 +119,17 @@ const CtaSection = () => {
       }
     }
   };
+
+  // No renderizar nada hasta que el componente esté montado en el cliente
+  if (!isMounted) {
+    return (
+      <section className="py-20 bg-white dark:bg-gray-900 relative overflow-hidden">
+        <div className="container mx-auto px-4 sm:px-6">
+          <div className="h-96"></div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <motion.section

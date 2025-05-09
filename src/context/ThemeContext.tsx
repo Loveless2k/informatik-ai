@@ -23,17 +23,20 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
 
   // Efecto para inicializar el tema basado en las preferencias del usuario
   useEffect(() => {
-    // Verificar si hay un tema guardado en localStorage
-    const savedTheme = localStorage.getItem('theme') as Theme | null;
+    // Verificar si estamos en el cliente
+    if (typeof window !== 'undefined') {
+      // Verificar si hay un tema guardado en localStorage
+      const savedTheme = localStorage.getItem('theme') as Theme | null;
 
-    // Si hay un tema guardado, usarlo
-    if (savedTheme) {
-      setTheme(savedTheme);
-    }
-    // Si no hay tema guardado, usar la preferencia del sistema
-    else {
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      setTheme(prefersDark ? 'dark' : 'light');
+      // Si hay un tema guardado, usarlo
+      if (savedTheme) {
+        setTheme(savedTheme);
+      }
+      // Si no hay tema guardado, usar la preferencia del sistema
+      else {
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        setTheme(prefersDark ? 'dark' : 'light');
+      }
     }
 
     setMounted(true);
@@ -41,7 +44,7 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
 
   // Efecto para actualizar el localStorage y la clase del documento cuando cambia el tema
   useEffect(() => {
-    if (!mounted) return;
+    if (!mounted || typeof window === 'undefined') return;
 
     // Guardar el tema en localStorage
     localStorage.setItem('theme', theme);

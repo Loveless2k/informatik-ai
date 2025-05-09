@@ -57,6 +57,17 @@ const CamiDevCase = () => {
     };
   }, [isMounted]);
 
+  // No renderizar nada hasta que el componente esté montado en el cliente
+  if (!isMounted) {
+    return (
+      <section id="camidev" className="py-20 bg-gradient-to-br from-cyan-50 via-white to-cyan-100 relative overflow-hidden">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="h-[1200px]"></div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section id="camidev" className="py-20 bg-gradient-to-br from-cyan-50 via-white to-cyan-100 relative overflow-hidden">
       {/* Elementos decorativos */}

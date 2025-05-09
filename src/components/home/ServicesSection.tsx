@@ -2,10 +2,8 @@
 
 import React, { useRef } from 'react';
 import SectionHeading from '@/components/ui/SectionHeading';
-import Card from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import { motion, useInView } from 'framer-motion';
-import Image from 'next/image';
 import { useTheme } from '@/context/ThemeContext';
 
 interface Servicio {
@@ -193,26 +191,29 @@ const ServicesSection = () => {
 
   return (
     <section className={`py-24 md:py-32 relative overflow-hidden ${isDarkMode
-      ? 'bg-gradient-to-b from-[#0f172a] to-[#1e293b]'
-      : 'bg-gradient-to-b from-[#f8fafc] to-[#e2e8f0]'}`}>
+      ? 'bg-gradient-to-b from-gray-950 via-gray-900 to-gray-800'
+      : 'bg-gradient-to-b from-white via-gray-50 to-gray-100'}`}>
       {/* Background pattern - Modern tech grid */}
-      <div className={`absolute inset-0 bg-[url('/images/grid-pattern.svg')] bg-[length:40px_40px] ${isDarkMode ? 'opacity-[0.07]' : 'opacity-[0.15]'}`}></div>
+      <div className={`absolute inset-0 bg-[url('/images/grid-pattern.svg')] bg-[length:40px_40px] ${isDarkMode ? 'opacity-[0.05]' : 'opacity-[0.1]'}`}></div>
 
       {/* Circuit board pattern overlay */}
-      <div className={`absolute inset-0 bg-[url('/images/circuit-pattern.svg')] bg-no-repeat bg-cover ${isDarkMode ? 'opacity-[0.06]' : 'opacity-[0.08]'}`}></div>
+      <div className={`absolute inset-0 bg-[url('/images/circuit-pattern.svg')] bg-no-repeat bg-cover ${isDarkMode ? 'opacity-[0.04]' : 'opacity-[0.06]'}`}></div>
 
-      {/* Decorative elements - Aligned with HeroSection colors */}
-      <div className={`absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-br ${isDarkMode ? 'from-[#48D1CC]/15' : 'from-[#48D1CC]/25'} to-transparent rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/3`}></div>
-      <div className={`absolute bottom-0 left-0 w-1/4 h-1/4 bg-gradient-to-tr ${isDarkMode ? 'from-[#00B4DB]/15' : 'from-[#00B4DB]/25'} to-transparent rounded-full blur-3xl transform -translate-x-1/3 translate-y-1/3`}></div>
-      <div className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1/2 h-1/2 bg-gradient-to-r ${isDarkMode ? 'from-[#00B4DB]/10 via-[#48D1CC]/10 to-[#00BFFF]/10' : 'from-[#00B4DB]/20 via-[#48D1CC]/20 to-[#00BFFF]/20'} rounded-full blur-3xl`}></div>
+      {/* Decorative elements - Enhanced with more vibrant colors */}
+      <div className={`absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-br ${isDarkMode ? 'from-[#48D1CC]/20' : 'from-[#48D1CC]/30'} to-transparent rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/3`}></div>
+      <div className={`absolute bottom-0 left-0 w-1/4 h-1/4 bg-gradient-to-tr ${isDarkMode ? 'from-[#00B4DB]/20' : 'from-[#00B4DB]/30'} to-transparent rounded-full blur-3xl transform -translate-x-1/3 translate-y-1/3`}></div>
+      <div className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1/2 h-1/2 bg-gradient-to-r ${isDarkMode ? 'from-[#00B4DB]/15 via-[#48D1CC]/15 to-[#00BFFF]/15' : 'from-[#00B4DB]/25 via-[#48D1CC]/25 to-[#00BFFF]/25'} rounded-full blur-3xl`}></div>
 
-      {/* Neural network nodes - Subtle tech effect */}
+      {/* Neural network nodes - Enhanced tech effect */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className={`neural-node absolute top-1/4 left-1/4 w-2 h-2 rounded-full ${isDarkMode ? 'bg-[#48D1CC]/30' : 'bg-[#48D1CC]/50'}`}></div>
-        <div className={`neural-node absolute top-3/4 left-1/3 w-3 h-3 rounded-full ${isDarkMode ? 'bg-[#00B4DB]/30' : 'bg-[#00B4DB]/50'}`}></div>
-        <div className={`neural-node absolute top-1/3 right-1/4 w-2 h-2 rounded-full ${isDarkMode ? 'bg-[#00BFFF]/30' : 'bg-[#00BFFF]/50'}`}></div>
-        <div className={`neural-node absolute bottom-1/4 right-1/3 w-3 h-3 rounded-full ${isDarkMode ? 'bg-[#48D1CC]/30' : 'bg-[#48D1CC]/50'}`}></div>
+        <div className={`neural-node absolute top-1/4 left-1/4 w-2 h-2 rounded-full ${isDarkMode ? 'bg-[#48D1CC]/40' : 'bg-[#48D1CC]/60'} animate-pulse`} style={{ animationDuration: '4s' }}></div>
+        <div className={`neural-node absolute top-3/4 left-1/3 w-3 h-3 rounded-full ${isDarkMode ? 'bg-[#00B4DB]/40' : 'bg-[#00B4DB]/60'} animate-pulse`} style={{ animationDuration: '6s' }}></div>
+        <div className={`neural-node absolute top-1/3 right-1/4 w-2 h-2 rounded-full ${isDarkMode ? 'bg-[#00BFFF]/40' : 'bg-[#00BFFF]/60'} animate-pulse`} style={{ animationDuration: '5s' }}></div>
+        <div className={`neural-node absolute bottom-1/4 right-1/3 w-3 h-3 rounded-full ${isDarkMode ? 'bg-[#48D1CC]/40' : 'bg-[#48D1CC]/60'} animate-pulse`} style={{ animationDuration: '7s' }}></div>
       </div>
+
+      {/* Scan effect - Subtle tech line */}
+      <div className="absolute inset-0 scan-effect opacity-10"></div>
 
       <motion.div
         ref={sectionRef}
@@ -249,17 +250,20 @@ const ServicesSection = () => {
               whileHover="hover"
               whileTap="tap"
               className={`${isDarkMode
-                ? 'bg-slate-800/80 border-slate-700/50'
-                : 'bg-white/90 border-slate-200/70'}
-                backdrop-blur-sm rounded-xl p-8 shadow-md hover:shadow-xl transition-all group relative overflow-hidden border`}
+                ? 'bg-gray-800/90 border-gray-700/50 shadow-lg shadow-blue-900/5'
+                : 'bg-white/95 border-gray-200/70 shadow-xl shadow-gray-200/50'}
+                backdrop-blur-sm rounded-xl p-8 transition-all group relative overflow-hidden border`}
             >
-              {/* Decoración de fondo */}
-              <div className={`absolute -right-16 -top-16 w-32 h-32 bg-gradient-to-br from-${service.color === 'blue' ? '[#00B4DB]' : service.color === 'teal' ? '[#48D1CC]' : service.color === 'sky' ? '[#00BFFF]' : service.color === 'indigo' ? '[#00B4DB]' : '[#48D1CC]'} to-transparent rounded-full opacity-10 group-hover:scale-150 transition-transform duration-500`}></div>
+              {/* Decoración de fondo mejorada */}
+              <div className={`absolute -right-16 -top-16 w-32 h-32 bg-gradient-to-br from-${service.color === 'blue' ? '[#00B4DB]' : service.color === 'teal' ? '[#48D1CC]' : service.color === 'sky' ? '[#00BFFF]' : service.color === 'indigo' ? '[#00B4DB]' : '[#48D1CC]'}/20 to-transparent rounded-full ${isDarkMode ? 'opacity-20' : 'opacity-15'} group-hover:scale-150 transition-transform duration-500`}></div>
+
+              {/* Efecto de brillo en esquina */}
+              <div className={`absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-${service.color === 'blue' ? '[#00B4DB]' : service.color === 'teal' ? '[#48D1CC]' : service.color === 'sky' ? '[#00BFFF]' : service.color === 'indigo' ? '[#00B4DB]' : '[#48D1CC]'}/5 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
 
               <div className="relative z-10">
                 {/* Icono con animación mejorada */}
                 <motion.div
-                  className={`w-16 h-16 rounded-full bg-gradient-to-r from-${service.color === 'blue' ? '[#00B4DB]' : service.color === 'teal' ? '[#48D1CC]' : service.color === 'sky' ? '[#00BFFF]' : service.color === 'indigo' ? '[#00B4DB]' : '[#48D1CC]'}/20 to-${service.color === 'blue' ? '[#00B4DB]' : service.color === 'teal' ? '[#48D1CC]' : service.color === 'sky' ? '[#00BFFF]' : service.color === 'indigo' ? '[#00B4DB]' : '[#48D1CC]'}/30 flex items-center justify-center mb-6 border border-${service.color === 'blue' ? '[#00B4DB]' : service.color === 'teal' ? '[#48D1CC]' : service.color === 'sky' ? '[#00BFFF]' : service.color === 'indigo' ? '[#00B4DB]' : '[#48D1CC]'}/30`}
+                  className={`w-16 h-16 rounded-full bg-gradient-to-r from-${service.color === 'blue' ? '[#00B4DB]' : service.color === 'teal' ? '[#48D1CC]' : service.color === 'sky' ? '[#00BFFF]' : service.color === 'indigo' ? '[#00B4DB]' : '[#48D1CC]'}/20 to-${service.color === 'blue' ? '[#00B4DB]' : service.color === 'teal' ? '[#48D1CC]' : service.color === 'sky' ? '[#00BFFF]' : service.color === 'indigo' ? '[#00B4DB]' : '[#48D1CC]'}/30 flex items-center justify-center mb-6 border border-${service.color === 'blue' ? '[#00B4DB]' : service.color === 'teal' ? '[#48D1CC]' : service.color === 'sky' ? '[#00BFFF]' : service.color === 'indigo' ? '[#00B4DB]' : '[#48D1CC]'}/30 ${isDarkMode ? 'shadow-lg shadow-blue-900/10' : 'shadow-md shadow-blue-500/10'}`}
                   variants={iconVariants}
                 >
                   {service.icon}
@@ -269,33 +273,43 @@ const ServicesSection = () => {
                   {service.title}
                 </h3>
 
-                <p className={`${isDarkMode ? 'text-gray-300' : 'text-gray-600'} mb-6`}>
+                <p className={`${isDarkMode ? 'text-gray-300' : 'text-gray-600'} mb-6 leading-relaxed`}>
                   {service.description}
                 </p>
 
 
 
-                {/* Lista de características */}
-                <div className="space-y-3 mb-6">
+                {/* Lista de características - Diseño mejorado */}
+                <div className="space-y-3 mb-8">
                   {service.caracteristicas.map((caracteristica, i) => (
-                    <div key={i} className="flex items-start">
-                      <div className={`w-5 h-5 rounded-full bg-gradient-to-r from-${service.color === 'blue' ? '[#00B4DB]' : service.color === 'teal' ? '[#48D1CC]' : service.color === 'sky' ? '[#00BFFF]' : service.color === 'indigo' ? '[#00B4DB]' : '[#48D1CC]'}/20 to-${service.color === 'blue' ? '[#00B4DB]' : service.color === 'teal' ? '[#48D1CC]' : service.color === 'sky' ? '[#00BFFF]' : service.color === 'indigo' ? '[#00B4DB]' : '[#48D1CC]'}/30 flex-shrink-0 mt-1 mr-3 flex items-center justify-center border border-${service.color === 'blue' ? '[#00B4DB]' : service.color === 'teal' ? '[#48D1CC]' : service.color === 'sky' ? '[#00BFFF]' : service.color === 'indigo' ? '[#00B4DB]' : '[#48D1CC]'}/30`}>
-                        <div className={`w-2 h-2 bg-${service.color === 'blue' ? '[#00B4DB]' : service.color === 'teal' ? '[#48D1CC]' : service.color === 'sky' ? '[#00BFFF]' : service.color === 'indigo' ? '[#00B4DB]' : '[#48D1CC]'} rounded-full`}></div>
+                    <div key={i} className="flex items-start group/item">
+                      <div className={`w-5 h-5 rounded-full bg-gradient-to-r from-${service.color === 'blue' ? '[#00B4DB]' : service.color === 'teal' ? '[#48D1CC]' : service.color === 'sky' ? '[#00BFFF]' : service.color === 'indigo' ? '[#00B4DB]' : '[#48D1CC]'}/20 to-${service.color === 'blue' ? '[#00B4DB]' : service.color === 'teal' ? '[#48D1CC]' : service.color === 'sky' ? '[#00BFFF]' : service.color === 'indigo' ? '[#00B4DB]' : '[#48D1CC]'}/30 flex-shrink-0 mt-1 mr-3 flex items-center justify-center border border-${service.color === 'blue' ? '[#00B4DB]' : service.color === 'teal' ? '[#48D1CC]' : service.color === 'sky' ? '[#00BFFF]' : service.color === 'indigo' ? '[#00B4DB]' : '[#48D1CC]'}/30 group-hover/item:scale-110 transition-transform duration-300`}>
+                        <div className={`w-2 h-2 bg-${service.color === 'blue' ? '[#00B4DB]' : service.color === 'teal' ? '[#48D1CC]' : service.color === 'sky' ? '[#00BFFF]' : service.color === 'indigo' ? '[#00B4DB]' : '[#48D1CC]'} rounded-full group-hover/item:scale-125 transition-transform duration-300`}></div>
                       </div>
-                      <span className={`${isDarkMode ? 'text-gray-300' : 'text-gray-600'}`}>{caracteristica}</span>
+                      <span className={`${isDarkMode ? 'text-gray-300' : 'text-gray-600'} group-hover/item:text-${service.color === 'blue' ? '[#00B4DB]' : service.color === 'teal' ? '[#48D1CC]' : service.color === 'sky' ? '[#00BFFF]' : service.color === 'indigo' ? '[#00B4DB]' : '[#48D1CC]'} transition-colors duration-300`}>{caracteristica}</span>
                     </div>
                   ))}
                 </div>
 
-                {/* Botón de consulta */}
+                {/* Línea decorativa antes del botón */}
+                <div className={`w-16 h-0.5 bg-gradient-to-r from-${service.color === 'blue' ? '[#00B4DB]' : service.color === 'teal' ? '[#48D1CC]' : service.color === 'sky' ? '[#00BFFF]' : service.color === 'indigo' ? '[#00B4DB]' : '[#48D1CC]'}/40 to-transparent mb-6 rounded-full`}></div>
+
+                {/* Botón de consulta mejorado */}
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className={`inline-flex items-center text-white px-6 py-3 rounded-full bg-gradient-to-r from-${service.color === 'blue' ? '[#00B4DB]' : service.color === 'teal' ? '[#48D1CC]' : service.color === 'sky' ? '[#00BFFF]' : service.color === 'indigo' ? '[#00B4DB]' : '[#48D1CC]'} to-${service.color === 'blue' ? '[#0083B0]' : service.color === 'teal' ? '[#00B4DB]' : service.color === 'sky' ? '[#00B4DB]' : service.color === 'indigo' ? '[#0083B0]' : '[#00B4DB]'} hover:shadow-lg hover:shadow-${service.color === 'blue' ? '[#00B4DB]' : service.color === 'teal' ? '[#48D1CC]' : service.color === 'sky' ? '[#00BFFF]' : service.color === 'indigo' ? '[#00B4DB]' : '[#48D1CC]'}/20 transition-all duration-300 cursor-pointer font-semibold relative overflow-hidden group`}
+                  className={`inline-flex items-center text-white px-6 py-3 rounded-full bg-gradient-to-r from-${service.color === 'blue' ? '[#00B4DB]' : service.color === 'teal' ? '[#48D1CC]' : service.color === 'sky' ? '[#00BFFF]' : service.color === 'indigo' ? '[#00B4DB]' : '[#48D1CC]'} to-${service.color === 'blue' ? '[#0083B0]' : service.color === 'teal' ? '[#00B4DB]' : service.color === 'sky' ? '[#00B4DB]' : service.color === 'indigo' ? '[#0083B0]' : '[#00B4DB]'} ${isDarkMode ? 'shadow-md shadow-blue-900/20' : 'shadow-md shadow-blue-500/20'} hover:shadow-lg hover:shadow-${service.color === 'blue' ? '[#00B4DB]' : service.color === 'teal' ? '[#48D1CC]' : service.color === 'sky' ? '[#00BFFF]' : service.color === 'indigo' ? '[#00B4DB]' : '[#48D1CC]'}/30 transition-all duration-300 cursor-pointer font-semibold relative overflow-hidden group`}
                   onClick={() => window.location.href = service.href}
                 >
-                  {/* Efecto de brillo en hover */}
-                  <span className="absolute inset-0 bg-gradient-to-r from-white to-transparent opacity-0 group-hover:opacity-20 transition-opacity duration-300"></span>
+                  {/* Efecto de brillo en hover mejorado */}
+                  <span className="absolute inset-0 bg-gradient-to-r from-white to-transparent opacity-0 group-hover:opacity-30 transition-opacity duration-300 transform -skew-x-12"></span>
+
+                  {/* Efecto de partículas en hover */}
+                  <span className="absolute inset-0 overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <span className="absolute top-1/2 left-1/2 w-1 h-1 bg-white rounded-full transform -translate-x-1/2 -translate-y-1/2 animate-ping" style={{ animationDuration: '1.5s' }}></span>
+                    <span className="absolute top-1/3 left-1/4 w-1 h-1 bg-white rounded-full transform -translate-x-1/2 -translate-y-1/2 animate-ping" style={{ animationDuration: '2s' }}></span>
+                    <span className="absolute top-2/3 left-3/4 w-1 h-1 bg-white rounded-full transform -translate-x-1/2 -translate-y-1/2 animate-ping" style={{ animationDuration: '2.5s' }}></span>
+                  </span>
 
                   <span>Consultar</span>
                   <svg xmlns="http://www.w3.org/2000/svg" className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -308,14 +322,26 @@ const ServicesSection = () => {
         </motion.div>
 
         <motion.div
-          className="mt-20 text-center"
+          className="mt-24 text-center"
           variants={itemVariants}
         >
+          {/* Línea decorativa antes del botón principal */}
+          <motion.div
+            className={`w-32 h-0.5 bg-gradient-to-r from-[#00B4DB]/40 via-[#48D1CC]/60 to-[#00B4DB]/40 rounded-full mx-auto mb-8`}
+            initial={{ width: 0, opacity: 0 }}
+            animate={{ width: 128, opacity: 1 }}
+            transition={{ delay: 0.3, duration: 0.8, ease: "easeOut" }}
+          />
+
           <motion.div
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.98 }}
             transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            className="relative inline-block"
           >
+            {/* Efecto de resplandor detrás del botón */}
+            <div className={`absolute inset-0 bg-gradient-to-r from-[#00B4DB]/30 via-[#48D1CC]/30 to-[#00BFFF]/30 rounded-full blur-xl transform scale-110 ${isDarkMode ? 'opacity-30' : 'opacity-40'}`}></div>
+
             <Button
               href="/services"
               variant="primary"
@@ -340,7 +366,7 @@ const ServicesSection = () => {
                 </motion.svg>
               }
               iconPosition="right"
-              className="rounded-lg shadow-lg bg-gradient-to-r from-[#00B4DB] to-[#0083B0] hover:from-[#00C4EB] hover:to-[#0093C0] text-white font-bold transform transition-transform duration-300 px-8"
+              className={`rounded-full ${isDarkMode ? 'shadow-lg shadow-blue-900/30' : 'shadow-xl shadow-blue-500/20'} bg-gradient-to-r from-[#00B4DB] via-[#48D1CC] to-[#00BFFF] hover:from-[#00C4EB] hover:via-[#58E1DC] hover:to-[#10CFFF] text-white font-bold transform transition-all duration-300 px-10 py-4 border border-white/10`}
             >
               Ver Todos los Servicios
             </Button>
@@ -348,19 +374,19 @@ const ServicesSection = () => {
 
           {/* Efecto decorativo debajo del botón */}
           <motion.div
-            className="w-24 h-1 bg-gradient-to-r from-[#00B4DB] to-[#48D1CC] rounded-full mx-auto mt-4"
+            className="w-24 h-1 bg-gradient-to-r from-[#00B4DB] to-[#48D1CC] rounded-full mx-auto mt-6"
             initial={{ width: 0, opacity: 0 }}
             animate={{ width: 96, opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.8, ease: "easeOut" }}
           />
         </motion.div>
 
-        {/* Elementos decorativos adicionales - Estilo moderno */}
+        {/* Elementos decorativos adicionales - Estilo mejorado */}
         <motion.div
-          className={`absolute bottom-10 right-10 w-20 h-20 border ${isDarkMode ? 'border-[#48D1CC]/20' : 'border-[#48D1CC]/40'} rounded-full`}
+          className={`absolute bottom-10 right-10 w-20 h-20 border-2 ${isDarkMode ? 'border-[#48D1CC]/30' : 'border-[#48D1CC]/50'} rounded-full`}
           animate={{
             scale: [1, 1.2, 1],
-            opacity: isDarkMode ? [0.3, 0.6, 0.3] : [0.4, 0.7, 0.4],
+            opacity: isDarkMode ? [0.4, 0.7, 0.4] : [0.5, 0.8, 0.5],
             rotate: [0, 180, 360]
           }}
           transition={{
@@ -368,12 +394,16 @@ const ServicesSection = () => {
             repeat: Infinity,
             ease: "linear"
           }}
-        />
+        >
+          {/* Punto central */}
+          <div className={`absolute top-1/2 left-1/2 w-2 h-2 ${isDarkMode ? 'bg-[#48D1CC]/70' : 'bg-[#48D1CC]'} rounded-full transform -translate-x-1/2 -translate-y-1/2`}></div>
+        </motion.div>
+
         <motion.div
-          className={`absolute top-20 left-10 w-32 h-32 border ${isDarkMode ? 'border-[#00B4DB]/20' : 'border-[#00B4DB]/40'} rounded-full`}
+          className={`absolute top-20 left-10 w-32 h-32 border-2 ${isDarkMode ? 'border-[#00B4DB]/30' : 'border-[#00B4DB]/50'} rounded-full`}
           animate={{
             scale: [1, 1.1, 1],
-            opacity: isDarkMode ? [0.2, 0.5, 0.2] : [0.3, 0.6, 0.3],
+            opacity: isDarkMode ? [0.3, 0.6, 0.3] : [0.4, 0.7, 0.4],
             rotate: [360, 180, 0]
           }}
           transition={{
@@ -381,12 +411,16 @@ const ServicesSection = () => {
             repeat: Infinity,
             ease: "linear"
           }}
-        />
+        >
+          {/* Punto central */}
+          <div className={`absolute top-1/2 left-1/2 w-3 h-3 ${isDarkMode ? 'bg-[#00B4DB]/70' : 'bg-[#00B4DB]'} rounded-full transform -translate-x-1/2 -translate-y-1/2`}></div>
+        </motion.div>
+
         <motion.div
-          className={`absolute top-1/2 right-1/4 w-16 h-16 border ${isDarkMode ? 'border-[#00BFFF]/20' : 'border-[#00BFFF]/40'} rounded-full`}
+          className={`absolute top-1/2 right-1/4 w-16 h-16 border-2 ${isDarkMode ? 'border-[#00BFFF]/30' : 'border-[#00BFFF]/50'} rounded-full`}
           animate={{
             scale: [1, 1.3, 1],
-            opacity: isDarkMode ? [0.2, 0.4, 0.2] : [0.3, 0.5, 0.3],
+            opacity: isDarkMode ? [0.3, 0.5, 0.3] : [0.4, 0.6, 0.4],
             y: [0, -20, 0]
           }}
           transition={{
@@ -394,7 +428,41 @@ const ServicesSection = () => {
             repeat: Infinity,
             ease: "easeInOut"
           }}
-        />
+        >
+          {/* Punto central */}
+          <div className={`absolute top-1/2 left-1/2 w-1.5 h-1.5 ${isDarkMode ? 'bg-[#00BFFF]/70' : 'bg-[#00BFFF]'} rounded-full transform -translate-x-1/2 -translate-y-1/2`}></div>
+        </motion.div>
+
+        {/* Líneas de conexión animadas */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <motion.div
+            className={`absolute top-1/4 left-1/4 w-1/2 h-0.5 ${isDarkMode ? 'bg-gradient-to-r from-[#48D1CC]/0 via-[#48D1CC]/20 to-[#48D1CC]/0' : 'bg-gradient-to-r from-[#48D1CC]/0 via-[#48D1CC]/30 to-[#48D1CC]/0'}`}
+            animate={{
+              opacity: [0, 1, 0],
+              scaleX: [0.3, 1, 0.3],
+              rotate: [0, 5, 0]
+            }}
+            transition={{
+              duration: 10,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+          />
+          <motion.div
+            className={`absolute bottom-1/3 right-1/4 w-1/3 h-0.5 ${isDarkMode ? 'bg-gradient-to-r from-[#00B4DB]/0 via-[#00B4DB]/20 to-[#00B4DB]/0' : 'bg-gradient-to-r from-[#00B4DB]/0 via-[#00B4DB]/30 to-[#00B4DB]/0'}`}
+            animate={{
+              opacity: [0, 1, 0],
+              scaleX: [0.5, 1, 0.5],
+              rotate: [0, -3, 0]
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: 2
+            }}
+          />
+        </div>
       </motion.div>
     </section>
   );
