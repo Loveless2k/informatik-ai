@@ -78,12 +78,20 @@ const CamiDevCase = () => {
       <div className={`absolute bottom-0 left-0 w-80 h-80 ${isDarkMode ? 'bg-cyan-700' : 'bg-cyan-200'} rounded-full ${isDarkMode ? 'opacity-10' : 'opacity-20'} blur-3xl translate-y-1/2 -translate-x-1/4`}></div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
         <SectionHeading
-          title="CamiDevAI"
-          subtitle="De 156 a 290,000 seguidores: Una historia de crecimiento exponencial"
-          centered
-          className="mb-16"
-        />
+            title={
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00B4DB] via-[#48D1CC] to-[#00BFFF] font-bold">
+                CamiDevAI
+              </span>
+            }
+            subtitle={
+              <span className={`${isDarkMode ? 'text-gray-300' : 'text-gray-600'} max-w-3xl mx-auto`}>
+                De 156 a 290,000 seguidores: Una historia de crecimiento exponencial
+              </span>
+            }
+            centered
+          />
 
         <motion.div
           ref={ref}

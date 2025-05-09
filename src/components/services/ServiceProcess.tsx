@@ -117,13 +117,21 @@ const ServiceProcess = () => {
       <div className={`absolute inset-0 ${isDarkMode ? 'bg-grid-slate-800' : 'bg-grid-slate-100'} bg-[length:20px_20px] ${isDarkMode ? 'opacity-20' : 'opacity-30'}`}></div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <SectionHeading
-          title="Nuestro Proceso de Trabajo"
-          subtitle="Un enfoque estructurado y colaborativo para garantizar resultados excepcionales"
-          centered
-          className="mb-16"
-        />
+      
 
+        <SectionHeading
+            title={
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00B4DB] via-[#48D1CC] to-[#00BFFF] font-bold">
+                Nuestro Proceso de Trabajo
+              </span>
+            }
+            subtitle={
+              <span className={`${isDarkMode ? 'text-gray-300' : 'text-gray-600'} max-w-3xl mx-auto`}>
+                Un enfoque estructurado y colaborativo para garantizar resultados excepcionales
+              </span>
+            }
+            centered
+          />
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {processSteps.map((step, index) => (
             <motion.div

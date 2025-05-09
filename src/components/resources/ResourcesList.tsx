@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import Image from 'next/image';
+import SectionHeading from '@/components/ui/SectionHeading';
+import { useTheme } from '@/context/ThemeContext';
 
 // Definir los recursos disponibles
 const resources = [
@@ -147,6 +149,10 @@ const ResourceCard = ({ resource }) => {
 };
 
 const ResourcesList = () => {
+
+      const { theme } = useTheme();
+      const isDarkMode = theme === 'dark';
+  
   const [activeCategory, setActiveCategory] = useState('all');
   const [ref, inView] = useInView({
     triggerOnce: true,
@@ -168,14 +174,22 @@ const ResourcesList = () => {
   return (
     <section id="recursos-destacados" className="py-20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
-            Recursos Destacados
-          </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-            Explora nuestra colección de recursos gratuitos diseñados para ayudarte a implementar y aprovechar la IA en tu empresa.
-          </p>
-        </div>
+        
+
+        <SectionHeading
+            title={
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00B4DB] via-[#48D1CC] to-[#00BFFF] font-bold">
+                Recursos Destacados
+              </span>
+            }
+            subtitle={
+              <span className={`${isDarkMode ? 'text-gray-300' : 'text-gray-600'} max-w-3xl mx-auto`}>
+                Explora nuestra colección de recursos gratuitos diseñados para ayudarte a implementar y aprovechar la IA en tu empresa.
+              </span>
+            }
+            centered
+            className="mb-16"
+          />
 
         {/* Filtros de categoría */}
         <div className="flex flex-wrap justify-center gap-4 mb-12">

@@ -46,13 +46,21 @@ const InformatikCase = () => {
       )}
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+
         <SectionHeading
-          title="Informatik-AI: Nuestro Propio Caso de Éxito"
-          subtitle="Aplicando nuestra experiencia y conocimiento para crear una empresa innovadora"
-          centered
-          className={`mb-16 ${isDarkMode ? 'text-white' : 'text-slate-800'}`}
-          subtitleClassName={isDarkMode ? 'text-blue-100' : 'text-slate-600'}
-        />
+            title={
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00B4DB] via-[#48D1CC] to-[#00BFFF] font-bold">
+                Informatik-AI: Nuestro Propio Caso de Éxito
+              </span>
+            }
+            subtitle={
+              <span className={`${isDarkMode ? 'text-gray-300' : 'text-gray-600'} max-w-3xl mx-auto`}>
+                Aplicando nuestra experiencia y conocimiento para crear una empresa innovadora.
+              </span>
+            }
+            centered
+          />
 
         <motion.div
           className="max-w-4xl mx-auto"

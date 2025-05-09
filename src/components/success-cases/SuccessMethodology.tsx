@@ -169,12 +169,18 @@ const SuccessMethodology = () => {
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <SectionHeading
-          title="Nuestra Metodología"
-          subtitle="Un enfoque sistemático y probado para impulsar el crecimiento exponencial"
-          centered
-          className={`mb-16 ${isDarkMode ? 'text-white' : ''}`}
-          subtitleClassName={isDarkMode ? 'text-gray-300' : ''}
-        />
+            title={
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00B4DB] via-[#48D1CC] to-[#00BFFF] font-bold">
+                Nuestra Metodología
+              </span>
+            }
+            subtitle={
+              <span className={`${isDarkMode ? 'text-gray-300' : 'text-gray-600'} max-w-3xl mx-auto`}>
+                Un enfoque sistemático y probado para impulsar el crecimiento exponencial
+              </span>
+            }
+            centered
+          />
 
         <div className="max-w-6xl mx-auto">
           {/* Pasos de la metodología */}

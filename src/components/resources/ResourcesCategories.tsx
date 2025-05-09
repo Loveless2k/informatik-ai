@@ -4,6 +4,9 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import Link from 'next/link';
+import SectionHeading from '@/components/ui/SectionHeading';
+import { useTheme } from '@/context/ThemeContext';
+
 
 // Definir las categorías de recursos
 const categories = [
@@ -55,6 +58,10 @@ const categories = [
 ];
 
 const ResourcesCategories = () => {
+
+    const { theme } = useTheme();
+    const isDarkMode = theme === 'dark';
+
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -85,40 +92,50 @@ const ResourcesCategories = () => {
   return (
     <section id="categorias" className="py-20 bg-gray-50 dark:bg-gray-900">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
-            Categorías de Recursos
-          </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-            Explora nuestra biblioteca de recursos organizados por categorías para encontrar exactamente lo que necesitas.
-          </p>
-        </div>
+
+        <SectionHeading
+            title={
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00B4DB] via-[#48D1CC] to-[#00BFFF] font-bold">
+                Categorías de Recursos
+              </span>
+            }
+            subtitle={
+              <span className={`${isDarkMode ? 'text-gray-300' : 'text-gray-600'} max-w-3xl mx-auto`}>
+                Explora nuestra biblioteca de recursos organizados por categorías para encontrar exactamente lo que necesitas.
+              </span>
+            }
+            centered
+            className="mb-16"
+          />
 
         <motion.div
           ref={ref}
           variants={containerVariants}
           initial="hidden"
           animate={inView ? "visible" : "hidden"}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 max-w-7xl mx-auto"
         >
           {categories.map((category) => (
             <motion.div
               key={category.id}
               variants={itemVariants}
-              className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group"
+              className="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group relative"
             >
+              {/* Elemento decorativo de fondo */}
+              <div className="absolute -right-16 -bottom-16 w-32 h-32 bg-gradient-to-br from-[#00B4DB]/10 to-[#48D1CC]/10 rounded-full opacity-10 group-hover:scale-150 transition-transform duration-500 dark:opacity-20"></div>
+
               <Link href={`/resources#${category.id}`} className="block h-full">
-                <div className="p-6 flex flex-col h-full">
-                  <div className={`p-4 rounded-full bg-gradient-to-r ${category.color} text-white w-16 h-16 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                <div className="p-6 flex flex-col h-full relative z-10">
+                  <div className={`p-4 rounded-full bg-gradient-to-r ${category.color} text-white w-16 h-16 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-md`}>
                     {category.icon}
                   </div>
-                  <h3 className="text-xl font-bold mb-3 text-gray-900 dark:text-white group-hover:text-secondary dark:group-hover:text-secondary-light transition-colors">
+                  <h3 className="text-xl font-bold mb-3 text-gray-900 dark:text-white group-hover:text-[#00B4DB] dark:group-hover:text-[#48D1CC] transition-colors">
                     {category.title}
                   </h3>
-                  <p className="text-gray-600 dark:text-gray-400 flex-grow">
+                  <p className="text-gray-600 dark:text-gray-400 flex-grow leading-relaxed">
                     {category.description}
                   </p>
-                  <div className="mt-6 text-secondary dark:text-secondary-light font-medium flex items-center">
+                  <div className="mt-6 text-[#00B4DB] dark:text-[#48D1CC] font-medium flex items-center">
                     <span>Explorar</span>
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />

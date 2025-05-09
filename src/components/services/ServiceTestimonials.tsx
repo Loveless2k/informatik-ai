@@ -137,13 +137,21 @@ const ServiceTestimonials = () => {
       )}
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+       
+
         <SectionHeading
-          title="Casos de Éxito"
-          subtitle="Resultados reales que hemos logrado para nuestros clientes"
-          centered
-          className={`mb-16 ${isDarkMode ? 'text-white' : 'text-slate-800'}`}
-          subtitleClassName={isDarkMode ? 'text-blue-100' : 'text-slate-600'}
-        />
+            title={
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00B4DB] via-[#48D1CC] to-[#00BFFF] font-bold">
+                Casos de Éxito
+              </span>
+            }
+            subtitle={
+              <span className={`${isDarkMode ? 'text-gray-300' : 'text-gray-600'} max-w-3xl mx-auto`}>
+                Resultados reales que hemos logrado para nuestros clientes
+              </span>
+            }
+            centered
+          />
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {successCases.map((caseStudy, index) => (

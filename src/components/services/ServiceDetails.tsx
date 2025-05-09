@@ -100,12 +100,20 @@ const ServiceDetails = () => {
   return (
     <section className={`py-20 ${isDarkMode ? 'bg-gray-900' : 'bg-slate-50'}`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+       
+
         <SectionHeading
-          title="Servicios en Detalle"
-          subtitle="Conoce en profundidad cómo nuestros servicios pueden transformar tu empresa"
-          centered
-          className="mb-16"
-        />
+            title={
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00B4DB] via-[#48D1CC] to-[#00BFFF] font-bold">
+                Servicios en Detalle
+              </span>
+            }
+            subtitle={
+              <span className={`${isDarkMode ? 'text-gray-300' : 'text-gray-600'} max-w-3xl mx-auto`}>
+             Conoce en profundidad cómo nuestros servicios pueden transformar tu empresa              </span>
+            }
+            centered
+          />
 
         <div className="space-y-32">
           {serviceDetails.map((service, index) => (

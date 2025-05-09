@@ -15,12 +15,21 @@ const SuccessIntro = () => {
       <div className={`absolute inset-0 ${isDarkMode ? 'bg-grid-gray-800' : 'bg-grid-slate-100'} bg-[length:20px_20px] ${isDarkMode ? 'opacity-20' : 'opacity-30'}`}></div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        
+
         <SectionHeading
-          title="Nuestro Enfoque para el Éxito"
-          subtitle="Combinamos estrategia, tecnología y creatividad para impulsar resultados extraordinarios"
-          centered
-          className="mb-16"
-        />
+            title={
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00B4DB] via-[#48D1CC] to-[#00BFFF] font-bold">
+                Nuestro Enfoque para el Éxito
+              </span>
+            }
+            subtitle={
+              <span className={`${isDarkMode ? 'text-gray-300' : 'text-gray-600'} max-w-3xl mx-auto`}>
+                Combinamos estrategia, tecnología y creatividad para impulsar resultados extraordinarios
+              </span>
+            }
+            centered
+          />
 
         <div className="max-w-4xl mx-auto">
           <motion.div
