@@ -112,7 +112,6 @@ const Header = () => {
 
           {/* Right side elements */}
           <div className="flex items-center space-x-4">
-            <SearchBar />
             <ThemeToggle />
             <div className="hidden md:block">
               <DataStreamButton href="/contact" className="w-auto">

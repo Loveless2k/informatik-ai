@@ -6,7 +6,6 @@ import Button from '@/components/ui/Button';
 import SectionHeading from '@/components/ui/SectionHeading';
 import { useTheme } from '@/context/ThemeContext';
 
-
 interface Servicio {
   title: string;
   description: string;
@@ -113,38 +112,17 @@ const services: Servicio[] = [
     ]
   },
 ];
-
 const ServicesList = () => {
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: '-100px 0px' });
-
-    // Obtener el tema actual
-    const { theme } = useTheme();
-    const isDarkMode = theme === 'dark';
+  const { theme } = useTheme();
+  const isDarkMode = theme === 'dark';
 
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.1
-      }
-    }
-  };
-
-const iconVariants = {
-    hidden: { scale: 0.8, opacity: 0, rotateY: 90 },
-    visible: {
-      scale: 1,
-      opacity: 1,
-      rotateY: 0,
-      transition: {
-        type: "spring",
-        stiffness: 200,
-        damping: 15,
-        delay: 0.2
-      }
+      transition: { staggerChildren: 0.2, delayChildren: 0.1 }
     }
   };
 
@@ -153,22 +131,12 @@ const iconVariants = {
     visible: {
       opacity: 1,
       y: 0,
-      transition: {
-        type: 'spring',
-        stiffness: 100,
-        damping: 12
-      }
+      transition: { type: 'spring', stiffness: 100, damping: 12 }
     },
     hover: {
-      y: -10,
-      scale: 1.03,
-      boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.2)',
-      transition: {
-        type: 'spring',
-        stiffness: 300,
-        damping: 15,
-        duration: 0.3
-      }
+      y: -6,
+      scale: 1.015,
+      transition: { type: 'spring', stiffness: 250, damping: 18, duration: 0.3 }
     },
     tap: {
       scale: 0.98,
@@ -177,29 +145,8 @@ const iconVariants = {
   };
 
   return (
-    <section id="servicios" className={`py-24 md:py-32 relative overflow-hidden ${isDarkMode
-      ? 'bg-gradient-to-b from-gray-950 via-gray-900 to-gray-800'
-      : 'bg-gradient-to-b from-white via-gray-50 to-gray-100'}`}>
-
-      {/* Fondo y decoraciones mejoradas */}
+    <section id="servicios" className={`py-20 md:py-28 relative overflow-hidden ${isDarkMode ? 'bg-gradient-to-b from-gray-950 via-gray-900 to-gray-800' : 'bg-gradient-to-b from-white via-gray-50 to-gray-100'}`}>
       <div className={`absolute inset-0 bg-[url('/images/grid-pattern.svg')] bg-[length:40px_40px] ${isDarkMode ? 'opacity-[0.05]' : 'opacity-[0.1]'}`}></div>
-      <div className={`absolute inset-0 bg-[url('/images/circuit-pattern.svg')] bg-no-repeat bg-cover ${isDarkMode ? 'opacity-[0.04]' : 'opacity-[0.06]'}`}></div>
-      <div className="scan-effect absolute inset-0 opacity-10"></div>
-      <div className={`matrix-bg absolute inset-0 ${isDarkMode ? 'opacity-10' : 'opacity-5'}`}></div>
-
-      {/* Elementos decorativos - Gradientes */}
-      <div className={`absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-br ${isDarkMode ? 'from-[#48D1CC]/20' : 'from-[#48D1CC]/30'} to-transparent rounded-full blur-3xl transform translate-x-1/3 -translate-y-1/3`}></div>
-      <div className={`absolute bottom-0 left-0 w-1/4 h-1/4 bg-gradient-to-tr ${isDarkMode ? 'from-[#00B4DB]/20' : 'from-[#00B4DB]/30'} to-transparent rounded-full blur-3xl transform -translate-x-1/3 translate-y-1/3`}></div>
-      <div className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-1/2 h-1/2 bg-gradient-to-r ${isDarkMode ? 'from-[#00B4DB]/15 via-[#48D1CC]/15 to-[#00BFFF]/15' : 'from-[#00B4DB]/25 via-[#48D1CC]/25 to-[#00BFFF]/25'} rounded-full blur-3xl`}></div>
-
-      {/* Nodos de red neural animados */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className={`absolute top-1/4 left-1/4 w-2 h-2 rounded-full ${isDarkMode ? 'bg-[#48D1CC]/40' : 'bg-[#48D1CC]/60'} animate-pulse`} style={{ animationDuration: '4s' }}></div>
-        <div className={`absolute top-3/4 left-1/3 w-3 h-3 rounded-full ${isDarkMode ? 'bg-[#00B4DB]/40' : 'bg-[#00B4DB]/60'} animate-pulse`} style={{ animationDuration: '6s' }}></div>
-        <div className={`absolute top-1/3 right-1/4 w-2 h-2 rounded-full ${isDarkMode ? 'bg-[#00BFFF]/40' : 'bg-[#00BFFF]/60'} animate-pulse`} style={{ animationDuration: '5s' }}></div>
-        <div className={`absolute bottom-1/4 right-1/3 w-3 h-3 rounded-full ${isDarkMode ? 'bg-[#48D1CC]/40' : 'bg-[#48D1CC]/60'} animate-pulse`} style={{ animationDuration: '7s' }}></div>
-      </div>
-
       <motion.div
         ref={sectionRef}
         className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10"
@@ -210,117 +157,44 @@ const iconVariants = {
         <motion.div variants={cardVariants}>
           <SectionHeading
             title={<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00B4DB] via-[#48D1CC] to-[#00BFFF] font-bold">Nuestros Servicios</span>}
-            subtitle={<span className={`${isDarkMode ? 'text-gray-300' : 'text-gray-600'} max-w-3xl mx-auto`}>
-              Soluciones tecnológicas avanzadas diseñadas para transformar tu empresa
-            </span>}
+            subtitle={<span className={`${isDarkMode ? 'text-gray-300' : 'text-gray-600'} max-w-2xl mx-auto text-base md:text-lg`}>Soluciones prácticas que puedes explorar al detalle</span>}
             centered
-            className="mb-8"
-          />
-
-          {/* Línea decorativa bajo el título */}
-          <motion.div
-            className="w-24 h-1 bg-gradient-to-r from-[#00B4DB] to-[#48D1CC] rounded-full mx-auto mt-4 mb-16"
-            initial={{ width: 0, opacity: 0 }}
-            animate={{ width: 96, opacity: 1 }}
-            transition={{ delay: 0.5, duration: 0.8, ease: "easeOut" }}
+            className="mb-12"
           />
         </motion.div>
-                <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           variants={containerVariants}
         >
-         {services.map((service, index) => (
-                     <motion.div
-                       key={index}
-                       variants={cardVariants}
-                       whileHover="hover"
-                       whileTap="tap"
-                       className={`${isDarkMode
-                         ? 'bg-gray-800/90 border-gray-700/50 shadow-lg shadow-blue-900/5'
-                         : 'bg-white/95 border-gray-200/70 shadow-xl shadow-gray-200/50'}
-                         backdrop-blur-sm rounded-xl p-8 transition-all group relative overflow-hidden border`}
-                     >
-                       {/* Decoración de fondo mejorada */}
-                       <div className={`absolute -right-16 -top-16 w-32 h-32 bg-gradient-to-br from-${service.color === 'blue' ? '[#00B4DB]' : service.color === 'teal' ? '[#48D1CC]' : service.color === 'sky' ? '[#00BFFF]' : service.color === 'indigo' ? '[#00B4DB]' : '[#48D1CC]'}/20 to-transparent rounded-full ${isDarkMode ? 'opacity-20' : 'opacity-15'} group-hover:scale-150 transition-transform duration-500`}></div>
-
-                       {/* Efecto de brillo en esquina */}
-                       <div className={`absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-${service.color === 'blue' ? '[#00B4DB]' : service.color === 'teal' ? '[#48D1CC]' : service.color === 'sky' ? '[#00BFFF]' : service.color === 'indigo' ? '[#00B4DB]' : '[#48D1CC]'}/5 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500`}></div>
-
-                       <div className="relative z-10">
-                         {/* Icono con animación mejorada */}
-                         <motion.div
-                           className={`w-16 h-16 rounded-full bg-gradient-to-r from-${service.color === 'blue' ? '[#00B4DB]' : service.color === 'teal' ? '[#48D1CC]' : service.color === 'sky' ? '[#00BFFF]' : service.color === 'indigo' ? '[#00B4DB]' : '[#48D1CC]'}/20 to-${service.color === 'blue' ? '[#00B4DB]' : service.color === 'teal' ? '[#48D1CC]' : service.color === 'sky' ? '[#00BFFF]' : service.color === 'indigo' ? '[#00B4DB]' : '[#48D1CC]'}/30 flex items-center justify-center mb-6 border border-${service.color === 'blue' ? '[#00B4DB]' : service.color === 'teal' ? '[#48D1CC]' : service.color === 'sky' ? '[#00BFFF]' : service.color === 'indigo' ? '[#00B4DB]' : '[#48D1CC]'}/30 ${isDarkMode ? 'shadow-lg shadow-blue-900/10' : 'shadow-md shadow-blue-500/10'}`}
-                           variants={iconVariants}
-                         >
-                           {service.icon}
-                         </motion.div>
-
-                         <h3 className={`text-2xl font-bold ${isDarkMode ? 'text-white' : 'text-gray-800'} mb-4 group-hover:text-${service.color === 'blue' ? '[#00B4DB]' : service.color === 'teal' ? '[#48D1CC]' : service.color === 'sky' ? '[#00BFFF]' : service.color === 'indigo' ? '[#00B4DB]' : '[#48D1CC]'} transition-colors duration-300`}>
-                           {service.title}
-                         </h3>
-
-                         <p className={`${isDarkMode ? 'text-gray-300' : 'text-gray-600'} mb-6 leading-relaxed`}>
-                           {service.description}
-                         </p>
-
-
-
-                         {/* Lista de características - Diseño mejorado */}
-                         <div className="space-y-3 mb-8">
-                           {service.caracteristicas.map((caracteristica, i) => (
-                             <div key={i} className="flex items-start group/item">
-                               <div className={`w-5 h-5 rounded-full bg-gradient-to-r from-${service.color === 'blue' ? '[#00B4DB]' : service.color === 'teal' ? '[#48D1CC]' : service.color === 'sky' ? '[#00BFFF]' : service.color === 'indigo' ? '[#00B4DB]' : '[#48D1CC]'}/20 to-${service.color === 'blue' ? '[#00B4DB]' : service.color === 'teal' ? '[#48D1CC]' : service.color === 'sky' ? '[#00BFFF]' : service.color === 'indigo' ? '[#00B4DB]' : '[#48D1CC]'}/30 flex-shrink-0 mt-1 mr-3 flex items-center justify-center border border-${service.color === 'blue' ? '[#00B4DB]' : service.color === 'teal' ? '[#48D1CC]' : service.color === 'sky' ? '[#00BFFF]' : service.color === 'indigo' ? '[#00B4DB]' : '[#48D1CC]'}/30 group-hover/item:scale-110 transition-transform duration-300`}>
-                                 <div className={`w-2 h-2 bg-${service.color === 'blue' ? '[#00B4DB]' : service.color === 'teal' ? '[#48D1CC]' : service.color === 'sky' ? '[#00BFFF]' : service.color === 'indigo' ? '[#00B4DB]' : '[#48D1CC]'} rounded-full group-hover/item:scale-125 transition-transform duration-300`}></div>
-                               </div>
-                               <span className={`${isDarkMode ? 'text-gray-300' : 'text-gray-600'} group-hover/item:text-${service.color === 'blue' ? '[#00B4DB]' : service.color === 'teal' ? '[#48D1CC]' : service.color === 'sky' ? '[#00BFFF]' : service.color === 'indigo' ? '[#00B4DB]' : '[#48D1CC]'} transition-colors duration-300`}>{caracteristica}</span>
-                             </div>
-                           ))}
-                         </div>
-
-                         {/* Línea decorativa antes del botón */}
-                         <div className={`w-16 h-0.5 bg-gradient-to-r from-${service.color === 'blue' ? '[#00B4DB]' : service.color === 'teal' ? '[#48D1CC]' : service.color === 'sky' ? '[#00BFFF]' : service.color === 'indigo' ? '[#00B4DB]' : '[#48D1CC]'}/40 to-transparent mb-6 rounded-full`}></div>
-
-                         {/* Botón de consulta mejorado */}
-                         <motion.button
-                           whileHover={{ scale: 1.05 }}
-                           whileTap={{ scale: 0.95 }}
-                           className={`inline-flex items-center text-white px-6 py-3 rounded-full bg-gradient-to-r from-${service.color === 'blue' ? '[#00B4DB]' : service.color === 'teal' ? '[#48D1CC]' : service.color === 'sky' ? '[#00BFFF]' : service.color === 'indigo' ? '[#00B4DB]' : '[#48D1CC]'} to-${service.color === 'blue' ? '[#0083B0]' : service.color === 'teal' ? '[#00B4DB]' : service.color === 'sky' ? '[#00B4DB]' : service.color === 'indigo' ? '[#0083B0]' : '[#00B4DB]'} ${isDarkMode ? 'shadow-md shadow-blue-900/20' : 'shadow-md shadow-blue-500/20'} hover:shadow-lg hover:shadow-${service.color === 'blue' ? '[#00B4DB]' : service.color === 'teal' ? '[#48D1CC]' : service.color === 'sky' ? '[#00BFFF]' : service.color === 'indigo' ? '[#00B4DB]' : '[#48D1CC]'}/30 transition-all duration-300 cursor-pointer font-semibold relative overflow-hidden group`}
-                           onClick={() => window.location.href = service.href}
-                         >
-                           {/* Efecto de brillo en hover mejorado */}
-                           <span className="absolute inset-0 bg-gradient-to-r from-white to-transparent opacity-0 group-hover:opacity-30 transition-opacity duration-300 transform -skew-x-12"></span>
-
-                           {/* Efecto de partículas en hover */}
-                           <span className="absolute inset-0 overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                             <span className="absolute top-1/2 left-1/2 w-1 h-1 bg-white rounded-full transform -translate-x-1/2 -translate-y-1/2 animate-ping" style={{ animationDuration: '1.5s' }}></span>
-                             <span className="absolute top-1/3 left-1/4 w-1 h-1 bg-white rounded-full transform -translate-x-1/2 -translate-y-1/2 animate-ping" style={{ animationDuration: '2s' }}></span>
-                             <span className="absolute top-2/3 left-3/4 w-1 h-1 bg-white rounded-full transform -translate-x-1/2 -translate-y-1/2 animate-ping" style={{ animationDuration: '2.5s' }}></span>
-                           </span>
-
-                           <span>Consultar</span>
-                           <svg xmlns="http://www.w3.org/2000/svg" className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                           </svg>
-                         </motion.button>
-                       </div>
-                     </motion.div>
-                   ))}
-        </motion.div>
-                <motion.div className="mt-16 text-center" variants={cardVariants}>
-          <Button
-            href="/contact"
-            variant="gradient"
-            size="lg"
-            icon={
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-              </svg>
-            }
-            iconPosition="right"
-            className="rounded-full bg-gradient-to-r from-blue-700 to-blue-900 hover:from-blue-600 hover:to-blue-800 shadow-lg text-white"
-          >
-            Consulta sobre nuestros servicios
-          </Button>
+          {services.map((service, index) => (
+            <motion.div
+              key={index}
+              variants={cardVariants}
+              whileHover="hover"
+              whileTap="tap"
+              className={`${isDarkMode ? 'bg-gray-800/90 border-gray-700/50' : 'bg-white/95 border-gray-200/70'} p-6 rounded-xl shadow-md border transition-all group relative overflow-hidden`}
+            >
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 w-14 h-14 rounded-lg bg-gradient-to-br from-blue-700 to-blue-900 flex items-center justify-center border border-blue-800/30">
+                  {service.icon}
+                </div>
+                <div>
+                  <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-1`}>{service.title}</h3>
+                  <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} text-sm leading-relaxed`}>{service.description}</p>
+                </div>
+              </div>
+              <div className="mt-4">
+                <Button
+                  href={service.href}
+                  variant="outline"
+                  className="text-sm px-4 py-2 rounded-full border-blue-700/30 text-blue-300 hover:bg-blue-900/30"
+                >
+                  Ver más detalles
+                </Button>
+              </div>
+            </motion.div>
+          ))}
         </motion.div>
       </motion.div>
     </section>
@@ -328,4 +202,3 @@ const iconVariants = {
 };
 
 export default ServicesList;
-
