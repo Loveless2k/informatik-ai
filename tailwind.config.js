@@ -34,6 +34,7 @@ module.exports = {
       fontFamily: {
         sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
         mono: ['var(--font-mono)', 'monospace'],
+        outfit: ['var(--font-outfit)', 'Outfit', 'system-ui', 'sans-serif'],
       },
       backgroundImage: {
         'gradient-primary': 'var(--gradient-primary)',

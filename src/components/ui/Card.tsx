@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useTheme } from '@/context/ThemeContext';
 
 type CardProps = {
   title: string;
@@ -21,6 +22,10 @@ const Card = ({
   className = '',
   children,
 }: CardProps) => {
+  // Get theme context
+  const { theme } = useTheme();
+  const isDarkMode = theme === 'dark';
+
   const cardContent = (
     <>
       {imageSrc && (
@@ -35,13 +40,21 @@ const Card = ({
       )}
       {children}
       <div className="px-3 py-4 pt-0">
-        <h3 className="text-lg font-bold mb-2 text-slate-900">{title}</h3>
-        {description && <p className="text-slate-700 mb-3 text-xs leading-relaxed">{description}</p>}
+        <h3 className={`text-lg font-bold mb-2 ${
+          isDarkMode ? 'text-white' : 'text-[#111111]'
+        }`}>{title}</h3>
+        {description && <p className={`mb-3 text-xs leading-relaxed ${
+          isDarkMode ? 'text-[#A0A0A0]' : 'text-[#444444]'
+        }`}>{description}</p>}
       </div>
     </>
   );
 
-  const cardClasses = `bg-white rounded-lg shadow-md overflow-hidden transition-shadow hover:shadow-lg ${className}`;
+  const cardClasses = `rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg ${
+    isDarkMode
+      ? 'bg-[#111111] text-white'
+      : 'bg-white text-[#111111]'
+  } ${className}`;
 
   if (href) {
     return (

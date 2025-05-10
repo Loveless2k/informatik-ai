@@ -3,6 +3,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import SectionHeading from '@/components/ui/SectionHeading';
+import { useTheme } from '@/context/ThemeContext';
 
 const serviceDetails = [
   {
@@ -93,15 +94,26 @@ const serviceDetails = [
 ];
 
 const ServiceDetails = () => {
+  const { theme } = useTheme();
+  const isDarkMode = theme === 'dark';
+
   return (
-    <section className="py-20 bg-slate-50">
+    <section className={`py-20 ${isDarkMode ? 'bg-gray-900' : 'bg-slate-50'}`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+       
+
         <SectionHeading
-          title="Servicios en Detalle"
-          subtitle="Conoce en profundidad cómo nuestros servicios pueden transformar tu empresa"
-          centered
-          className="mb-16"
-        />
+            title={
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00B4DB] via-[#48D1CC] to-[#00BFFF] font-bold">
+                Servicios en Detalle
+              </span>
+            }
+            subtitle={
+              <span className={`${isDarkMode ? 'text-gray-300' : 'text-gray-600'} max-w-3xl mx-auto`}>
+             Conoce en profundidad cómo nuestros servicios pueden transformar tu empresa              </span>
+            }
+            centered
+          />
 
         <div className="space-y-32">
           {serviceDetails.map((service, index) => (
@@ -111,7 +123,7 @@ const ServiceDetails = () => {
               className="scroll-mt-24"
             >
               <motion.div
-                className={`rounded-2xl overflow-hidden shadow-xl ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} flex flex-col lg:flex-row`}
+                className={`rounded-2xl overflow-hidden ${isDarkMode ? 'shadow-2xl shadow-blue-900/20 border border-gray-700/50' : 'shadow-xl'} ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} flex flex-col lg:flex-row`}
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
@@ -128,8 +140,8 @@ const ServiceDetails = () => {
                   </div>
                 </div>
 
-                <div className={`lg:w-1/2 p-8 md:p-12 ${service.bgColor}`}>
-                  <p className="text-slate-700 mb-8 text-lg">{service.content}</p>
+                <div className={`lg:w-1/2 p-8 md:p-12 ${isDarkMode ? 'bg-gray-800' : service.bgColor}`}>
+                  <p className={`${isDarkMode ? 'text-gray-300' : 'text-slate-700'} mb-8 text-lg`}>{service.content}</p>
 
                   <h4 className={`text-xl font-semibold mb-4 ${service.textColor}`}>Beneficios</h4>
                   <ul className="space-y-3">
@@ -138,7 +150,7 @@ const ServiceDetails = () => {
                         <svg className={`w-5 h-5 ${service.textColor} mr-2 mt-1 flex-shrink-0`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"></path>
                         </svg>
-                        <span className="text-slate-700">{benefit}</span>
+                        <span className={`${isDarkMode ? 'text-gray-300' : 'text-slate-700'}`}>{benefit}</span>
                       </li>
                     ))}
                   </ul>

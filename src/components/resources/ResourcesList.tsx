@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import Image from 'next/image';
+import SectionHeading from '@/components/ui/SectionHeading';
+import { useTheme } from '@/context/ThemeContext';
 
 // Definir los recursos disponibles
 const resources = [
@@ -147,104 +149,69 @@ const ResourceCard = ({ resource }) => {
 };
 
 const ResourcesList = () => {
-  const [activeCategory, setActiveCategory] = useState('all');
-  const [ref, inView] = useInView({
-    triggerOnce: true,
-    threshold: 0.1,
-  });
+  const { theme } = useTheme();
+  const isDarkMode = theme === 'dark';
 
-  // Filtrar recursos según la categoría seleccionada
+  const [activeCategory, setActiveCategory] = useState('all');
+  const [ref, inView] = useInView({ triggerOnce: true, threshold: 0.1 });
+
   const filteredResources = activeCategory === 'all'
     ? resources
     : resources.filter(resource => resource.category === activeCategory);
 
-  // Destacar los recursos destacados al principio
   const sortedResources = [...filteredResources].sort((a, b) => {
     if (a.featured && !b.featured) return -1;
     if (!a.featured && b.featured) return 1;
     return 0;
   });
 
+  const categories = [
+    { key: 'all', label: 'Todos' },
+    { key: 'guias', label: 'Guías y Tutoriales' },
+    { key: 'plantillas', label: 'Plantillas' },
+    { key: 'herramientas', label: 'Herramientas' },
+    { key: 'webinars', label: 'Webinars' },
+  ];
+
   return (
-    <section id="recursos-destacados" className="py-20">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-gray-900 dark:text-white">
-            Recursos Destacados
-          </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-            Explora nuestra colección de recursos gratuitos diseñados para ayudarte a implementar y aprovechar la IA en tu empresa.
-          </p>
+    <section id="recursos-destacados" className={`py-20 relative overflow-hidden ${isDarkMode ? 'bg-gradient-to-b from-gray-950 via-gray-900 to-gray-800' : 'bg-gradient-to-b from-white via-gray-50 to-gray-100'}`}>
+      <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] bg-[length:40px_40px] opacity-[0.05] pointer-events-none"></div>
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <SectionHeading
+          title={<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00B4DB] via-[#48D1CC] to-[#00BFFF] font-bold">Recursos Destacados</span>}
+          subtitle={<span className={`${isDarkMode ? 'text-gray-300' : 'text-gray-600'} max-w-3xl mx-auto`}>Explora nuestra colección de recursos gratuitos diseñados para ayudarte a implementar y aprovechar la IA en tu empresa.</span>}
+          centered
+          className="mb-16"
+        />
+
+        <div className="flex flex-wrap justify-center gap-3 mb-10">
+          {categories.map(cat => (
+            <button
+              key={cat.key}
+              onClick={() => setActiveCategory(cat.key)}
+              className={`px-5 py-2 rounded-full text-sm font-medium transition-colors ${
+                activeCategory === cat.key
+                  ? 'bg-gradient-to-r from-blue-600 to-teal-500 text-white shadow-md'
+                  : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
+              }`}
+            >
+              {cat.label}
+            </button>
+          ))}
         </div>
 
-        {/* Filtros de categoría */}
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
-          <button
-            onClick={() => setActiveCategory('all')}
-            className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${
-              activeCategory === 'all'
-                ? 'bg-secondary text-white'
-                : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
-            }`}
-          >
-            Todos
-          </button>
-          <button
-            onClick={() => setActiveCategory('guias')}
-            className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${
-              activeCategory === 'guias'
-                ? 'bg-secondary text-white'
-                : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
-            }`}
-          >
-            Guías y Tutoriales
-          </button>
-          <button
-            onClick={() => setActiveCategory('plantillas')}
-            className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${
-              activeCategory === 'plantillas'
-                ? 'bg-secondary text-white'
-                : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
-            }`}
-          >
-            Plantillas
-          </button>
-          <button
-            onClick={() => setActiveCategory('herramientas')}
-            className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${
-              activeCategory === 'herramientas'
-                ? 'bg-secondary text-white'
-                : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
-            }`}
-          >
-            Herramientas
-          </button>
-          <button
-            onClick={() => setActiveCategory('webinars')}
-            className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${
-              activeCategory === 'webinars'
-                ? 'bg-secondary text-white'
-                : 'bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700'
-            }`}
-          >
-            Webinars
-          </button>
-        </div>
-
-        {/* Lista de recursos */}
         <motion.div
           ref={ref}
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
         >
           {sortedResources.map((resource) => (
             <ResourceCard key={resource.id} resource={resource} />
           ))}
         </motion.div>
 
-        {/* Mensaje si no hay recursos */}
         {filteredResources.length === 0 && (
           <div className="text-center py-12">
             <p className="text-gray-600 dark:text-gray-400">
@@ -253,9 +220,8 @@ const ResourcesList = () => {
           </div>
         )}
 
-        {/* Botón para cargar más recursos (simulado) */}
         <div className="text-center mt-16">
-          <button className="px-8 py-3 bg-white dark:bg-gray-800 text-secondary dark:text-secondary-light border border-secondary dark:border-secondary-light rounded-full hover:bg-secondary hover:text-white dark:hover:bg-secondary-light dark:hover:text-gray-900 transition-colors duration-300 font-medium">
+          <button className="px-8 py-3 bg-gradient-to-r from-blue-600 to-teal-500 text-white rounded-full font-medium shadow-lg hover:from-blue-700 hover:to-teal-600 transition-all duration-300">
             Cargar Más Recursos
           </button>
         </div>

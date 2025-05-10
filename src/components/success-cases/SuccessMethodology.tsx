@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import SectionHeading from '@/components/ui/SectionHeading';
+import { useTheme } from '@/context/ThemeContext';
 
 const methodologySteps = [
   {
@@ -114,21 +115,72 @@ const methodologySteps = [
 
 const SuccessMethodology = () => {
   const [activeStep, setActiveStep] = useState('analysis');
+  const { theme } = useTheme();
+  const isDarkMode = theme === 'dark';
+
+  // Definir colores para el tema oscuro
+  const getDarkModeColors = (step: { id: string }) => {
+    const darkModeColors = {
+      analysis: {
+        bgColor: 'bg-teal-900/30',
+        borderColor: 'border-teal-700/50',
+        textColor: 'text-teal-300'
+      },
+      strategy: {
+        bgColor: 'bg-blue-900/30',
+        borderColor: 'border-blue-700/50',
+        textColor: 'text-blue-300'
+      },
+      implementation: {
+        bgColor: 'bg-purple-900/30',
+        borderColor: 'border-purple-700/50',
+        textColor: 'text-purple-300'
+      },
+      optimization: {
+        bgColor: 'bg-orange-900/30',
+        borderColor: 'border-orange-700/50',
+        textColor: 'text-orange-300'
+      },
+      scaling: {
+        bgColor: 'bg-indigo-900/30',
+        borderColor: 'border-indigo-700/50',
+        textColor: 'text-indigo-300'
+      }
+    };
+
+    return darkModeColors[step.id];
+  };
 
   const activeStepData = methodologySteps.find(step => step.id === activeStep);
+  const darkModeColors = activeStepData ? getDarkModeColors(activeStepData) : null;
 
   return (
-    <section className="py-20 bg-white relative">
+    <section className={`py-20 ${isDarkMode ? 'bg-gray-900' : 'bg-white'} relative`}>
       {/* Patrón de fondo sutil */}
-      <div className="absolute inset-0 bg-grid-slate-100 bg-[length:20px_20px] opacity-30"></div>
-      
+      <div className={`absolute inset-0 ${isDarkMode ? 'bg-grid-gray-800' : 'bg-grid-slate-100'} bg-[length:20px_20px] ${isDarkMode ? 'opacity-20' : 'opacity-30'}`}></div>
+
+      {/* Elementos decorativos adicionales para el tema oscuro */}
+      {isDarkMode && (
+        <>
+          <div className="absolute top-0 right-0 w-96 h-96 bg-blue-900/20 rounded-full filter blur-3xl opacity-30"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-900/20 rounded-full filter blur-3xl opacity-30"></div>
+        </>
+      )}
+
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <SectionHeading
-          title="Nuestra Metodología"
-          subtitle="Un enfoque sistemático y probado para impulsar el crecimiento exponencial"
-          centered
-          className="mb-16"
-        />
+            title={
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00B4DB] via-[#48D1CC] to-[#00BFFF] font-bold">
+                Nuestra Metodología
+              </span>
+            }
+            subtitle={
+              <span className={`${isDarkMode ? 'text-gray-300' : 'text-gray-600'} max-w-3xl mx-auto`}>
+                Un enfoque sistemático y probado para impulsar el crecimiento exponencial
+              </span>
+            }
+            centered
+          />
 
         <div className="max-w-6xl mx-auto">
           {/* Pasos de la metodología */}
@@ -139,13 +191,19 @@ const SuccessMethodology = () => {
                 className={`flex items-center px-4 py-3 m-2 rounded-lg transition-all duration-300 ${
                   activeStep === step.id
                     ? `bg-gradient-to-r ${step.color} text-white shadow-md`
-                    : `bg-white border ${step.borderColor} ${step.textColor} hover:shadow-sm`
+                    : isDarkMode
+                      ? `bg-gray-800 border ${getDarkModeColors(step).borderColor} ${getDarkModeColors(step).textColor} hover:shadow-sm hover:bg-gray-800/80`
+                      : `bg-white border ${step.borderColor} ${step.textColor} hover:shadow-sm`
                 }`}
                 onClick={() => setActiveStep(step.id)}
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.98 }}
               >
-                <span className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center mr-3">
+                <span className={`w-8 h-8 rounded-full ${
+                  activeStep === step.id
+                    ? 'bg-white/20'
+                    : isDarkMode ? 'bg-gray-700' : 'bg-gray-100'
+                } flex items-center justify-center mr-3`}>
                   {index + 1}
                 </span>
                 <span className="font-medium">{step.title}</span>
@@ -154,102 +212,114 @@ const SuccessMethodology = () => {
           </div>
 
           {/* Detalle del paso activo */}
-          <motion.div 
+          <motion.div
             key={activeStep}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.5 }}
-            className={`p-8 rounded-2xl shadow-lg ${activeStepData?.bgColor} border ${activeStepData?.borderColor}`}
+            className={`p-8 rounded-2xl ${isDarkMode ? 'shadow-xl shadow-black/20' : 'shadow-lg'} ${
+              isDarkMode ? darkModeColors.bgColor : activeStepData?.bgColor
+            } border ${
+              isDarkMode ? darkModeColors.borderColor : activeStepData?.borderColor
+            }`}
           >
             <div className="flex flex-col md:flex-row items-start md:items-center mb-8">
-              <div className={`w-16 h-16 rounded-xl bg-gradient-to-r ${activeStepData?.color} flex items-center justify-center mb-4 md:mb-0 md:mr-6 shadow-md`}>
+              <div className={`w-16 h-16 rounded-xl bg-gradient-to-r ${activeStepData?.color} flex items-center justify-center mb-4 md:mb-0 md:mr-6 ${isDarkMode ? 'shadow-lg shadow-black/30' : 'shadow-md'}`}>
                 {activeStepData?.icon}
               </div>
               <div>
-                <h3 className={`text-2xl font-bold ${activeStepData?.textColor} mb-2`}>{activeStepData?.title}</h3>
-                <p className="text-slate-700 text-lg">{activeStepData?.description}</p>
+                <h3 className={`text-2xl font-bold ${
+                  isDarkMode ? darkModeColors.textColor : activeStepData?.textColor
+                } mb-2`}>{activeStepData?.title}</h3>
+                <p className={`${isDarkMode ? 'text-gray-300' : 'text-slate-700'} text-lg`}>{activeStepData?.description}</p>
               </div>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
-                <h4 className={`text-xl font-semibold ${activeStepData?.textColor} mb-4`}>Actividades Clave</h4>
+                <h4 className={`text-xl font-semibold ${
+                  isDarkMode ? darkModeColors.textColor : activeStepData?.textColor
+                } mb-4`}>Actividades Clave</h4>
                 <ul className="space-y-3">
                   {activeStepData?.details.map((detail, i) => (
                     <li key={i} className="flex items-start">
-                      <svg className={`w-5 h-5 ${activeStepData?.textColor} mr-2 mt-1 flex-shrink-0`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <svg className={`w-5 h-5 ${
+                        isDarkMode ? darkModeColors.textColor : activeStepData?.textColor
+                      } mr-2 mt-1 flex-shrink-0`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7"></path>
                       </svg>
-                      <span className="text-slate-700">{detail}</span>
+                      <span className={`${isDarkMode ? 'text-gray-300' : 'text-slate-700'}`}>{detail}</span>
                     </li>
                   ))}
                 </ul>
               </div>
-              
-              <div className="bg-white/70 p-6 rounded-xl shadow-inner">
-                <h4 className={`text-xl font-semibold ${activeStepData?.textColor} mb-4`}>Beneficios</h4>
+
+              <div className={`${isDarkMode ? 'bg-gray-800/70' : 'bg-white/70'} p-6 rounded-xl ${isDarkMode ? 'shadow-inner shadow-black/30' : 'shadow-inner'}`}>
+                <h4 className={`text-xl font-semibold ${
+                  isDarkMode ? darkModeColors.textColor : activeStepData?.textColor
+                } mb-4`}>Beneficios</h4>
                 <div className="space-y-4">
                   {activeStep === 'analysis' && (
                     <>
-                      <p className="text-slate-700">
-                        Un análisis profundo nos permite identificar oportunidades únicas y desarrollar 
+                      <p className={`${isDarkMode ? 'text-gray-300' : 'text-slate-700'} leading-relaxed`}>
+                        Un análisis profundo nos permite identificar oportunidades únicas y desarrollar
                         estrategias altamente efectivas basadas en datos reales, no en suposiciones.
                       </p>
-                      <p className="text-slate-700">
-                        Este enfoque ha permitido a nuestros clientes como CamiDevAI identificar nichos 
+                      <p className={`${isDarkMode ? 'text-gray-300' : 'text-slate-700'} leading-relaxed`}>
+                        Este enfoque ha permitido a nuestros clientes como CamiDevAI identificar nichos
                         específicos y oportunidades de crecimiento que otros habían pasado por alto.
                       </p>
                     </>
                   )}
-                  
+
                   {activeStep === 'strategy' && (
                     <>
-                      <p className="text-slate-700">
-                        Una estrategia bien diseñada proporciona una hoja de ruta clara para el crecimiento, 
+                      <p className={`${isDarkMode ? 'text-gray-300' : 'text-slate-700'} leading-relaxed`}>
+                        Una estrategia bien diseñada proporciona una hoja de ruta clara para el crecimiento,
                         optimizando recursos y maximizando el impacto de cada acción.
                       </p>
-                      <p className="text-slate-700">
-                        Nuestras estrategias personalizadas han permitido a clientes como CamiDevAI 
+                      <p className={`${isDarkMode ? 'text-gray-300' : 'text-slate-700'} leading-relaxed`}>
+                        Nuestras estrategias personalizadas han permitido a clientes como CamiDevAI
                         multiplicar su audiencia de forma exponencial en tiempo récord.
                       </p>
                     </>
                   )}
-                  
+
                   {activeStep === 'implementation' && (
                     <>
-                      <p className="text-slate-700">
-                        La implementación de soluciones tecnológicas avanzadas permite automatizar procesos, 
+                      <p className={`${isDarkMode ? 'text-gray-300' : 'text-slate-700'} leading-relaxed`}>
+                        La implementación de soluciones tecnológicas avanzadas permite automatizar procesos,
                         escalar operaciones y generar interacciones más relevantes con la audiencia.
                       </p>
-                      <p className="text-slate-700">
-                        Los agentes GPT y chatbots que desarrollamos para CamiDevAI permitieron una interacción 
+                      <p className={`${isDarkMode ? 'text-gray-300' : 'text-slate-700'} leading-relaxed`}>
+                        Los agentes GPT y chatbots que desarrollamos para CamiDevAI permitieron una interacción
                         constante y personalizada con su audiencia, aumentando significativamente el engagement.
                       </p>
                     </>
                   )}
-                  
+
                   {activeStep === 'optimization' && (
                     <>
-                      <p className="text-slate-700">
-                        La optimización continua basada en datos permite adaptar rápidamente las estrategias 
+                      <p className={`${isDarkMode ? 'text-gray-300' : 'text-slate-700'} leading-relaxed`}>
+                        La optimización continua basada en datos permite adaptar rápidamente las estrategias
                         a los cambios en el mercado y maximizar el retorno de inversión.
                       </p>
-                      <p className="text-slate-700">
-                        Nuestro enfoque de mejora continua permitió a CamiDevAI mantener un crecimiento 
+                      <p className={`${isDarkMode ? 'text-gray-300' : 'text-slate-700'} leading-relaxed`}>
+                        Nuestro enfoque de mejora continua permitió a CamiDevAI mantener un crecimiento
                         sostenido incluso cuando los algoritmos de las plataformas cambiaron.
                       </p>
                     </>
                   )}
-                  
+
                   {activeStep === 'scaling' && (
                     <>
-                      <p className="text-slate-700">
-                        El escalamiento estratégico permite multiplicar el impacto de las acciones exitosas, 
+                      <p className={`${isDarkMode ? 'text-gray-300' : 'text-slate-700'} leading-relaxed`}>
+                        El escalamiento estratégico permite multiplicar el impacto de las acciones exitosas,
                         expandiendo el alcance y acelerando el crecimiento de forma sostenible.
                       </p>
-                      <p className="text-slate-700">
-                        Aplicando técnicas de escalamiento, ayudamos a CamiDevAI a pasar de un crecimiento 
+                      <p className={`${isDarkMode ? 'text-gray-300' : 'text-slate-700'} leading-relaxed`}>
+                        Aplicando técnicas de escalamiento, ayudamos a CamiDevAI a pasar de un crecimiento
                         lineal a uno exponencial, alcanzando los 290,000 seguidores en tiempo récord.
                       </p>
                     </>

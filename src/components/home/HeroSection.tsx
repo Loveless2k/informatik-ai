@@ -19,15 +19,15 @@ const HeroSection = () => {
 
   // Lista de frases para mostrar
   const phrases = [
-    "Soluciones de IA",
-    "Machine Learning",
-    "Deep Learning",
-    "Computer Vision",
-    "NLP Avanzado"
+    "Formación In Company",
+    "Asesoría Estratégica",
+    "Desarrollo de Cursos",
+    "Automatizaciones",
+    "Desarrollo a Medida"
   ];
 
   // Referencia para cancelar el timeout
-  const typingTimeout = useRef(null);
+  const typingTimeout = useRef<NodeJS.Timeout | null>(null);
 
   // Obtener el tema actual
   let themeContext: { theme: string } = { theme: 'light' };
@@ -37,6 +37,43 @@ const HeroSection = () => {
     // Mantener el valor por defecto
   }
   const isDarkMode = themeContext.theme === 'dark';
+
+  // Efecto para el texto de escritura
+  useEffect(() => {
+    if (!isMounted) return;
+
+    const currentPhrase = phrases[phraseIndex];
+
+    // Lógica para escribir y borrar texto
+    if (!isDeleting && text === currentPhrase) {
+      // Pausa antes de empezar a borrar
+      typingTimeout.current = setTimeout(() => {
+        setIsDeleting(true);
+        setTypingSpeed(80); // Más rápido al borrar
+      }, 1500);
+    } else if (isDeleting && text === '') {
+      // Cambiar a la siguiente frase
+      setIsDeleting(false);
+      setPhraseIndex((phraseIndex + 1) % phrases.length);
+      setTypingSpeed(150); // Velocidad normal al escribir
+    } else {
+      // Escribir o borrar un carácter
+      typingTimeout.current = setTimeout(() => {
+        setText(prev => {
+          if (isDeleting) {
+            return prev.substring(0, prev.length - 1);
+          } else {
+            return currentPhrase.substring(0, prev.length + 1);
+          }
+        });
+      }, typingSpeed);
+    }
+
+    // Limpiar timeout al desmontar
+    return () => {
+      if (typingTimeout.current) clearTimeout(typingTimeout.current);
+    };
+  }, [isMounted, text, isDeleting, phraseIndex, phrases, typingSpeed]);
 
   // Controles de animación
   const controls = useAnimation();
@@ -176,12 +213,11 @@ const HeroSection = () => {
               initial="initial"
               animate="animate"
             />
-            <motion.div
-              className="flex flex-col items-center"
-              variants={fadeInUp}
-            >
+
+            <motion.div variants={fadeInUp}>
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-white w-full text-center mb-2">
-                Transformando los Negocios con
+                Impulsando negocios con inteligencia artificial
+
               </h1>
               <div className="relative min-h-[1.2em] text-5xl md:text-6xl lg:text-7xl font-extrabold w-full text-center">
                 <div className="inline-flex justify-center items-center relative">
@@ -214,19 +250,13 @@ const HeroSection = () => {
               onMouseLeave={() => setIsButtonHovered(false)}
             >
               <Button
-                href="/services"
-                variant="primary"
-                size="lg"
-                icon={
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                  </svg>
-                }
-                iconPosition="right"
-                className="rounded-lg shadow-lg bg-gradient-to-r from-[#00B4DB] to-[#0083B0] hover:from-[#00C4EB] hover:to-[#0093C0] text-white font-bold transform transition-transform duration-300 hover:scale-105"
-              >
-                Explorar Nuestros Servicios
-              </Button>
+
+              href="/services"
+              size="lg"
+              className="hover-lift hover-shadow bg-gradient-to-r from-[#0ea5e9] to-[#14b8a6] border-0 px-8 py-4 text-xl font-bold"
+            >
+              Explorar Nuestros Servicios
+            </Button>
             </motion.div>
 
             {/* Botón secundario con borde brillante - Alineado verticalmente */}
@@ -234,8 +264,8 @@ const HeroSection = () => {
               href="/contact"
               variant="outline"
               size="lg"
-              className="rounded-lg border-2 border-[#48D1CC] text-[#48D1CC] hover:bg-[#48D1CC]/20 transform transition-transform duration-300 hover:scale-105"
-            >
+
+              className="hover-lift hover-shadow bg-white text-[#0f172a] border-0 px-8 py-4 text-xl font-bold transition-all duration-300 hover:bg-opacity-90 hover:scale-105 shadow-md hover:shadow-lg">
               Contáctanos
             </Button>
           </motion.div>
@@ -260,3 +290,4 @@ const HeroSection = () => {
 };
 
 export default HeroSection;
+

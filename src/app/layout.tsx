@@ -1,6 +1,6 @@
 "use client";
 
-import { Geist, Geist_Mono, Inter } from "next/font/google";
+import { Geist, Geist_Mono, Inter, Outfit } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -9,6 +9,13 @@ import PageTransition from "@/components/ui/PageTransition";
 import { ThemeProvider } from "@/context/ThemeContext";
 
 // Load fonts
+const outfit = Outfit({
+  variable: "--font-outfit",
+  subsets: ["latin"],
+  display: 'swap',
+  weight: ['300', '400', '500', '600', '700', '800'],
+});
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -45,7 +52,7 @@ export default function RootLayout({
     <html lang="es" className="scroll-smooth">
       <ThemeProvider>
         <body
-          className={`${geistSans.variable} ${geistMono.variable} ${inter.variable} font-sans antialiased min-h-screen flex flex-col`}
+          className={`${outfit.variable} ${geistSans.variable} ${geistMono.variable} ${inter.variable} font-outfit antialiased min-h-screen flex flex-col`}
         >
           <Header />
           <main className="flex-grow">
