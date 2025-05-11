@@ -30,13 +30,13 @@ const HeroSection = () => {
   const typingTimeout = useRef<NodeJS.Timeout | null>(null);
 
   // Obtener el tema actual
-  let themeContext;
+  let themeContext: { theme: string } = { theme: 'light' };
   try {
     themeContext = useTheme();
   } catch (error) {
-    themeContext = { theme: 'light' };
+    // Mantener el valor por defecto
   }
-  const isDarkMode = themeContext?.theme === 'dark';
+  const isDarkMode = themeContext.theme === 'dark';
 
   // Efecto para el texto de escritura
   useEffect(() => {
@@ -84,6 +84,66 @@ const HeroSection = () => {
     controls.start('visible');
   }, [controls]);
 
+  // Efecto para el texto rotativo
+  useEffect(() => {
+    // Inicializar con la primera frase si el texto está vacío
+    if (text === '' && !isDeleting) {
+      setText(phrases[0].charAt(0));
+      return;
+    }
+
+    // Función para manejar el efecto de escritura
+    const handleTyping = () => {
+      // Obtener la frase actual
+      const currentPhrase = phrases[phraseIndex];
+
+      // Si está borrando, eliminar un carácter
+      if (isDeleting) {
+        setText((prevText) => prevText.substring(0, prevText.length - 1));
+        setTypingSpeed(50); // Más rápido al borrar
+      } else {
+        // Si está escribiendo, añadir un carácter
+        setText((prevText) => currentPhrase.substring(0, prevText.length + 1));
+        setTypingSpeed(150); // Más lento al escribir
+      }
+
+      // Lógica para cambiar entre escribir y borrar
+      if (!isDeleting && text === currentPhrase) {
+        // Pausa antes de empezar a borrar
+        setTimeout(() => {
+          setIsDeleting(true);
+        }, 2000);
+        return;
+      } else if (isDeleting && text === '') {
+        setIsDeleting(false);
+        // Cambiar a la siguiente frase
+        setPhraseIndex((prevIndex) => (prevIndex + 1) % phrases.length);
+        // No programar el siguiente paso aquí, esperar a que el efecto se ejecute de nuevo
+        return;
+      }
+
+      // Programar la próxima actualización
+      const nextTimeout = setTimeout(
+        handleTyping,
+        isDeleting ? 50 : text.length === 0 ? 500 : 150
+      );
+
+      // Guardar la referencia del timeout
+      typingTimeout.current = nextTimeout;
+    };
+
+    // Iniciar el efecto de escritura
+    const timeout = setTimeout(handleTyping, typingSpeed);
+    typingTimeout.current = timeout;
+
+    // Limpiar el timeout al desmontar o cuando cambian las dependencias
+    return () => {
+      if (typingTimeout.current) {
+        clearTimeout(typingTimeout.current);
+      }
+    };
+  }, [text, isDeleting, phraseIndex, phrases]);
+
   // Variantes de animación mejoradas
   const fadeInUp = {
     hidden: { opacity: 0, y: 40 },
@@ -122,24 +182,18 @@ const HeroSection = () => {
   };
 
   return (
-    <section className={`relative py-32 md:py-44 overflow-hidden code-lines-bg ${
-      isDarkMode
-        ? 'bg-gradient-to-br from-gray-950 via-gray-900 to-gray-800'
-        : 'bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700'
-    }`}>
+    <section className="relative py-32 md:py-44 overflow-hidden bg-gray-900">
       {/* Efecto de resplandor superior */}
-      <div className={`absolute top-0 left-1/4 w-1/2 h-1/3 rounded-full filter blur-[120px] ${
-        isDarkMode ? 'bg-blue-900/30' : 'bg-blue-800/20'
-      }`}></div>
+      <div className="absolute top-0 left-1/4 w-1/2 h-1/3 rounded-full filter blur-[120px] bg-[#00B4DB]/20"></div>
+
+      {/* Círculos decorativos */}
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full filter blur-[150px] bg-[#48D1CC]/15"></div>
 
       {/* Neural Network Background con opacidad ajustada */}
       <NeuralNetworkBackground />
 
       {/* Grid pattern overlay más sutil */}
-      <div className="absolute inset-0 bg-grid-white/[0.03] bg-[length:40px_40px]"></div>
-
-      {/* Efecto de escaneo sutil */}
-      <div className="scan-effect absolute inset-0 opacity-30"></div>
+      <div className="absolute inset-0 bg-grid-white/[0.03] bg-[length:30px_30px]"></div>
 
       {/* Content */}
       <motion.div
@@ -159,9 +213,11 @@ const HeroSection = () => {
               initial="initial"
               animate="animate"
             />
+
             <motion.div variants={fadeInUp}>
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-white w-full text-center mb-2">
                 Impulsando negocios con inteligencia artificial
+
               </h1>
               <div className="relative min-h-[1.2em] text-5xl md:text-6xl lg:text-7xl font-extrabold w-full text-center">
                 <div className="inline-flex justify-center items-center relative">
@@ -177,7 +233,7 @@ const HeroSection = () => {
           </div>
 
           <motion.p
-            className="text-xl md:text-2xl mb-14 text-gray-300 max-w-3xl mx-auto tech-text"
+            className="text-lg md:text-xl mt-8 mb-10 text-gray-300 max-w-4xl mx-auto"
             variants={fadeInUp}
           >
             Potenciando tu transformación digital con tecnologías de inteligencia artificial
@@ -194,6 +250,7 @@ const HeroSection = () => {
               onMouseLeave={() => setIsButtonHovered(false)}
             >
               <Button
+
               href="/services"
               size="lg"
               className="hover-lift hover-shadow bg-gradient-to-r from-[#0ea5e9] to-[#14b8a6] border-0 px-8 py-4 text-xl font-bold"
@@ -207,21 +264,26 @@ const HeroSection = () => {
               href="/contact"
               variant="outline"
               size="lg"
-              className="hover-lift hover-shadow bg-white text-[#0f172a] border-0 px-8 py-4 text-xl font-bold transition-all duration-300 hover:bg-opacity-90 hover:scale-105 shadow-md hover:shadow-lg"
-            >
+
+              className="hover-lift hover-shadow bg-white text-[#0f172a] border-0 px-8 py-4 text-xl font-bold transition-all duration-300 hover:bg-opacity-90 hover:scale-105 shadow-md hover:shadow-lg">
               Contáctanos
             </Button>
           </motion.div>
         </div>
 
         {/* Elementos decorativos mejorados */}
-        <div className="absolute bottom-10 left-10 w-20 h-20 border border-blue-500/20 rounded-full animate-pulse"
+        <div className="absolute bottom-10 left-10 w-20 h-20 border border-[#00B4DB]/30 rounded-full animate-pulse"
              style={{ animationDuration: '8s' }}></div>
-        <div className="absolute top-20 right-10 w-32 h-32 border border-teal-500/10 rounded-full animate-pulse"
+        <div className="absolute top-20 right-10 w-32 h-32 border border-[#48D1CC]/20 rounded-full animate-pulse"
              style={{ animationDuration: '12s' }}></div>
 
-        {/* Elementos de matriz adicionales */}
-        <div className="matrix-bg absolute inset-0 opacity-10"></div>
+        {/* Patrón de puntos decorativo */}
+        <div className="absolute -right-8 bottom-32 w-24 h-48 opacity-40">
+          <div className="w-2 h-2 rounded-full bg-[#00BFFF]/60 absolute top-0 left-0"></div>
+          <div className="w-2 h-2 rounded-full bg-[#48D1CC]/60 absolute top-8 left-8"></div>
+          <div className="w-2 h-2 rounded-full bg-[#00B4DB]/60 absolute top-16 left-0"></div>
+          <div className="w-2 h-2 rounded-full bg-[#48D1CC]/60 absolute top-24 left-8"></div>
+        </div>
       </motion.div>
     </section>
   );
