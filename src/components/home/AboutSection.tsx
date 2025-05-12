@@ -59,20 +59,23 @@ const AboutSection = () => {
   };
 
   return (
-    <section className="py-20 bg-white dark:bg-gray-900 relative overflow-hidden">
-      {/* Fondo minimalista */}
-      <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] bg-[length:60px_60px] opacity-[0.03] dark:opacity-[0.05]"></div>
+    <section className="py-20 bg-gradient-to-b from-white via-[#f8fdff] to-[#E0FBFF]/50 dark:bg-gradient-to-b dark:from-gray-900 dark:via-gray-800 dark:to-black relative overflow-hidden">
+      {/* Fondo minimalista con patrón más visible */}
+      <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] bg-[length:60px_60px] opacity-[0.05] dark:opacity-[0.07]"></div>
+      
+      {/* Línea decorativa superior */}
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#00B4DB]/30 to-transparent"></div>
+      
+      {/* Elementos decorativos minimalistas con mayor presencia */}
+      <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-br from-[#00B4DB]/10 to-transparent rounded-full blur-3xl"></div>
+      <div className="absolute bottom-0 left-0 w-1/4 h-1/4 bg-gradient-to-tr from-[#00B4DB]/10 to-transparent rounded-full blur-3xl"></div>
 
-      {/* Elementos decorativos minimalistas */}
-      <div className="absolute top-0 right-0 w-1/4 h-1/4 bg-gradient-to-br from-[#00B4DB]/5 to-transparent rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 left-0 w-1/5 h-1/5 bg-gradient-to-tr from-[#00B4DB]/5 to-transparent rounded-full blur-3xl"></div>
-
-      {/* Animated particles */}
+      {/* Animated particles con mayor intensidad */}
       <motion.div
-        className="absolute top-20 right-20 w-80 h-80 bg-[#00B4DB]/10 rounded-full filter blur-[100px]"
+        className="absolute top-20 right-20 w-96 h-96 bg-[#00B4DB]/15 rounded-full filter blur-[100px]"
         animate={{
           scale: [1, 1.2, 1],
-          opacity: [0.1, 0.2, 0.1]
+          opacity: [0.15, 0.25, 0.15]
         }}
         transition={{
           duration: 8,
@@ -81,10 +84,10 @@ const AboutSection = () => {
         }}
       />
       <motion.div
-        className="absolute bottom-10 left-10 w-96 h-96 bg-[#48D1CC]/10 rounded-full filter blur-[100px]"
+        className="absolute bottom-10 left-10 w-[30rem] h-[30rem] bg-[#48D1CC]/15 rounded-full filter blur-[100px]"
         animate={{
           scale: [1, 1.3, 1],
-          opacity: [0.05, 0.1, 0.05]
+          opacity: [0.1, 0.2, 0.1]
         }}
         transition={{
           duration: 12,
