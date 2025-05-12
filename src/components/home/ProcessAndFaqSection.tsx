@@ -36,7 +36,7 @@ const procesoSteps = [
 // Preguntas frecuentes
 const faqs = [
   {
-    question: '¿Qué tipos de empresas pueden beneficiarse de vuestros servicios?',
+    question: '¿Qué tipos de empresas pueden beneficiarse de nuestros servicios?',
     answer: 'Nuestras soluciones son adaptables a empresas de todos los tamaños y sectores. Trabajamos con startups, pymes y grandes corporaciones, personalizando cada proyecto según las necesidades específicas del cliente.'
   },
   {
@@ -44,11 +44,11 @@ const faqs = [
     answer: 'El tiempo de implementación varía según la complejidad del proyecto. Un proyecto típico puede tomar entre 2-6 meses desde la consulta inicial hasta la implementación completa, aunque ofrecemos soluciones más rápidas para necesidades urgentes.'
   },
   {
-    question: '¿Qué nivel de personalización ofrecéis en vuestras soluciones?',
+    question: '¿Qué nivel de personalización ofrecemos en nuestras soluciones?',
     answer: 'Todas nuestras soluciones son 100% personalizadas. Comenzamos entendiendo a fondo los desafíos y objetivos específicos de tu negocio, y desarrollamos soluciones a medida que se integran perfectamente con tus sistemas y procesos existentes.'
   },
   {
-    question: '¿Ofrecéis soporte después de la implementación?',
+    question: '¿Ofrecemos soporte después de la implementación?',
     answer: 'Sí, proporcionamos soporte continuo y mantenimiento para todas nuestras soluciones. Además, ofrecemos programas de formación para tu equipo y actualizaciones periódicas para mantener la tecnología al día con las últimas innovaciones.'
   },
   {

@@ -216,7 +216,7 @@ const HeroSection = () => {
 
             <motion.div variants={fadeInUp}>
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-white w-full text-center mb-2">
-                Impulsando negocios con inteligencia artificial
+                Impulsando negocios con Inteligencia Artificial
 
               </h1>
               <div className="relative min-h-[1.2em] text-5xl md:text-6xl lg:text-7xl font-extrabold w-full text-center">
@@ -236,8 +236,7 @@ const HeroSection = () => {
             className="text-lg md:text-xl mt-8 mb-10 text-gray-300 max-w-4xl mx-auto"
             variants={fadeInUp}
           >
-            Potenciando tu transformación digital con tecnologías de inteligencia artificial
-            y aprendizaje automático de vanguardia.
+            Domina la IA. Lidera la transformación empresarial.
           </motion.p>
 
           <motion.div

@@ -70,8 +70,9 @@ const DualToneText = ({
   };
 
   // Mapear los valores de letterSpacing a clases de Tailwind
-  const getTrackingClass = () => {
-    switch (letterSpacing) {
+  const getTrackingClass = (spacingValue?: string) => {
+    const valueToUse = spacingValue || letterSpacing;
+    switch (valueToUse) {
       case 'tighter':
         return 'tracking-tighter';
       case 'tight':
@@ -85,13 +86,13 @@ const DualToneText = ({
       case 'widest':
         return 'tracking-widest';
       default:
-        return `tracking-${letterSpacing}`;
+        return `tracking-${valueToUse}`;
     }
   };
 
   // Manejar el caso especial para letterSpacing que incluye breakpoints
   const getResponsiveTrackingClass = () => {
-    if (letterSpacing.includes(' ')) {
+    if (typeof letterSpacing === 'string' && letterSpacing.includes(' ')) {
       // Si contiene espacios, asumimos que es un valor responsive como "tighter sm:normal md:normal lg:wide"
       return letterSpacing.split(' ').map(spacing => {
         if (spacing.includes(':')) {
