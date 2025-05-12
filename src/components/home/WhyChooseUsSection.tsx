@@ -164,35 +164,114 @@ const WhyChooseUsSection = () => {
           className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-16"
           variants={containerVariants}
         >
-          {features.map((feature, index) => (
-            <motion.div
-              key={index}
-              className="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-sm hover:shadow-md transition-all group relative overflow-hidden"
-              variants={itemVariants}
-              whileHover={{ y: -5, transition: { duration: 0.2 } }}
-            >
-              {/* Decoración de fondo */}
-              <div className="absolute -right-16 -top-16 w-32 h-32 bg-gradient-to-br from-[#00B4DB]/10 to-[#48D1CC]/10 rounded-full opacity-10 group-hover:scale-150 transition-transform duration-500 dark:opacity-20"></div>
+          {features.map((feature, index) => {
+            // Colores para cada tarjeta
+            const colors = [
+              { primary: '#00B4DB', secondary: '#48D1CC', accent: '#E0FBFF' },
+              { primary: '#6366F1', secondary: '#8B5CF6', accent: '#EEF2FF' },
+              { primary: '#EC4899', secondary: '#F472B6', accent: '#FCE7F3' },
+              { primary: '#10B981', secondary: '#34D399', accent: '#ECFDF5' }
+            ];
+            const color = colors[index % colors.length];
+            
+            return (
+              <motion.div
+                key={index}
+                className="relative rounded-xl overflow-hidden group perspective-1000"
+                variants={itemVariants}
+                whileHover={{ scale: 1.02, transition: { duration: 0.3 } }}
+              >
+                {/* Tarjeta con borde gradiente */}
+                <div 
+                  className="p-[2px] rounded-xl relative z-10 bg-white dark:bg-gray-800"
+                  style={{
+                    background: `linear-gradient(to right, ${color.primary}, ${color.secondary})`,
+                  }}
+                >
+                  <div 
+                    className="bg-white dark:bg-gray-800 rounded-[10px] p-8 h-full relative z-10 overflow-hidden"
+                    style={{
+                      backgroundImage: `radial-gradient(circle at top right, ${color.accent}40 0%, transparent 70%)`,
+                    }}
+                  >
+                    {/* Efecto de brillo en esquina */}
+                    <div 
+                      className="absolute -top-10 -right-10 w-20 h-20 rounded-full blur-xl opacity-30 group-hover:opacity-60 transition-opacity duration-700"
+                      style={{ background: `linear-gradient(to right, ${color.primary}, ${color.secondary})` }}
+                    ></div>
+                    
+                    {/* Línea decorativa */}
+                    <div 
+                      className="absolute top-0 left-0 w-1/3 h-1 group-hover:w-full transition-all duration-700 ease-out"
+                      style={{ background: `linear-gradient(to right, ${color.primary}, ${color.secondary})` }}
+                    ></div>
+                    
+                    <div className="relative z-10">
+                      <div className="flex flex-col sm:flex-row sm:items-center mb-6 gap-4">
+                        {/* Contenedor de icono con efecto 3D */}
+                        <div 
+                          className="relative w-16 h-16 rounded-xl flex items-center justify-center flex-shrink-0 transform group-hover:rotate-y-180 transition-transform duration-700"
+                          style={{
+                            background: `linear-gradient(135deg, ${color.primary}, ${color.secondary})`,
+                            boxShadow: `0 10px 15px -3px ${color.primary}30, 0 4px 6px -4px ${color.primary}20`
+                          }}
+                        >
+                          <div className="text-white">
+                            {feature.icon}
+                          </div>
+                          
+                          {/* Partículas animadas alrededor del icono */}
+                          <div className="absolute -top-1 -right-1 w-3 h-3 rounded-full animate-ping" 
+                            style={{ background: color.secondary, animationDuration: '3s' }}></div>
+                          <div className="absolute -bottom-1 -left-1 w-2 h-2 rounded-full animate-ping" 
+                            style={{ background: color.primary, animationDuration: '2.5s', animationDelay: '0.5s' }}></div>
+                        </div>
+                        
+                        <h3 className="text-2xl font-bold text-gray-800 dark:text-white group-hover:translate-x-2 transition-transform duration-300">
+                          {feature.title}
+                        </h3>
+                      </div>
 
-              <div className="relative z-10">
-                <div className="flex items-center mb-6">
-                  <div className={`w-16 h-16 rounded-full flex items-center justify-center mr-4 flex-shrink-0 ${
-                    index === 0 ? 'bg-gradient-to-r from-[#00B4DB] to-[#48D1CC]' : 
-                    index === 1 ? 'bg-gradient-to-r from-[#6366F1] to-[#8B5CF6]' : 
-                    index === 2 ? 'bg-gradient-to-r from-[#EC4899] to-[#F472B6]' : 
-                    'bg-gradient-to-r from-[#10B981] to-[#34D399]'
-                  }`}>
-                    <div className="text-white">
-                      {feature.icon}
+                      <p className="text-gray-600 dark:text-gray-300 leading-relaxed relative">
+                        {feature.description}
+                        
+                        {/* Línea decorativa bajo el texto */}
+                        <span 
+                          className="absolute -bottom-4 left-0 w-0 h-0.5 group-hover:w-1/3 transition-all duration-700 delay-300 ease-out opacity-0 group-hover:opacity-100"
+                          style={{ background: `linear-gradient(to right, ${color.primary}, transparent)` }}
+                        ></span>
+                      </p>
+                      
+                      {/* Botón "Saber más" que aparece en hover */}
+                      <div className="mt-8 overflow-hidden h-0 group-hover:h-10 transition-all duration-500 ease-out">
+                        <button 
+                          className="flex items-center gap-2 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-300"
+                          style={{ color: color.primary }}
+                        >
+                          <span>Saber más</span>
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                          </svg>
+                        </button>
+                      </div>
                     </div>
+                    
+                    {/* Decoración de fondo */}
+                    <div 
+                      className="absolute bottom-0 right-0 w-32 h-32 rounded-full opacity-5 group-hover:opacity-10 group-hover:scale-150 transition-all duration-700"
+                      style={{ background: `radial-gradient(circle, ${color.primary}, transparent)` }}
+                    ></div>
                   </div>
-                  <h3 className="text-2xl font-bold text-gray-800 dark:text-white">{feature.title}</h3>
                 </div>
-
-                <p className="text-gray-600 dark:text-gray-300 leading-relaxed">{feature.description}</p>
-              </div>
-            </motion.div>
-          ))}
+                
+                {/* Efecto de sombra flotante */}
+                <div 
+                  className="absolute -inset-0.5 rounded-xl blur-md opacity-0 group-hover:opacity-30 transition-opacity duration-700 -z-10"
+                  style={{ background: `linear-gradient(to right, ${color.primary}, ${color.secondary})` }}
+                ></div>
+              </motion.div>
+            );
+          })}
         </motion.div>
 
         {/* Línea decorativa */}

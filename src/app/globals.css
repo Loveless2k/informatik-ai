@@ -638,3 +638,27 @@ p {
   stroke-dashoffset: 1000;
   animation: draw-line 8s ease-in-out 1.5s forwards;
 }
+
+/* Estilos para efectos 3D */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+/* Animación de brillo */
+@keyframes shine {
+  0% {
+    background-position: -100% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-shine {
+  animation: shine 3s linear infinite;
+  background-size: 200% 100%;
+}
