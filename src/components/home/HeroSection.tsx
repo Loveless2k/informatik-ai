@@ -221,8 +221,8 @@ const HeroSection = () => {
               </h1>
               <div className="relative min-h-[1.2em] text-5xl md:text-6xl lg:text-7xl font-extrabold w-full text-center">
                 <div className="inline-flex justify-center items-center relative">
-                  <span className="bg-gradient-to-r from-[#00B4DB] via-[#48D1CC] to-[#00BFFF] text-transparent bg-clip-text">
-                    {text || ""}
+                  <span className="bg-gradient-to-r from-[#00B4DB] via-[#48D1CC] to-[#00BFFF] text-transparent bg-clip-text min-w-[1em] h-[1.2em]">
+                    {text || "\u00A0"}
                   </span>
                   <span
                     className="inline-block h-[1em] border-r-4 border-[#48D1CC] animate-blink ml-1"
