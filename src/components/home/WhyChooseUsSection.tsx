@@ -100,7 +100,7 @@ const WhyChooseUsSection = () => {
   };
 
   return (
-    <section className="py-20 bg-gradient-to-b from-[#E0FBFF]/50 via-[#f0f9fb] to-white dark:bg-gradient-to-b dark:from-black dark:via-gray-900 dark:to-gray-900 relative overflow-hidden">
+    <section className="py-20 bg-gradient-to-b from-[#E0FBFF]/50 via-[#f0f9fb] to-[#f8fdff] dark:bg-gradient-to-b dark:from-black dark:via-gray-900 dark:to-gray-900 relative overflow-hidden">
       {/* Fondo con patrón alternativo */}
       <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] bg-[length:40px_40px] opacity-[0.04] dark:opacity-[0.06] rotate-[2deg]"></div>
       
@@ -110,6 +110,9 @@ const WhyChooseUsSection = () => {
       {/* Elementos decorativos con posiciones distintas */}
       <div className="absolute top-0 left-0 w-1/3 h-1/3 bg-gradient-to-bl from-[#48D1CC]/10 to-transparent rounded-full blur-3xl"></div>
       <div className="absolute bottom-0 right-0 w-1/4 h-1/4 bg-gradient-to-tl from-[#00B4DB]/10 to-transparent rounded-full blur-3xl"></div>
+      
+      {/* Nuevo elemento decorativo para evitar el fondo completamente blanco */}
+      <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-[#E0FBFF]/30 to-transparent"></div>
 
       {/* Animated particles con colores ligeramente distintos */}
       <motion.div
@@ -173,7 +176,12 @@ const WhyChooseUsSection = () => {
 
               <div className="relative z-10">
                 <div className="flex items-center mb-6">
-                  <div className="w-16 h-16 rounded-full bg-gradient-to-r from-[#00B4DB] to-[#48D1CC] flex items-center justify-center mr-4 flex-shrink-0">
+                  <div className={`w-16 h-16 rounded-full flex items-center justify-center mr-4 flex-shrink-0 ${
+                    index === 0 ? 'bg-gradient-to-r from-[#00B4DB] to-[#48D1CC]' : 
+                    index === 1 ? 'bg-gradient-to-r from-[#6366F1] to-[#8B5CF6]' : 
+                    index === 2 ? 'bg-gradient-to-r from-[#EC4899] to-[#F472B6]' : 
+                    'bg-gradient-to-r from-[#10B981] to-[#34D399]'
+                  }`}>
                     <div className="text-white">
                       {feature.icon}
                     </div>
