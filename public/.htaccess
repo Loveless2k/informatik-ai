@@ -1,0 +1,64 @@
+# Enable rewrite engine
+RewriteEngine On
+
+# Set the base directory
+RewriteBase /
+
+# If the request is for a real file or directory, skip the rewrite rules
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# If the request is for a static asset, skip the rewrite rules
+RewriteRule ^(static|images|assets|favicon\.ico|robots\.txt|sitemap\.xml)($|/) - [L]
+
+# Rewrite all other requests to the index.html file
+RewriteRule ^ index.html [L]
+
+# Set security headers
+<IfModule mod_headers.c>
+  # Protect against XSS attacks
+  Header set X-XSS-Protection "1; mode=block"
+  
+  # Prevent MIME-sniffing
+  Header set X-Content-Type-Options "nosniff"
+  
+  # Referrer policy
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  
+  # Content Security Policy
+  Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self';"
+  
+  # Cache control for static assets
+  <FilesMatch "\.(ico|pdf|jpg|jpeg|png|webp|gif|svg|js|css|woff|woff2|ttf|eot)$">
+    Header set Cache-Control "max-age=31536000, public"
+  </FilesMatch>
+  
+  # Cache control for HTML and data files
+  <FilesMatch "\.(html|htm|xml|json|txt)$">
+    Header set Cache-Control "max-age=3600, public, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+# Enable GZIP compression
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript application/json
+  BrowserMatch ^Mozilla/4 gzip-only-text/html
+  BrowserMatch ^Mozilla/4\.0[678] no-gzip
+  BrowserMatch \bMSIE !no-gzip !gzip-only-text/html
+</IfModule>
+
+# Set default character set
+AddDefaultCharset UTF-8
+
+# Set default language
+DefaultLanguage es-ES
+
+# Prevent directory listing
+Options -Indexes
+
+# Prevent access to hidden files
+<FilesMatch "^\.">
+  Order allow,deny
+  Deny from all
+</FilesMatch>

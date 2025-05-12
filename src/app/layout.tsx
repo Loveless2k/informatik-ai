@@ -50,6 +50,10 @@ export default function RootLayout({
 
   return (
     <html lang="es" className="scroll-smooth">
+      <head>
+        {/* Add static routing script for better client-side navigation in static export */}
+        <script src="/static-routing.js" defer></script>
+      </head>
       <ThemeProvider>
         <body
           className={`${outfit.variable} ${geistSans.variable} ${geistMono.variable} ${inter.variable} font-outfit antialiased min-h-screen flex flex-col`}

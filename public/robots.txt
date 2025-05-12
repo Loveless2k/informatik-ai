@@ -1,0 +1,11 @@
+# Allow all web crawlers
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://informatik-ai.com/sitemap.xml
+
+# Disallow specific paths
+Disallow: /theme-components
+Disallow: /theme-example
+Disallow: /logo-comparison
