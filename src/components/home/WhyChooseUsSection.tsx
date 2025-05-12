@@ -177,21 +177,22 @@ const WhyChooseUsSection = () => {
             return (
               <motion.div
                 key={index}
-                className="relative rounded-xl overflow-hidden group perspective-1000"
+                className="relative rounded-xl overflow-hidden group perspective-1000 h-full"
                 variants={itemVariants}
                 whileHover={{ scale: 1.02, transition: { duration: 0.3 } }}
               >
                 {/* Tarjeta con borde gradiente */}
                 <div 
-                  className="p-[2px] rounded-xl relative z-10 bg-white dark:bg-gray-800"
+                  className="p-[2px] rounded-xl relative z-10 bg-white dark:bg-gray-800 h-full"
                   style={{
                     background: `linear-gradient(to right, ${color.primary}, ${color.secondary})`,
                   }}
                 >
                   <div 
-                    className="bg-white dark:bg-gray-800 rounded-[10px] p-8 h-full relative z-10 overflow-hidden"
+                    className="bg-white dark:bg-gray-800 rounded-[10px] p-8 flex flex-col h-full relative z-10 overflow-hidden"
                     style={{
                       backgroundImage: `radial-gradient(circle at top right, ${color.accent}40 0%, transparent 70%)`,
+                      minHeight: '320px', // Altura mínima estandarizada
                     }}
                   >
                     {/* Efecto de brillo en esquina */}
@@ -206,17 +207,25 @@ const WhyChooseUsSection = () => {
                       style={{ background: `linear-gradient(to right, ${color.primary}, ${color.secondary})` }}
                     ></div>
                     
-                    <div className="relative z-10">
+                    <div className="relative z-10 flex flex-col h-full">
                       <div className="flex flex-col sm:flex-row sm:items-center mb-6 gap-4">
-                        {/* Contenedor de icono con efecto 3D */}
+                        {/* Contenedor de icono con efecto 3D - CORREGIDO */}
                         <div 
-                          className="relative w-16 h-16 rounded-xl flex items-center justify-center flex-shrink-0 transform group-hover:rotate-y-180 transition-transform duration-700"
+                          className="relative w-16 h-16 rounded-xl flex items-center justify-center flex-shrink-0 transition-transform duration-700"
                           style={{
                             background: `linear-gradient(135deg, ${color.primary}, ${color.secondary})`,
-                            boxShadow: `0 10px 15px -3px ${color.primary}30, 0 4px 6px -4px ${color.primary}20`
+                            boxShadow: `0 10px 15px -3px ${color.primary}30, 0 4px 6px -4px ${color.primary}20`,
+                            transform: `perspective(1000px) rotateY(${0}deg)`,
+                            transformStyle: 'preserve-3d'
+                          }}
+                          onMouseEnter={(e) => {
+                            e.currentTarget.style.transform = 'perspective(1000px) rotateY(180deg)';
+                          }}
+                          onMouseLeave={(e) => {
+                            e.currentTarget.style.transform = 'perspective(1000px) rotateY(0deg)';
                           }}
                         >
-                          <div className="text-white">
+                          <div className="text-white" style={{ backfaceVisibility: 'hidden' }}>
                             {feature.icon}
                           </div>
                           
@@ -232,24 +241,26 @@ const WhyChooseUsSection = () => {
                         </h3>
                       </div>
 
-                      <p className="text-gray-600 dark:text-gray-300 leading-relaxed relative">
-                        {feature.description}
-                        
-                        {/* Línea decorativa bajo el texto */}
-                        <span 
-                          className="absolute -bottom-4 left-0 w-0 h-0.5 group-hover:w-1/3 transition-all duration-700 delay-300 ease-out opacity-0 group-hover:opacity-100"
-                          style={{ background: `linear-gradient(to right, ${color.primary}, transparent)` }}
-                        ></span>
-                      </p>
+                      <div className="flex-grow">
+                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed relative">
+                          {feature.description}
+                          
+                          {/* Línea decorativa bajo el texto */}
+                          <span 
+                            className="absolute -bottom-4 left-0 w-0 h-0.5 group-hover:w-1/3 transition-all duration-700 delay-300 ease-out opacity-0 group-hover:opacity-100"
+                            style={{ background: `linear-gradient(to right, ${color.primary}, transparent)` }}
+                          ></span>
+                        </p>
+                      </div>
                       
-                      {/* Botón "Saber más" que aparece en hover */}
-                      <div className="mt-8 overflow-hidden h-0 group-hover:h-10 transition-all duration-500 ease-out">
+                      {/* Botón "Saber más" - CORREGIDO */}
+                      <div className="mt-auto pt-6">
                         <button 
-                          className="flex items-center gap-2 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-300"
+                          className={`flex items-center gap-2 text-sm font-medium transition-all duration-500 ease-out opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0`}
                           style={{ color: color.primary }}
                         >
                           <span>Saber más</span>
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                           </svg>
                         </button>

@@ -644,10 +644,6 @@ p {
   perspective: 1000px;
 }
 
-.rotate-y-180 {
-  transform: rotateY(180deg);
-}
-
 /* Animación de brillo */
 @keyframes shine {
   0% {
