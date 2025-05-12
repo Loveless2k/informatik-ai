@@ -145,7 +145,11 @@ const ServicesList = () => {
   };
 
   return (
-    <section id="servicios" className={`py-20 md:py-28 relative overflow-hidden ${isDarkMode ? 'bg-gradient-to-b from-gray-950 via-gray-900 to-gray-800' : 'bg-gradient-to-b from-white via-gray-50 to-gray-100'}`}>
+    <section id="servicios" className={`py-20 md:py-28 relative overflow-hidden ${
+      isDarkMode 
+        ? 'bg-gradient-to-b from-gray-950 via-gray-900 to-gray-800' 
+        : 'bg-gradient-to-b from-blue-50 via-blue-50/70 to-slate-100'
+    }`}>
       <div className={`absolute inset-0 bg-[url('/images/grid-pattern.svg')] bg-[length:40px_40px] ${isDarkMode ? 'opacity-[0.05]' : 'opacity-[0.1]'}`}></div>
       <motion.div
         ref={sectionRef}
@@ -173,25 +177,89 @@ const ServicesList = () => {
               variants={cardVariants}
               whileHover="hover"
               whileTap="tap"
-              className={`${isDarkMode ? 'bg-gray-800/90 border-gray-700/50' : 'bg-white/95 border-gray-200/70'} p-6 rounded-xl shadow-md border transition-all group relative overflow-hidden`}
+              className={`${
+                isDarkMode 
+                  ? 'bg-gray-800/90 border-gray-700/50' 
+                  : 'bg-white/95 border-gray-200/70'
+              } p-6 rounded-xl shadow-md border transition-all group relative overflow-hidden`}
             >
               <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-14 h-14 rounded-lg bg-gradient-to-br from-blue-700 to-blue-900 flex items-center justify-center border border-blue-800/30">
-                  {service.icon}
-                </div>
+                {isDarkMode ? (
+                  // Versión oscura - Iconos con colores más vivos
+                  <div className={`flex-shrink-0 w-14 h-14 rounded-lg ${
+                    index === 0 ? 'bg-gradient-to-br from-teal-500/30 to-cyan-500/30 border-teal-500/30' :
+                    index === 1 ? 'bg-gradient-to-br from-blue-500/30 to-indigo-500/30 border-blue-500/30' :
+                    index === 2 ? 'bg-gradient-to-br from-purple-500/30 to-pink-500/30 border-purple-500/30' :
+                    index === 3 ? 'bg-gradient-to-br from-indigo-500/30 to-purple-500/30 border-indigo-500/30' :
+                    'bg-gradient-to-br from-cyan-500/30 to-blue-500/30 border-cyan-500/30'
+                  } flex items-center justify-center border`}>
+                    <svg className={`w-8 h-8 ${
+                      index === 0 ? 'text-teal-400' :
+                      index === 1 ? 'text-blue-400' :
+                      index === 2 ? 'text-purple-400' :
+                      index === 3 ? 'text-indigo-400' :
+                      'text-cyan-400'
+                    }`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      {service.icon.props.children.props.children}
+                    </svg>
+                  </div>
+                ) : (
+                  // Versión clara - Iconos con colores más vivos
+                  <div className={`flex-shrink-0 w-14 h-14 rounded-lg ${
+                    index === 0 ? 'bg-gradient-to-br from-teal-100 to-teal-200 border-teal-200' :
+                    index === 1 ? 'bg-gradient-to-br from-blue-100 to-blue-200 border-blue-200' :
+                    index === 2 ? 'bg-gradient-to-br from-purple-100 to-purple-200 border-purple-200' :
+                    index === 3 ? 'bg-gradient-to-br from-indigo-100 to-indigo-200 border-indigo-200' :
+                    'bg-gradient-to-br from-cyan-100 to-cyan-200 border-cyan-200'
+                  } flex items-center justify-center border`}>
+                    <svg className={`w-8 h-8 ${
+                      index === 0 ? 'text-teal-600' :
+                      index === 1 ? 'text-blue-600' :
+                      index === 2 ? 'text-purple-600' :
+                      index === 3 ? 'text-indigo-600' :
+                      'text-cyan-600'
+                    }`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      {service.icon.props.children.props.children}
+                    </svg>
+                  </div>
+                )}
                 <div>
                   <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-1`}>{service.title}</h3>
                   <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} text-sm leading-relaxed`}>{service.description}</p>
                 </div>
               </div>
               <div className="mt-4">
-                <Button
-                  href={service.href}
-                  variant="outline"
-                  className="text-sm px-4 py-2 rounded-full border-blue-700/30 text-blue-300 hover:bg-blue-900/30"
-                >
-                  Ver más detalles
-                </Button>
+                {isDarkMode ? (
+                  // Botones versión oscura con colores más vivos
+                  <Button
+                    href={service.href}
+                    variant="outline"
+                    className={`text-sm px-4 py-2 rounded-full ${
+                      index === 0 ? 'border-teal-500/30 text-teal-300 hover:bg-teal-900/30' :
+                      index === 1 ? 'border-blue-500/30 text-blue-300 hover:bg-blue-900/30' :
+                      index === 2 ? 'border-purple-500/30 text-purple-300 hover:bg-purple-900/30' :
+                      index === 3 ? 'border-indigo-500/30 text-indigo-300 hover:bg-indigo-900/30' :
+                      'border-cyan-500/30 text-cyan-300 hover:bg-cyan-900/30'
+                    }`}
+                  >
+                    Ver más detalles
+                  </Button>
+                ) : (
+                  // Botones versión clara con colores más vivos
+                  <Button
+                    href={service.href}
+                    variant="outline"
+                    className={`text-sm px-4 py-2 rounded-full ${
+                      index === 0 ? 'border-teal-500 text-teal-700 hover:bg-teal-50' :
+                      index === 1 ? 'border-blue-500 text-blue-700 hover:bg-blue-50' :
+                      index === 2 ? 'border-purple-500 text-purple-700 hover:bg-purple-50' :
+                      index === 3 ? 'border-indigo-500 text-indigo-700 hover:bg-indigo-50' :
+                      'border-cyan-500 text-cyan-700 hover:bg-cyan-50'
+                    }`}
+                  >
+                    Ver más detalles
+                  </Button>
+                )}
               </div>
             </motion.div>
           ))}
