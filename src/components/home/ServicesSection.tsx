@@ -1,10 +1,70 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, ReactNode } from 'react';
 import { motion, useInView } from 'framer-motion';
 import Button from '@/components/ui/Button';
 import SectionHeading from '@/components/ui/SectionHeading';
 import { useTheme } from '@/context/ThemeContext';
+
+// Helper function to safely extract SVG path from icon structure
+const extractSvgPath = (icon: ReactNode): ReactNode => {
+  try {
+    // Verificar si el icono es válido
+    if (!icon || typeof icon !== 'object') {
+      return null;
+    }
+
+    // Verificar si el icono tiene la propiedad 'props'
+    if (!('props' in icon)) {
+      return null;
+    }
+
+    // Usar type assertion para acceder a props de manera segura
+    const iconProps = (icon as { props: unknown }).props;
+
+    // Verificar si props es un objeto
+    if (!iconProps || typeof iconProps !== 'object') {
+      return null;
+    }
+
+    // Verificar si props tiene la propiedad 'children'
+    if (!('children' in iconProps)) {
+      return null;
+    }
+
+    // Acceder a children de manera segura
+    const iconChildren = (iconProps as { children: unknown }).children;
+
+    // Verificar si children es un objeto con props
+    if (!iconChildren || typeof iconChildren !== 'object') {
+      return null;
+    }
+
+    // Verificar si children tiene la propiedad 'props'
+    if (!('props' in iconChildren)) {
+      return null;
+    }
+
+    // Acceder a props de children de manera segura
+    const svgProps = (iconChildren as { props: unknown }).props;
+
+    // Verificar si svgProps es un objeto
+    if (!svgProps || typeof svgProps !== 'object') {
+      return null;
+    }
+
+    // Verificar si svgProps tiene la propiedad 'children'
+    if (!('children' in svgProps)) {
+      return null;
+    }
+
+    // Devolver el contenido del SVG (el path)
+    return (svgProps as { children: ReactNode }).children;
+  } catch (error) {
+    console.error('Error extracting SVG path:', error);
+    return null;
+  }
+};
 
 interface Servicio {
   title: string;
@@ -146,8 +206,8 @@ const ServicesList = () => {
 
   return (
     <section id="servicios" className={`py-20 md:py-28 relative overflow-hidden ${
-      isDarkMode 
-        ? 'bg-gradient-to-b from-gray-950 via-gray-900 to-gray-800' 
+      isDarkMode
+        ? 'bg-gradient-to-b from-gray-950 via-gray-900 to-gray-800'
         : 'bg-gradient-to-b from-blue-50 via-blue-50/70 to-slate-100'
     }`}>
       <div className={`absolute inset-0 bg-[url('/images/grid-pattern.svg')] bg-[length:40px_40px] ${isDarkMode ? 'opacity-[0.05]' : 'opacity-[0.1]'}`}></div>
@@ -168,7 +228,7 @@ const ServicesList = () => {
         </motion.div>
 
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
           variants={containerVariants}
         >
           {services.map((service, index) => (
@@ -178,54 +238,54 @@ const ServicesList = () => {
               whileHover="hover"
               whileTap="tap"
               className={`${
-                isDarkMode 
-                  ? 'bg-gray-800/90 border-gray-700/50' 
+                isDarkMode
+                  ? 'bg-gray-800/90 border-gray-700/50'
                   : 'bg-white/95 border-gray-200/70'
               } p-6 rounded-xl shadow-md border transition-all group relative overflow-hidden`}
             >
-              <div className="flex items-start gap-4">
+              <div className="flex flex-col sm:flex-row sm:items-start gap-4">
                 {isDarkMode ? (
                   // Versión oscura - Iconos con colores más vivos
-                  <div className={`flex-shrink-0 w-14 h-14 rounded-lg ${
+                  <div className={`flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-lg ${
                     index === 0 ? 'bg-gradient-to-br from-teal-500/30 to-cyan-500/30 border-teal-500/30' :
                     index === 1 ? 'bg-gradient-to-br from-blue-500/30 to-indigo-500/30 border-blue-500/30' :
                     index === 2 ? 'bg-gradient-to-br from-purple-500/30 to-pink-500/30 border-purple-500/30' :
                     index === 3 ? 'bg-gradient-to-br from-indigo-500/30 to-purple-500/30 border-indigo-500/30' :
                     'bg-gradient-to-br from-cyan-500/30 to-blue-500/30 border-cyan-500/30'
-                  } flex items-center justify-center border`}>
-                    <svg className={`w-8 h-8 ${
+                  } flex items-center justify-center border mx-auto sm:mx-0`}>
+                    <svg className={`w-6 h-6 sm:w-8 sm:h-8 ${
                       index === 0 ? 'text-teal-400' :
                       index === 1 ? 'text-blue-400' :
                       index === 2 ? 'text-purple-400' :
                       index === 3 ? 'text-indigo-400' :
                       'text-cyan-400'
                     }`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      {service.icon.props.children.props.children}
+                      {extractSvgPath(service.icon)}
                     </svg>
                   </div>
                 ) : (
                   // Versión clara - Iconos con colores más vivos
-                  <div className={`flex-shrink-0 w-14 h-14 rounded-lg ${
+                  <div className={`flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-lg ${
                     index === 0 ? 'bg-gradient-to-br from-teal-100 to-teal-200 border-teal-200' :
                     index === 1 ? 'bg-gradient-to-br from-blue-100 to-blue-200 border-blue-200' :
                     index === 2 ? 'bg-gradient-to-br from-purple-100 to-purple-200 border-purple-200' :
                     index === 3 ? 'bg-gradient-to-br from-indigo-100 to-indigo-200 border-indigo-200' :
                     'bg-gradient-to-br from-cyan-100 to-cyan-200 border-cyan-200'
-                  } flex items-center justify-center border`}>
-                    <svg className={`w-8 h-8 ${
+                  } flex items-center justify-center border mx-auto sm:mx-0`}>
+                    <svg className={`w-6 h-6 sm:w-8 sm:h-8 ${
                       index === 0 ? 'text-teal-600' :
                       index === 1 ? 'text-blue-600' :
                       index === 2 ? 'text-purple-600' :
                       index === 3 ? 'text-indigo-600' :
                       'text-cyan-600'
                     }`} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                      {service.icon.props.children.props.children}
+                      {extractSvgPath(service.icon)}
                     </svg>
                   </div>
                 )}
                 <div>
-                  <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-1`}>{service.title}</h3>
-                  <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} text-sm leading-relaxed`}>{service.description}</p>
+                  <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-1 text-center sm:text-left`}>{service.title}</h3>
+                  <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} text-sm leading-relaxed text-center sm:text-left`}>{service.description}</p>
                 </div>
               </div>
               <div className="mt-4">

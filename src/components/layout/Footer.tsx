@@ -28,9 +28,9 @@ const Footer = () => {
       <div className="absolute inset-0 bg-grid-white/[0.03] bg-[length:30px_30px]"></div>
 
       <div className="container relative z-10 mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
           {/* Company Info */}
-          <div className="col-span-1 lg:col-span-1">
+          <div className="col-span-1 lg:col-span-1 text-center sm:text-left">
             <div className="flex items-center mb-4">
               <div className={`w-10 h-10 rounded-lg flex items-center justify-center text-white font-bold text-xl mr-2 shadow-md ${
                 isDarkMode
@@ -88,7 +88,7 @@ const Footer = () => {
           </div>
 
           {/* Quick Links */}
-          <div className="col-span-1">
+          <div className="col-span-1 text-center sm:text-left">
             <h3 className={`text-lg font-semibold mb-5 ${
               isDarkMode ? 'text-[#00F0FF]' : 'text-white'
             }`}>Enlaces Rápidos</h3>
@@ -114,26 +114,54 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link href="/services" className="text-gray-300 hover:text-white transition-colors flex items-center group">
-                  <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                <Link href="/services" className={`hover:text-white transition-colors flex items-center group ${
+                  isDarkMode ? 'text-gray-300' : 'text-[#E0FBFF]'
+                }`}>
+                  <span className={`w-1.5 h-1.5 rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity ${
+                    isDarkMode ? 'bg-[#00F0FF]' : 'bg-[#E0FBFF]'
+                  }`}></span>
                   Servicios
                 </Link>
               </li>
               <li>
-                <Link href="/case-studies" className="text-gray-300 hover:text-white transition-colors flex items-center group">
-                  <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                <Link href="/success-cases" className={`hover:text-white transition-colors flex items-center group ${
+                  isDarkMode ? 'text-gray-300' : 'text-[#E0FBFF]'
+                }`}>
+                  <span className={`w-1.5 h-1.5 rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity ${
+                    isDarkMode ? 'bg-[#00F0FF]' : 'bg-[#E0FBFF]'
+                  }`}></span>
                   Casos de Éxito
                 </Link>
               </li>
+              {/* Temporalmente oculto
               <li>
-                <Link href="/blog" className="text-gray-300 hover:text-white transition-colors flex items-center group">
-                  <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                <Link href="/blog" className={`hover:text-white transition-colors flex items-center group ${
+                  isDarkMode ? 'text-gray-300' : 'text-[#E0FBFF]'
+                }`}>
+                  <span className={`w-1.5 h-1.5 rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity ${
+                    isDarkMode ? 'bg-[#00F0FF]' : 'bg-[#E0FBFF]'
+                  }`}></span>
                   Blog
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="text-gray-300 hover:text-white transition-colors flex items-center group">
-                  <span className="w-1.5 h-1.5 bg-blue-500 rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                <Link href="/resources" className={`hover:text-white transition-colors flex items-center group ${
+                  isDarkMode ? 'text-gray-300' : 'text-[#E0FBFF]'
+                }`}>
+                  <span className={`w-1.5 h-1.5 rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity ${
+                    isDarkMode ? 'bg-[#00F0FF]' : 'bg-[#E0FBFF]'
+                  }`}></span>
+                  Recursos
+                </Link>
+              </li>
+              */}
+              <li>
+                <Link href="/contact" className={`hover:text-white transition-colors flex items-center group ${
+                  isDarkMode ? 'text-gray-300' : 'text-[#E0FBFF]'
+                }`}>
+                  <span className={`w-1.5 h-1.5 rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity ${
+                    isDarkMode ? 'bg-[#00F0FF]' : 'bg-[#E0FBFF]'
+                  }`}></span>
                   Contacto
                 </Link>
               </li>
@@ -141,7 +169,7 @@ const Footer = () => {
           </div>
 
           {/* Services */}
-          <div className="col-span-1">
+          <div className="col-span-1 text-center sm:text-left">
             <h3 className={`text-lg font-semibold mb-5 ${
               isDarkMode ? 'text-[#00F0FF]' : 'text-white'
             }`}>Nuestros Servicios</h3>
@@ -180,7 +208,7 @@ const Footer = () => {
           </div>
 
           {/* Contact Info */}
-          <div className="col-span-1">
+          <div className="col-span-1 text-center sm:text-left">
             <h3 className={`text-lg font-semibold mb-5 ${
               isDarkMode ? 'text-[#00F0FF]' : 'text-white'
             }`}>Contáctanos</h3>
@@ -214,7 +242,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className={`mt-12 pt-8 flex flex-col md:flex-row justify-between items-center border-t ${
+        <div className={`mt-10 sm:mt-12 pt-6 sm:pt-8 flex flex-col sm:flex-row justify-between items-center border-t ${
           isDarkMode ? 'border-gray-800' : 'border-[#006A70]'
         }`}>
           <p className={`text-sm ${
@@ -222,7 +250,7 @@ const Footer = () => {
           }`}>
             &copy; {currentYear} Informatik-AI. Todos los derechos reservados.
           </p>
-          <div className="mt-6 md:mt-0">
+          <div className="mt-4 sm:mt-6 md:mt-0">
             <ul className="flex flex-wrap gap-6 text-sm justify-center">
               <li>
                 <Link href="/privacy-policy" className={`transition-colors ${

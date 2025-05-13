@@ -60,10 +60,10 @@ const Button = ({
 
   // Size styles
   const sizeStyles = {
-    sm: 'px-3 py-1.5 text-sm',
-    md: 'px-5 py-2.5 text-base',
-    lg: 'px-7 py-3.5 text-lg font-semibold',
-    xl: 'px-10 py-4 text-xl font-bold',
+    sm: 'px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm',
+    md: 'px-3 sm:px-5 py-2 sm:py-2.5 text-sm sm:text-base',
+    lg: 'px-4 sm:px-7 py-2.5 sm:py-3.5 text-base sm:text-lg font-semibold',
+    xl: 'px-6 sm:px-10 py-3 sm:py-4 text-lg sm:text-xl font-bold',
   };
 
   // Disabled styles

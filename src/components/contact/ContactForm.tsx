@@ -89,7 +89,7 @@ const ContactForm = () => {
             </div>
           )}
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6">
             <div>
               <label htmlFor="name" className="block text-gray-300 font-medium mb-2">
                 Nombre <span className="text-red-400">*</span>
@@ -123,7 +123,7 @@ const ContactForm = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6">
             <div>
               <label htmlFor="company" className="block text-gray-300 font-medium mb-2">
                 Empresa
@@ -191,11 +191,11 @@ const ContactForm = () => {
             ></textarea>
           </div>
 
-          <div>
+          <div className="flex justify-center sm:justify-start">
             <Button
               type="submit"
               size="lg"
-              className="w-full md:w-auto bg-gradient-to-r from-blue-500 to-teal-400 hover:from-blue-600 hover:to-teal-500 text-white px-8 py-3 rounded-lg shadow-lg hover:shadow-blue-500/20 transition-all duration-300 hover:-translate-y-1"
+              className="w-full sm:w-auto bg-gradient-to-r from-blue-500 to-teal-400 hover:from-blue-600 hover:to-teal-500 text-white px-6 sm:px-8 py-3 rounded-lg shadow-lg hover:shadow-blue-500/20 transition-all duration-300 hover:-translate-y-1"
             >
               Enviar Mensaje
             </Button>

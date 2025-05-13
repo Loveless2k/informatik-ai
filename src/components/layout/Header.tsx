@@ -3,10 +3,8 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
 import MobileMenu from '@/components/ui/MobileMenu';
 import ThemeToggle from '@/components/ui/ThemeToggle';
-import SearchBar from '@/components/ui/SearchBar';
 import DataStreamButton from '@/components/ui/buttons/DataStreamButton';
 import { useTheme } from '@/context/ThemeContext';
 
@@ -15,12 +13,12 @@ const Header = () => {
   const [scrolled, setScrolled] = useState(false);
 
   // Usar el contexto de tema de manera segura
-  let themeContext;
+  let themeContext: { theme: string } = { theme: 'light' };
   try {
     themeContext = useTheme();
   } catch (error) {
     // Si el contexto no está disponible, asumimos tema claro por defecto
-    themeContext = { theme: 'light' };
+    // Ya tenemos el valor por defecto asignado
   }
 
   const isDarkMode = themeContext.theme === 'dark';
@@ -45,12 +43,13 @@ const Header = () => {
 
   // Lista de enlaces de navegación
   const navLinks = [
-    { href: "/", label: "Inicio" },
-    { href: "/about", label: "Nosotros" },
-    { href: "/services", label: "Servicios" },
-    { href: "/success-cases", label: "Casos de Éxito" },
-    { href: "/blog", label: "Blog" },
-    { href: "/resources", label: "Recursos" }
+    { href: '/', label: 'Inicio' },
+    { href: '/about', label: 'Nosotros' },
+    { href: '/services', label: 'Servicios' },
+    { href: '/success-cases', label: 'Casos de Éxito' },
+    // { href: '/blog', label: 'Blog' },        // Temporalmente oculto
+    // { href: '/resources', label: 'Recursos' }, // Temporalmente oculto
+    { href: '/contact', label: 'Contacto' },
   ];
 
   return (
@@ -64,17 +63,17 @@ const Header = () => {
           : 'bg-[#E0FBFF]/80 backdrop-blur-xl py-3 sm:py-4 md:py-5'
     }`}>
       <div className="container mx-auto px-4 max-w-7xl">
-        <div className="flex justify-between items-center h-20">
+        <div className="flex justify-between items-center h-16 sm:h-18 md:h-20">
           {/* Logo */}
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
-              <div className="relative h-17 w-[280px]">
+              <div className="relative h-12 sm:h-14 md:h-17 w-[180px] sm:w-[220px] md:w-[280px]">
                 <Image
                   src="/images/logos/logoInformatik-ai.png"
                   alt="Informatik-AI Logo (Light Mode)"
                   width={280}
                   height={70}
-                  className={`absolute top-0 left-0 h-17 w-auto transition-opacity ${
+                  className={`absolute top-0 left-0 h-full w-auto transition-opacity ${
                     isDarkMode ? 'opacity-0' : 'opacity-100'
                   }`}
                   priority
@@ -84,7 +83,7 @@ const Header = () => {
                   alt="Informatik-AI Logo (Dark Mode)"
                   width={280}
                   height={70}
-                  className={`absolute top-0 left-0 h-17 w-auto transition-opacity ${
+                  className={`absolute top-0 left-0 h-full w-auto transition-opacity ${
                     isDarkMode ? 'opacity-100' : 'opacity-0'
                   }`}
                   priority
@@ -121,9 +120,11 @@ const Header = () => {
 
             {/* Mobile Menu Button */}
             <button
-              className={`md:hidden focus:outline-none p-2 ${
-                isDarkMode ? 'text-white' : 'text-[#111111]'
-              }`}
+              className={`md:hidden focus:outline-none p-2 rounded-lg ${
+                isDarkMode
+                  ? 'text-white bg-gray-800 hover:bg-gray-700'
+                  : 'text-[#111111] bg-white/80 hover:bg-white shadow-sm'
+              } transition-colors`}
               onClick={toggleMenu}
               aria-label="Toggle menu"
             >

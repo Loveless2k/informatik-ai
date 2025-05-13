@@ -145,7 +145,7 @@ const DataStreamButton = ({ href, children, className = '' }: DataStreamButtonPr
       {/* Contenido del botón */}
       <Link
         href={href}
-        className={`relative flex items-center justify-center px-2 sm:px-3 md:px-4 lg:px-5 py-2 sm:py-2.5 md:py-3 ${isDarkMode ? 'text-white' : 'text-gray-800'} z-10 h-full w-full`}
+        className={`relative flex items-center justify-center px-2 sm:px-3 md:px-4 lg:px-5 py-1.5 sm:py-2 md:py-3 ${isDarkMode ? 'text-white' : 'text-gray-800'} z-10 h-full w-full`}
       >
         <span className="inline-flex items-center justify-center w-full whitespace-nowrap">
           {/* Renderizamos el contenido como children si no es una cadena de texto */}
@@ -153,13 +153,13 @@ const DataStreamButton = ({ href, children, className = '' }: DataStreamButtonPr
             <DualToneText
               firstPart="Contácta"
               secondPart="nos"
-              className="text-xs sm:text-sm md:text-base font-semibold"
+              className="text-xs sm:text-sm md:text-base font-semibold whitespace-nowrap"
               firstPartColor={isDarkMode ? 'text-white' : 'text-gray-800'}
               secondPartColor={isDarkMode ? 'text-secondary-light' : 'text-secondary'}
               letterSpacing="normal"
             />
           ) : (
-            <span className={`${isDarkMode ? 'text-white' : 'text-gray-800'} text-xs sm:text-sm md:text-base font-medium tracking-wider`}>
+            <span className={`${isDarkMode ? 'text-white' : 'text-gray-800'} text-xs sm:text-sm md:text-base font-medium tracking-wider whitespace-nowrap`}>
               {children}
             </span>
           )}

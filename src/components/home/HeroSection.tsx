@@ -7,8 +7,8 @@ import NeuralNetworkBackground from '@/components/ui/NeuralNetworkBackground';
 import { useTheme } from '@/context/ThemeContext';
 
 const HeroSection = () => {
-  // Estado para controlar la animación del botón
-  const [isButtonHovered, setIsButtonHovered] = useState(false);
+  // Estado para controlar animaciones
+  const [, setIsButtonHovered] = useState(false); // Mantenemos el setter para los eventos
   const [isMounted, setIsMounted] = useState(false);
 
   // Estado para el texto rotativo
@@ -17,14 +17,52 @@ const HeroSection = () => {
   const [text, setText] = useState('');
   const [typingSpeed, setTypingSpeed] = useState(150);
 
-  // Lista de frases para mostrar
-  const phrases = [
-    "Formación In Company",
-    "Asesoría Estratégica",
-    "Desarrollo de Cursos",
-    "Automatizaciones",
-    "Desarrollo a Medida"
-  ];
+  // Detectar si estamos en un dispositivo móvil
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Efecto para detectar el tamaño de la pantalla inicialmente
+  useEffect(() => {
+    const isMobileNow = window.innerWidth < 640; // sm breakpoint en Tailwind
+    setIsMobile(isMobileNow);
+  }, []);
+
+  // Efecto para manejar cambios en el tamaño de la ventana
+  useEffect(() => {
+    const handleResize = () => {
+      const isMobileNow = window.innerWidth < 640; // sm breakpoint en Tailwind
+
+      if (isMobile !== isMobileNow) {
+        setIsMobile(isMobileNow);
+        // Reiniciar la animación cuando cambia entre móvil y desktop
+        setText('');
+        setIsDeleting(false);
+        setPhraseIndex(0);
+      }
+    };
+
+    // Añadir listener para cambios de tamaño
+    window.addEventListener('resize', handleResize);
+
+    // Limpiar
+    return () => window.removeEventListener('resize', handleResize);
+  }, [isMobile, setText, setIsDeleting, setPhraseIndex]);
+
+  // Lista de frases para mostrar (versiones para móvil y desktop)
+  const phrases = isMobile
+    ? [
+        "Formación",
+        "Asesoría",
+        "Cursos",
+        "Automatización",
+        "Desarrollo"
+      ]
+    : [
+        "Formación In Company",
+        "Asesoría Estratégica",
+        "Desarrollo de Cursos",
+        "Automatizaciones",
+        "Desarrollo a Medida"
+      ];
 
   // Referencia para cancelar el timeout
   const typingTimeout = useRef<NodeJS.Timeout | null>(null);
@@ -215,32 +253,34 @@ const HeroSection = () => {
             />
 
             <motion.div variants={fadeInUp}>
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-white w-full text-center mb-2">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-white w-full text-center mb-2">
                 Impulsando negocios con Inteligencia Artificial
-
               </h1>
-              <div className="relative min-h-[1.2em] text-5xl md:text-6xl lg:text-7xl font-extrabold w-full text-center">
-                <div className="inline-flex justify-center items-center relative">
-                  <span className="bg-gradient-to-r from-[#00B4DB] via-[#48D1CC] to-[#00BFFF] text-transparent bg-clip-text min-w-[1em] h-[1.2em]">
-                    {text || "\u00A0"}
-                  </span>
-                  <span
-                    className="inline-block h-[1em] border-r-4 border-[#48D1CC] animate-blink ml-1"
-                  ></span>
+              <div className="relative min-h-[1.2em] text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold w-full text-center">
+                <div className="flex justify-center items-center relative">
+                  <div className="relative overflow-hidden max-w-[90%] sm:max-w-full">
+                    <span className="bg-gradient-to-r from-[#00B4DB] via-[#48D1CC] to-[#00BFFF] text-transparent bg-clip-text h-[1.2em] inline-block">
+                      {text || "\u00A0"}
+                    </span>
+                    <span
+                      className="inline-block h-[1em] border-r-4 border-[#48D1CC] animate-blink ml-1 absolute top-1/2 -translate-y-1/2"
+                      style={{ left: `calc(${text.length}ch)` }}
+                    ></span>
+                  </div>
                 </div>
               </div>
             </motion.div>
           </div>
 
           <motion.p
-            className="text-lg md:text-xl mt-8 mb-10 text-gray-300 max-w-4xl mx-auto"
+            className="text-base sm:text-lg md:text-xl mt-6 sm:mt-8 mb-8 sm:mb-10 text-gray-300 max-w-4xl mx-auto"
             variants={fadeInUp}
           >
             Domina la IA. Lidera la transformación empresarial.
           </motion.p>
 
           <motion.div
-            className="flex flex-col sm:flex-row gap-6 justify-center items-center"
+            className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center"
             variants={fadeInUp}
           >
             {/* Botón principal con efecto de datos - Más grande */}
@@ -252,7 +292,7 @@ const HeroSection = () => {
 
               href="/services"
               size="lg"
-              className="hover-lift hover-shadow bg-gradient-to-r from-[#0ea5e9] to-[#14b8a6] border-0 px-8 py-4 text-xl font-bold"
+              className="hover-lift hover-shadow bg-gradient-to-r from-[#0ea5e9] to-[#14b8a6] border-0 px-6 sm:px-8 py-3 sm:py-4 text-lg sm:text-xl font-bold"
             >
               Explorar Nuestros Servicios
             </Button>
@@ -264,16 +304,16 @@ const HeroSection = () => {
               variant="outline"
               size="lg"
 
-              className="hover-lift hover-shadow bg-white text-[#0f172a] border-0 px-8 py-4 text-xl font-bold transition-all duration-300 hover:bg-opacity-90 hover:scale-105 shadow-md hover:shadow-lg">
+              className="hover-lift hover-shadow bg-white text-[#0f172a] border-0 px-6 sm:px-8 py-3 sm:py-4 text-lg sm:text-xl font-bold transition-all duration-300 hover:bg-opacity-90 hover:scale-105 shadow-md hover:shadow-lg">
               Contáctanos
             </Button>
           </motion.div>
         </div>
 
         {/* Elementos decorativos mejorados */}
-        <div className="absolute bottom-10 left-10 w-20 h-20 border border-[#00B4DB]/30 rounded-full animate-pulse"
+        <div className="absolute bottom-5 sm:bottom-10 left-5 sm:left-10 w-12 sm:w-20 h-12 sm:h-20 border border-[#00B4DB]/30 rounded-full animate-pulse"
              style={{ animationDuration: '8s' }}></div>
-        <div className="absolute top-20 right-10 w-32 h-32 border border-[#48D1CC]/20 rounded-full animate-pulse"
+        <div className="absolute top-10 sm:top-20 right-5 sm:right-10 w-20 sm:w-32 h-20 sm:h-32 border border-[#48D1CC]/20 rounded-full animate-pulse"
              style={{ animationDuration: '12s' }}></div>
 
         {/* Patrón de puntos decorativo */}
