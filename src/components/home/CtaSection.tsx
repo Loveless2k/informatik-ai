@@ -2,6 +2,8 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import Button from '@/components/ui/Button';
+import ButtonWithEffect from '@/components/ui/ButtonWithEffect';
+import Tooltip from '@/components/ui/Tooltip';
 import { motion, useInView, useAnimation, AnimatePresence } from 'framer-motion';
 
 const CtaSection = () => {
@@ -280,11 +282,15 @@ const CtaSection = () => {
                   <div
                     className={`transition-all duration-300 ${isButtonAnimating ? 'scale-105 shadow-lg shadow-[#00B4DB]/20' : 'scale-100'}`}
                   >
-                    <Button
+                    <ButtonWithEffect
                       href="/contact"
-                      variant="gradient"
-                      size="xl"
-                      icon={
+                      effectType="particles"
+                      tooltip="Inicia tu transformación digital"
+                      size="lg"
+                      className="bg-gradient-to-r from-[#00B4DB] to-[#48D1CC] text-white px-8 py-4 text-xl font-bold rounded-lg shadow-lg"
+                    >
+                      <div className="flex items-center">
+                        Comienza Hoy
                         <svg
                           className={`ml-2 w-6 h-6 transition-transform duration-300 ${isHovering || isButtonAnimating ? 'translate-x-1' : ''}`}
                           fill="none"
@@ -294,12 +300,8 @@ const CtaSection = () => {
                         >
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                         </svg>
-                      }
-                      iconPosition="right"
-                      className="rounded-lg shadow-lg hover:shadow-[#00B4DB]/20"
-                    >
-                      Comienza Hoy
-                    </Button>
+                      </div>
+                    </ButtonWithEffect>
                   </div>
                 </div>
               </div>

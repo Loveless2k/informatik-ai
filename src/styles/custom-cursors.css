@@ -1,0 +1,21 @@
+/* Estilos para cursores personalizados */
+
+/* Cursor de neurona para secciones con fondo oscuro */
+.code-lines-bg {
+  cursor: url('/images/neuron-cursor.svg'), auto;
+}
+
+/* Cursor de neurona para secciones específicas */
+.neural-cursor {
+  cursor: url('/images/neuron-cursor.svg'), auto;
+}
+
+/* Cursor de neurona para botones y enlaces en hover */
+.neural-cursor-hover:hover {
+  cursor: url('/images/neuron-cursor.svg'), pointer;
+}
+
+/* Cursor de neurona para elementos interactivos */
+.neural-cursor-pointer {
+  cursor: url('/images/neuron-cursor.svg'), pointer;
+}

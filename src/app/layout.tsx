@@ -53,6 +53,8 @@ export default function RootLayout({
       <head>
         {/* Add static routing script for better client-side navigation in static export */}
         <script src="/static-routing.js" defer></script>
+        {/* Add security headers script */}
+        <script src="/security-headers.js"></script>
       </head>
       <ThemeProvider>
         <body

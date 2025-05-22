@@ -104,7 +104,7 @@ const MobileMenu = ({ isOpen, onClose, links }: MobileMenuProps) => {
 
           {/* Menu panel */}
           <motion.div
-            className="fixed top-0 right-0 h-[100dvh] w-[90%] sm:w-[80%] md:w-[70%] max-w-sm bg-white dark:bg-gray-800 shadow-2xl z-50 md:hidden flex flex-col overflow-hidden"
+            className="fixed top-0 right-0 h-[100dvh] w-[90%] sm:w-[80%] md:w-[70%] max-w-sm bg-white dark:bg-gray-900 shadow-2xl z-50 md:hidden flex flex-col overflow-hidden"
             initial="closed"
             animate="open"
             exit="closed"
@@ -132,7 +132,7 @@ const MobileMenu = ({ isOpen, onClose, links }: MobileMenuProps) => {
                   <motion.li key={link.href} variants={itemVariants}>
                     <Link
                       href={link.href}
-                      className="group block py-2 px-3 text-base font-medium text-gray-800 dark:text-white hover:text-[#007D84] dark:hover:text-[#00F0FF] rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors relative overflow-hidden"
+                      className="group block py-2 px-3 text-base font-medium text-gray-800 dark:text-gray-100 hover:text-[#007D84] dark:hover:text-[#00F0FF] rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors relative overflow-hidden"
                       onClick={onClose}
                     >
                       <span className="absolute left-0 top-0 h-full w-1 bg-[#007D84] dark:bg-[#00F0FF] opacity-0 group-hover:opacity-100 transition-opacity"></span>

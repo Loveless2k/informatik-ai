@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Núcleo de la neurona -->
+  <circle cx="16" cy="16" r="6" fill="#00F0FF" fill-opacity="0.8"/>
+  
+  <!-- Dendritas (conexiones) -->
+  <path d="M16 10L16 2" stroke="#00F0FF" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M16 30L16 22" stroke="#00F0FF" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M10 16L2 16" stroke="#00F0FF" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M30 16L22 16" stroke="#00F0FF" stroke-width="1.5" stroke-linecap="round"/>
+  
+  <!-- Conexiones diagonales -->
+  <path d="M12 12L6 6" stroke="#00F0FF" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M26 26L20 20" stroke="#00F0FF" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M12 20L6 26" stroke="#00F0FF" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M26 6L20 12" stroke="#00F0FF" stroke-width="1.5" stroke-linecap="round"/>
+  
+  <!-- Pequeños puntos en los extremos -->
+  <circle cx="2" cy="16" r="1.5" fill="#00F0FF" fill-opacity="0.6"/>
+  <circle cx="30" cy="16" r="1.5" fill="#00F0FF" fill-opacity="0.6"/>
+  <circle cx="16" cy="2" r="1.5" fill="#00F0FF" fill-opacity="0.6"/>
+  <circle cx="16" cy="30" r="1.5" fill="#00F0FF" fill-opacity="0.6"/>
+  <circle cx="6" cy="6" r="1.5" fill="#00F0FF" fill-opacity="0.6"/>
+  <circle cx="26" cy="6" r="1.5" fill="#00F0FF" fill-opacity="0.6"/>
+  <circle cx="6" cy="26" r="1.5" fill="#00F0FF" fill-opacity="0.6"/>
+  <circle cx="26" cy="26" r="1.5" fill="#00F0FF" fill-opacity="0.6"/>
+  
+  <!-- Brillo central -->
+  <circle cx="16" cy="16" r="3" fill="white" fill-opacity="0.6"/>
+</svg>

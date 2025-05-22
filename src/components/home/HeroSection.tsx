@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Button from '@/components/ui/Button';
+import ButtonWithEffect from '@/components/ui/ButtonWithEffect';
+import Tooltip from '@/components/ui/Tooltip';
 import { motion, useAnimation } from 'framer-motion';
 import NeuralNetworkBackground from '@/components/ui/NeuralNetworkBackground';
 import { useTheme } from '@/context/ThemeContext';
@@ -220,7 +222,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative py-32 md:py-44 overflow-hidden bg-gray-900">
+    <section className="relative py-24 sm:py-28 md:py-36 lg:py-44 overflow-hidden bg-gray-900 code-lines-bg">
       {/* Efecto de resplandor superior */}
       <div className="absolute top-0 left-1/4 w-1/2 h-1/3 rounded-full filter blur-[120px] bg-[#00B4DB]/20"></div>
 
@@ -242,7 +244,7 @@ const HeroSection = () => {
       >
         <div className="max-w-5xl mx-auto text-center">
           {/* Título con efecto de resplandor */}
-          <div className="relative mb-8">
+          <div className="relative mb-6 sm:mb-8">
             <motion.div
               className={`absolute inset-0 rounded-full filter blur-[80px] -z-10 ${
                 isDarkMode ? 'bg-blue-900/20' : 'bg-blue-800/10'
@@ -253,12 +255,16 @@ const HeroSection = () => {
             />
 
             <motion.div variants={fadeInUp}>
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-white w-full text-center mb-2">
-                Impulsando negocios con Inteligencia Artificial
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-tight text-white w-full text-center mb-2">
+                <span className="block sm:inline">Impulsando</span>{" "}
+                <span className="block sm:inline">negocios con</span>{" "}
+                <span className="bg-gradient-to-r from-[#00B4DB] via-[#48D1CC] to-[#00BFFF] text-transparent bg-clip-text">
+                  Inteligencia Artificial
+                </span>
               </h1>
-              <div className="relative min-h-[1.2em] text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold w-full text-center">
+              <div className="relative min-h-[1.2em] text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold w-full text-center">
                 <div className="flex justify-center items-center relative">
-                  <div className="relative overflow-hidden max-w-[90%] sm:max-w-full">
+                  <div className="relative overflow-hidden max-w-[95%] sm:max-w-full">
                     <span className="bg-gradient-to-r from-[#00B4DB] via-[#48D1CC] to-[#00BFFF] text-transparent bg-clip-text h-[1.2em] inline-block">
                       {text || "\u00A0"}
                     </span>
@@ -273,40 +279,44 @@ const HeroSection = () => {
           </div>
 
           <motion.p
-            className="text-base sm:text-lg md:text-xl mt-6 sm:mt-8 mb-8 sm:mb-10 text-gray-300 max-w-4xl mx-auto"
+            className="text-base sm:text-lg md:text-xl mt-4 sm:mt-6 mb-6 sm:mb-8 text-gray-300 max-w-4xl mx-auto"
             variants={fadeInUp}
           >
             Domina la IA. Lidera la transformación empresarial.
           </motion.p>
 
           <motion.div
-            className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center items-center"
+            className="flex flex-col sm:flex-row gap-5 sm:gap-6 justify-center items-center"
             variants={fadeInUp}
           >
-            {/* Botón principal con efecto de datos - Más grande */}
+            {/* Botón principal con efecto de partículas */}
             <motion.div
+              className="w-full sm:w-auto"
               onMouseEnter={() => setIsButtonHovered(true)}
               onMouseLeave={() => setIsButtonHovered(false)}
             >
-              <Button
-
-              href="/services"
-              size="lg"
-              className="hover-lift hover-shadow bg-gradient-to-r from-[#0ea5e9] to-[#14b8a6] border-0 px-6 sm:px-8 py-3 sm:py-4 text-lg sm:text-xl font-bold"
-            >
-              Explorar Nuestros Servicios
-            </Button>
+              <ButtonWithEffect
+                href="/services"
+                size="lg"
+                effectType="particles"
+                tooltip="Descubre nuestros servicios de IA"
+                className="bg-gradient-to-r from-[#0ea5e9] to-[#14b8a6] border-0 px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg md:text-xl font-bold w-full sm:w-auto text-white"
+              >
+                Explorar Nuestros Servicios
+              </ButtonWithEffect>
             </motion.div>
 
-            {/* Botón secundario con borde brillante - Alineado verticalmente */}
-            <Button
+            {/* Botón secundario con efecto de ripple */}
+            <ButtonWithEffect
               href="/contact"
-              variant="outline"
+              variant="secondary"
               size="lg"
-
-              className="hover-lift hover-shadow bg-white text-[#0f172a] border-0 px-6 sm:px-8 py-3 sm:py-4 text-lg sm:text-xl font-bold transition-all duration-300 hover:bg-opacity-90 hover:scale-105 shadow-md hover:shadow-lg">
+              effectType="ripple"
+              tooltip="Hablemos sobre tu proyecto"
+              className="bg-white text-[#0f172a] border-0 px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg md:text-xl font-bold w-full sm:w-auto transition-all duration-300 hover:bg-opacity-90 hover:scale-105 shadow-md hover:shadow-lg"
+            >
               Contáctanos
-            </Button>
+            </ButtonWithEffect>
           </motion.div>
         </div>
 

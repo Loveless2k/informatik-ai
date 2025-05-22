@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { useTheme } from '@/context/ThemeContext';
+import Tooltip from '@/components/ui/Tooltip';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -253,25 +254,31 @@ const Footer = () => {
           <div className="mt-4 sm:mt-6 md:mt-0">
             <ul className="flex flex-wrap gap-6 text-sm justify-center">
               <li>
-                <Link href="/privacy-policy" className={`transition-colors ${
-                  isDarkMode ? 'text-gray-400 hover:text-white' : 'text-[#E0FBFF] hover:text-white'
-                }`}>
-                  Política de Privacidad
-                </Link>
+                <Tooltip text="Información sobre cómo manejamos tus datos" position="top">
+                  <Link href="/privacy-policy" className={`transition-colors ${
+                    isDarkMode ? 'text-gray-400 hover:text-white' : 'text-[#E0FBFF] hover:text-white'
+                  }`}>
+                    Política de Privacidad
+                  </Link>
+                </Tooltip>
               </li>
               <li>
-                <Link href="/terms-of-service" className={`transition-colors ${
-                  isDarkMode ? 'text-gray-400 hover:text-white' : 'text-[#E0FBFF] hover:text-white'
-                }`}>
-                  Términos de Servicio
-                </Link>
+                <Tooltip text="Condiciones de uso de nuestros servicios" position="top">
+                  <Link href="/terms-of-service" className={`transition-colors ${
+                    isDarkMode ? 'text-gray-400 hover:text-white' : 'text-[#E0FBFF] hover:text-white'
+                  }`}>
+                    Términos de Servicio
+                  </Link>
+                </Tooltip>
               </li>
               <li>
-                <Link href="/cookies" className={`transition-colors ${
-                  isDarkMode ? 'text-gray-400 hover:text-white' : 'text-[#E0FBFF] hover:text-white'
-                }`}>
-                  Cookies
-                </Link>
+                <Tooltip text="Información sobre el uso de cookies en este sitio" position="top">
+                  <Link href="/cookies" className={`transition-colors ${
+                    isDarkMode ? 'text-gray-400 hover:text-white' : 'text-[#E0FBFF] hover:text-white'
+                  }`}>
+                    Cookies
+                  </Link>
+                </Tooltip>
               </li>
             </ul>
           </div>

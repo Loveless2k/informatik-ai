@@ -59,13 +59,13 @@ const AboutSection = () => {
   };
 
   return (
-    <section className="py-20 bg-gradient-to-b from-white via-[#f8fdff] to-[#E0FBFF]/50 dark:bg-gradient-to-b dark:from-gray-900 dark:via-gray-800 dark:to-black relative overflow-hidden">
+    <section className="py-16 sm:py-20 bg-gradient-to-b from-white via-[#f8fdff] to-[#E0FBFF]/50 dark:bg-gradient-to-b dark:from-gray-900 dark:via-gray-800 dark:to-black relative overflow-hidden">
       {/* Fondo minimalista con patrón más visible */}
-      <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] bg-[length:60px_60px] opacity-[0.05] dark:opacity-[0.07]"></div>
-      
+      <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] bg-[length:40px_40px] sm:bg-[length:60px_60px] opacity-[0.05] dark:opacity-[0.07]"></div>
+
       {/* Línea decorativa superior */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#00B4DB]/30 to-transparent"></div>
-      
+
       {/* Elementos decorativos minimalistas con mayor presencia */}
       <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-gradient-to-br from-[#00B4DB]/10 to-transparent rounded-full blur-3xl"></div>
       <div className="absolute bottom-0 left-0 w-1/4 h-1/4 bg-gradient-to-tr from-[#00B4DB]/10 to-transparent rounded-full blur-3xl"></div>
@@ -103,39 +103,39 @@ const AboutSection = () => {
         animate={isInView ? "visible" : "hidden"}
         variants={containerVariants}
       >
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 sm:gap-16 items-center">
           <motion.div variants={itemVariants}>
             <motion.div
-              className="inline-block mb-6 px-5 py-2 bg-[#00B4DB]/10 text-[#00B4DB] dark:text-[#48D1CC] rounded-full text-sm font-semibold tracking-wide backdrop-blur-sm border border-[#00B4DB]/20 dark:border-[#48D1CC]/20"
+              className="inline-block mb-4 sm:mb-6 px-4 sm:px-5 py-1.5 sm:py-2 bg-[#00B4DB]/10 text-[#00B4DB] dark:text-[#48D1CC] rounded-full text-sm font-semibold tracking-wide backdrop-blur-sm border border-[#00B4DB]/20 dark:border-[#48D1CC]/20"
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 400, damping: 10 }}
             >
               NUESTRA VISIÓN
             </motion.div>
-            <h2 className="text-4xl md:text-5xl font-bold mb-8 text-gray-800 dark:text-white leading-tight">
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 sm:mb-8 text-gray-800 dark:text-white leading-tight">
               Transformamos Empresas con <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00B4DB] to-[#48D1CC]">Soluciones Tecnológicas</span> Innovadoras
             </h2>
             <motion.p
-              className="text-xl text-gray-600 dark:text-gray-300 mb-6 leading-relaxed"
+              className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 mb-4 sm:mb-6 leading-relaxed"
               variants={itemVariants}
             >
               En InformatiK-AI, fusionamos tecnología de vanguardia con experiencia sectorial para crear soluciones que generan resultados empresariales excepcionales.
             </motion.p>
             <motion.p
-              className="text-xl text-gray-600 dark:text-gray-300 mb-10 leading-relaxed"
+              className="text-lg sm:text-xl text-gray-600 dark:text-gray-300 mb-6 sm:mb-10 leading-relaxed"
               variants={itemVariants}
             >
               Nuestro equipo multidisciplinar trabaja para entender tus desafíos específicos y desarrollar estrategias personalizadas que aportan valor medible y sostenible.
             </motion.p>
             <motion.div
-              className="flex flex-wrap gap-5"
+              className="flex flex-col sm:flex-row gap-4 sm:gap-5"
               variants={itemVariants}
             >
               <Button
                 href="/about"
                 variant="gradient"
                 size="lg"
-                className="rounded-full bg-gradient-to-r from-[#00B4DB] to-[#48D1CC] hover:from-[#00a0c2] hover:to-[#3ec0c0] shadow-lg hover:shadow-[#00B4DB]/20 transition-all duration-300"
+                className="rounded-full bg-gradient-to-r from-[#00B4DB] to-[#48D1CC] hover:from-[#00a0c2] hover:to-[#3ec0c0] shadow-lg hover:shadow-[#00B4DB]/20 transition-all duration-300 w-full sm:w-auto neural-cursor-hover"
               >
                 Conoce Nuestra Historia
               </Button>
@@ -143,7 +143,7 @@ const AboutSection = () => {
                 href="/case-studies"
                 variant="outline"
                 size="lg"
-                className="rounded-full border-2 border-[#00B4DB]/30 dark:border-[#48D1CC]/30 text-[#00B4DB] dark:text-[#48D1CC] hover:bg-[#00B4DB]/10 dark:hover:bg-[#48D1CC]/10"
+                className="rounded-full border-2 border-[#00B4DB]/30 dark:border-[#48D1CC]/30 text-[#00B4DB] dark:text-[#48D1CC] hover:bg-[#00B4DB]/10 dark:hover:bg-[#48D1CC]/10 w-full sm:w-auto neural-cursor-hover"
               >
                 Casos de Éxito
               </Button>
@@ -151,12 +151,12 @@ const AboutSection = () => {
           </motion.div>
 
           <motion.div
-            className="relative"
+            className="relative mt-8 sm:mt-0"
             variants={imageVariants}
             animate={isInView ? floatingAnimation : {}}
           >
             {/* Modern illustration with updated design */}
-            <div className="relative h-[500px] w-full rounded-2xl overflow-hidden shadow-xl border border-[#00B4DB]/20 dark:border-[#48D1CC]/20">
+            <div className="relative h-[400px] sm:h-[450px] md:h-[500px] w-full rounded-2xl overflow-hidden shadow-xl border border-[#00B4DB]/20 dark:border-[#48D1CC]/20">
               {/* Main background with updated gradient */}
               <div className="absolute inset-0 bg-gradient-to-br from-white via-[#f8fdff] to-white dark:from-gray-800 dark:via-gray-700 dark:to-gray-800"></div>
 

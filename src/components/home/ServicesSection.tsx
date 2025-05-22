@@ -205,7 +205,7 @@ const ServicesList = () => {
   };
 
   return (
-    <section id="servicios" className={`py-20 md:py-28 relative overflow-hidden ${
+    <section id="servicios" className={`py-16 sm:py-20 md:py-28 relative overflow-hidden ${
       isDarkMode
         ? 'bg-gradient-to-b from-gray-950 via-gray-900 to-gray-800'
         : 'bg-gradient-to-b from-blue-50 via-blue-50/70 to-slate-100'
@@ -223,12 +223,12 @@ const ServicesList = () => {
             title={<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00B4DB] via-[#48D1CC] to-[#00BFFF] font-bold">Nuestros Servicios</span>}
             subtitle={<span className={`${isDarkMode ? 'text-gray-300' : 'text-gray-600'} max-w-2xl mx-auto text-base md:text-lg`}>Soluciones prácticas que puedes explorar al detalle</span>}
             centered
-            className="mb-12"
+            className="mb-8 sm:mb-12"
           />
         </motion.div>
 
         <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-6 md:gap-8"
           variants={containerVariants}
         >
           {services.map((service, index) => (
@@ -241,19 +241,19 @@ const ServicesList = () => {
                 isDarkMode
                   ? 'bg-gray-800/90 border-gray-700/50'
                   : 'bg-white/95 border-gray-200/70'
-              } p-6 rounded-xl shadow-md border transition-all group relative overflow-hidden`}
+              } p-5 sm:p-6 rounded-xl shadow-md border transition-all group relative overflow-hidden`}
             >
               <div className="flex flex-col sm:flex-row sm:items-start gap-4">
                 {isDarkMode ? (
                   // Versión oscura - Iconos con colores más vivos
-                  <div className={`flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-lg ${
+                  <div className={`flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded-lg ${
                     index === 0 ? 'bg-gradient-to-br from-teal-500/30 to-cyan-500/30 border-teal-500/30' :
                     index === 1 ? 'bg-gradient-to-br from-blue-500/30 to-indigo-500/30 border-blue-500/30' :
                     index === 2 ? 'bg-gradient-to-br from-purple-500/30 to-pink-500/30 border-purple-500/30' :
                     index === 3 ? 'bg-gradient-to-br from-indigo-500/30 to-purple-500/30 border-indigo-500/30' :
                     'bg-gradient-to-br from-cyan-500/30 to-blue-500/30 border-cyan-500/30'
-                  } flex items-center justify-center border mx-auto sm:mx-0`}>
-                    <svg className={`w-6 h-6 sm:w-8 sm:h-8 ${
+                  } flex items-center justify-center border mx-auto sm:mx-0 mb-3 sm:mb-0`}>
+                    <svg className={`w-7 h-7 sm:w-8 sm:h-8 ${
                       index === 0 ? 'text-teal-400' :
                       index === 1 ? 'text-blue-400' :
                       index === 2 ? 'text-purple-400' :
@@ -265,14 +265,14 @@ const ServicesList = () => {
                   </div>
                 ) : (
                   // Versión clara - Iconos con colores más vivos
-                  <div className={`flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 rounded-lg ${
+                  <div className={`flex-shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded-lg ${
                     index === 0 ? 'bg-gradient-to-br from-teal-100 to-teal-200 border-teal-200' :
                     index === 1 ? 'bg-gradient-to-br from-blue-100 to-blue-200 border-blue-200' :
                     index === 2 ? 'bg-gradient-to-br from-purple-100 to-purple-200 border-purple-200' :
                     index === 3 ? 'bg-gradient-to-br from-indigo-100 to-indigo-200 border-indigo-200' :
                     'bg-gradient-to-br from-cyan-100 to-cyan-200 border-cyan-200'
-                  } flex items-center justify-center border mx-auto sm:mx-0`}>
-                    <svg className={`w-6 h-6 sm:w-8 sm:h-8 ${
+                  } flex items-center justify-center border mx-auto sm:mx-0 mb-3 sm:mb-0`}>
+                    <svg className={`w-7 h-7 sm:w-8 sm:h-8 ${
                       index === 0 ? 'text-teal-600' :
                       index === 1 ? 'text-blue-600' :
                       index === 2 ? 'text-purple-600' :
@@ -283,18 +283,18 @@ const ServicesList = () => {
                     </svg>
                   </div>
                 )}
-                <div>
-                  <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-1 text-center sm:text-left`}>{service.title}</h3>
-                  <p className={`${isDarkMode ? 'text-gray-400' : 'text-gray-600'} text-sm leading-relaxed text-center sm:text-left`}>{service.description}</p>
+                <div className="w-full">
+                  <h3 className={`text-lg font-semibold ${isDarkMode ? 'text-white' : 'text-gray-900'} mb-2 text-center sm:text-left`}>{service.title}</h3>
+                  <p className={`${isDarkMode ? 'text-gray-300' : 'text-gray-600'} text-sm leading-relaxed text-center sm:text-left`}>{service.description}</p>
                 </div>
               </div>
-              <div className="mt-4">
+              <div className="mt-5 sm:mt-4 text-center sm:text-left">
                 {isDarkMode ? (
                   // Botones versión oscura con colores más vivos
                   <Button
                     href={service.href}
                     variant="outline"
-                    className={`text-sm px-4 py-2 rounded-full ${
+                    className={`text-sm px-5 py-2.5 rounded-full w-full sm:w-auto ${
                       index === 0 ? 'border-teal-500/30 text-teal-300 hover:bg-teal-900/30' :
                       index === 1 ? 'border-blue-500/30 text-blue-300 hover:bg-blue-900/30' :
                       index === 2 ? 'border-purple-500/30 text-purple-300 hover:bg-purple-900/30' :
@@ -309,7 +309,7 @@ const ServicesList = () => {
                   <Button
                     href={service.href}
                     variant="outline"
-                    className={`text-sm px-4 py-2 rounded-full ${
+                    className={`text-sm px-5 py-2.5 rounded-full w-full sm:w-auto ${
                       index === 0 ? 'border-teal-500 text-teal-700 hover:bg-teal-50' :
                       index === 1 ? 'border-blue-500 text-blue-700 hover:bg-blue-50' :
                       index === 2 ? 'border-purple-500 text-purple-700 hover:bg-purple-50' :

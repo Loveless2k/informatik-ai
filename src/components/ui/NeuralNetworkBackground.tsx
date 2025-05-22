@@ -57,17 +57,31 @@ const NeuralNetworkBackground = () => {
   const nodesRef = useRef<Node[]>([]);
   const connectionsRef = useRef<Connection[]>([]);
 
-  // Configuración mejorada para un aspecto más profesional
-  const config = {
-    nodeCount: 50, // Más nodos para una red más densa
-    layerCount: 5, // Más capas para mayor profundidad
-    connectionProbability: 0.25, // Menos conexiones aleatorias para un aspecto más limpio
-    maxConnections: 100, // Más conexiones totales
-    pulseFrequency: 0.015, // Pulsos menos frecuentes para un aspecto más calmado
-    signalSpeed: 0.008, // Señales más lentas para un aspecto más elegante
-    nodeMinRadius: 1.5, // Nodos más pequeños
-    nodeMaxRadius: 3.5, // Nodos más pequeños para un aspecto más refinado
+  // Configuración adaptativa según el dispositivo
+  const getConfig = () => {
+    // Detectar si estamos en un dispositivo móvil
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+    const isLowPower = typeof window !== 'undefined' &&
+      (window.navigator.userAgent.includes('Mobile') ||
+       window.navigator.userAgent.includes('Android'));
+
+    return {
+      // Reducir la complejidad en dispositivos móviles
+      nodeCount: isMobile ? 30 : 50,
+      layerCount: isMobile ? 4 : 5,
+      connectionProbability: isMobile ? 0.2 : 0.25,
+      maxConnections: isMobile ? 60 : 100,
+      pulseFrequency: isMobile ? 0.01 : 0.015,
+      signalSpeed: isMobile ? 0.01 : 0.008,
+      nodeMinRadius: isMobile ? 1 : 1.5,
+      nodeMaxRadius: isMobile ? 2.5 : 3.5,
+      // Optimizaciones para dispositivos de baja potencia
+      optimizeForLowPower: isLowPower,
+    };
   };
+
+  // Obtener configuración adaptativa
+  const config = getConfig();
 
   // Colores según el tema - Paleta más sofisticada
   const getColors = () => {
@@ -317,11 +331,27 @@ const NeuralNetworkBackground = () => {
     });
   };
 
-  // Loop de animación
+  // Loop de animación optimizado
   const animate = () => {
-    updateAnimation();
-    drawNetwork();
-    animationRef.current = requestAnimationFrame(animate);
+    // Reducir la frecuencia de actualización en dispositivos de baja potencia
+    if (config.optimizeForLowPower) {
+      // Usar un contador para actualizar la animación con menos frecuencia
+      if (!animationRef.current || animationRef.current % 2 === 0) {
+        updateAnimation();
+      }
+      drawNetwork();
+      // Incrementar el contador
+      animationRef.current = (animationRef.current || 0) + 1;
+      // Usar setTimeout en lugar de requestAnimationFrame para reducir la carga
+      setTimeout(() => {
+        requestAnimationFrame(animate);
+      }, 1000 / 30); // Limitar a aproximadamente 30 FPS
+    } else {
+      // Comportamiento normal para dispositivos de alta potencia
+      updateAnimation();
+      drawNetwork();
+      animationRef.current = requestAnimationFrame(animate);
+    }
   };
 
   // Manejar cambios de tamaño
@@ -379,7 +409,10 @@ const NeuralNetworkBackground = () => {
 
     return () => {
       window.removeEventListener('resize', handleResize);
-      cancelAnimationFrame(animationRef.current);
+      // Limpiar la animación según el tipo de referencia
+      if (typeof animationRef.current === 'number' && !config.optimizeForLowPower) {
+        cancelAnimationFrame(animationRef.current);
+      }
     };
   }, [isMounted, prefersReducedMotion, isDarkMode]);
 
@@ -392,7 +425,11 @@ const NeuralNetworkBackground = () => {
     <canvas
       ref={canvasRef}
       className="absolute inset-0 w-full h-full"
-      style={{ opacity: 0.4 }} // Ligeramente más visible
+      style={{
+        opacity: config.optimizeForLowPower ? 0.3 : 0.4, // Reducir opacidad en dispositivos de baja potencia
+        willChange: 'transform', // Optimización de rendimiento
+      }}
+      aria-hidden="true" // Mejora de accesibilidad
     />
   );
 };

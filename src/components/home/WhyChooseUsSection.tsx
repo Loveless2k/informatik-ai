@@ -100,17 +100,17 @@ const WhyChooseUsSection = () => {
   };
 
   return (
-    <section className="py-20 bg-gradient-to-b from-[#E0FBFF]/50 via-[#f0f9fb] to-[#f8fdff] dark:bg-gradient-to-b dark:from-black dark:via-gray-900 dark:to-gray-900 relative overflow-hidden">
+    <section className="py-16 sm:py-20 bg-gradient-to-b from-[#E0FBFF]/50 via-[#f0f9fb] to-[#f8fdff] dark:bg-gradient-to-b dark:from-black dark:via-gray-900 dark:to-gray-900 relative overflow-hidden">
       {/* Fondo con patrón alternativo */}
-      <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] bg-[length:40px_40px] opacity-[0.04] dark:opacity-[0.06] rotate-[2deg]"></div>
-      
+      <div className="absolute inset-0 bg-[url('/images/grid-pattern.svg')] bg-[length:30px_30px] sm:bg-[length:40px_40px] opacity-[0.04] dark:opacity-[0.06] rotate-[2deg]"></div>
+
       {/* Línea decorativa superior */}
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#48D1CC]/30 to-transparent"></div>
-      
+
       {/* Elementos decorativos con posiciones distintas */}
       <div className="absolute top-0 left-0 w-1/3 h-1/3 bg-gradient-to-bl from-[#48D1CC]/10 to-transparent rounded-full blur-3xl"></div>
       <div className="absolute bottom-0 right-0 w-1/4 h-1/4 bg-gradient-to-tl from-[#00B4DB]/10 to-transparent rounded-full blur-3xl"></div>
-      
+
       {/* Nuevo elemento decorativo para evitar el fondo completamente blanco */}
       <div className="absolute bottom-0 left-0 right-0 h-1/2 bg-gradient-to-t from-[#E0FBFF]/30 to-transparent"></div>
 
@@ -148,20 +148,20 @@ const WhyChooseUsSection = () => {
         variants={containerVariants}
       >
         <motion.div variants={itemVariants}>
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">
+          <div className="text-center mb-10 sm:mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-3 sm:mb-4">
               <span className="bg-gradient-to-r from-[#00B4DB] via-[#48D1CC] to-[#00BFFF] text-transparent bg-clip-text">
                 ¿Por qué elegir InformatiK-AI?
               </span>
             </h2>
-            <p className="text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+            <p className="text-gray-600 dark:text-gray-300 max-w-3xl mx-auto text-base sm:text-lg px-4">
               Combinamos experiencia técnica con visión empresarial para ofrecer soluciones de IA que crean valor real.
             </p>
           </div>
         </motion.div>
 
         <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-16"
+          className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 mt-8 sm:mt-16"
           variants={containerVariants}
         >
           {features.map((feature, index) => {
@@ -173,7 +173,7 @@ const WhyChooseUsSection = () => {
               { primary: '#10B981', secondary: '#34D399', accent: '#ECFDF5' }
             ];
             const color = colors[index % colors.length];
-            
+
             return (
               <motion.div
                 key={index}
@@ -182,36 +182,36 @@ const WhyChooseUsSection = () => {
                 whileHover={{ scale: 1.02, transition: { duration: 0.3 } }}
               >
                 {/* Tarjeta con borde gradiente */}
-                <div 
+                <div
                   className="p-[2px] rounded-xl relative z-10 bg-white dark:bg-gray-800 h-full"
                   style={{
                     background: `linear-gradient(to right, ${color.primary}, ${color.secondary})`,
                   }}
                 >
-                  <div 
-                    className="bg-white dark:bg-gray-800 rounded-[10px] p-8 flex flex-col h-full relative z-10 overflow-hidden"
+                  <div
+                    className="bg-white dark:bg-gray-800 rounded-[10px] p-5 sm:p-8 flex flex-col h-full relative z-10 overflow-hidden"
                     style={{
                       backgroundImage: `radial-gradient(circle at top right, ${color.accent}40 0%, transparent 70%)`,
-                      minHeight: '320px', // Altura mínima estandarizada
+                      minHeight: '280px', // Altura mínima estandarizada
                     }}
                   >
                     {/* Efecto de brillo en esquina */}
-                    <div 
+                    <div
                       className="absolute -top-10 -right-10 w-20 h-20 rounded-full blur-xl opacity-30 group-hover:opacity-60 transition-opacity duration-700"
                       style={{ background: `linear-gradient(to right, ${color.primary}, ${color.secondary})` }}
                     ></div>
-                    
+
                     {/* Línea decorativa */}
-                    <div 
+                    <div
                       className="absolute top-0 left-0 w-1/3 h-1 group-hover:w-full transition-all duration-700 ease-out"
                       style={{ background: `linear-gradient(to right, ${color.primary}, ${color.secondary})` }}
                     ></div>
-                    
+
                     <div className="relative z-10 flex flex-col h-full">
-                      <div className="flex flex-col sm:flex-row sm:items-center mb-6 gap-4">
+                      <div className="flex flex-col sm:flex-row sm:items-center mb-4 sm:mb-6 gap-3 sm:gap-4">
                         {/* Contenedor de icono con efecto 3D - CORREGIDO */}
-                        <div 
-                          className="relative w-16 h-16 rounded-xl flex items-center justify-center flex-shrink-0 transition-transform duration-700"
+                        <div
+                          className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center flex-shrink-0 transition-transform duration-700 mx-auto sm:mx-0"
                           style={{
                             background: `linear-gradient(135deg, ${color.primary}, ${color.secondary})`,
                             boxShadow: `0 10px 15px -3px ${color.primary}30, 0 4px 6px -4px ${color.primary}20`,
@@ -228,35 +228,35 @@ const WhyChooseUsSection = () => {
                           <div className="text-white" style={{ backfaceVisibility: 'hidden' }}>
                             {feature.icon}
                           </div>
-                          
+
                           {/* Partículas animadas alrededor del icono */}
-                          <div className="absolute -top-1 -right-1 w-3 h-3 rounded-full animate-ping" 
+                          <div className="absolute -top-1 -right-1 w-3 h-3 rounded-full animate-ping"
                             style={{ background: color.secondary, animationDuration: '3s' }}></div>
-                          <div className="absolute -bottom-1 -left-1 w-2 h-2 rounded-full animate-ping" 
+                          <div className="absolute -bottom-1 -left-1 w-2 h-2 rounded-full animate-ping"
                             style={{ background: color.primary, animationDuration: '2.5s', animationDelay: '0.5s' }}></div>
                         </div>
-                        
-                        <h3 className="text-2xl font-bold text-gray-800 dark:text-white group-hover:translate-x-2 transition-transform duration-300">
+
+                        <h3 className="text-xl sm:text-2xl font-bold text-gray-800 dark:text-white group-hover:translate-x-2 transition-transform duration-300 text-center sm:text-left">
                           {feature.title}
                         </h3>
                       </div>
 
                       <div className="flex-grow">
-                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed relative">
+                        <p className="text-gray-600 dark:text-gray-300 leading-relaxed relative text-center sm:text-left text-sm sm:text-base">
                           {feature.description}
-                          
+
                           {/* Línea decorativa bajo el texto */}
-                          <span 
-                            className="absolute -bottom-4 left-0 w-0 h-0.5 group-hover:w-1/3 transition-all duration-700 delay-300 ease-out opacity-0 group-hover:opacity-100"
+                          <span
+                            className="absolute -bottom-4 left-0 right-0 sm:right-auto w-0 h-0.5 group-hover:w-1/3 transition-all duration-700 delay-300 ease-out opacity-0 group-hover:opacity-100 mx-auto sm:mx-0"
                             style={{ background: `linear-gradient(to right, ${color.primary}, transparent)` }}
                           ></span>
                         </p>
                       </div>
-                      
+
                       {/* Botón "Saber más" - CORREGIDO */}
-                      <div className="mt-auto pt-6">
-                        <button 
-                          className={`flex items-center gap-2 text-sm font-medium transition-all duration-500 ease-out opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0`}
+                      <div className="mt-auto pt-4 sm:pt-6 text-center sm:text-left">
+                        <button
+                          className={`flex items-center gap-2 text-sm font-medium transition-all duration-500 ease-out opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 mx-auto sm:mx-0 neural-cursor-hover`}
                           style={{ color: color.primary }}
                         >
                           <span>Saber más</span>
@@ -266,17 +266,17 @@ const WhyChooseUsSection = () => {
                         </button>
                       </div>
                     </div>
-                    
+
                     {/* Decoración de fondo */}
-                    <div 
+                    <div
                       className="absolute bottom-0 right-0 w-32 h-32 rounded-full opacity-5 group-hover:opacity-10 group-hover:scale-150 transition-all duration-700"
                       style={{ background: `radial-gradient(circle, ${color.primary}, transparent)` }}
                     ></div>
                   </div>
                 </div>
-                
+
                 {/* Efecto de sombra flotante */}
-                <div 
+                <div
                   className="absolute -inset-0.5 rounded-xl blur-md opacity-0 group-hover:opacity-30 transition-opacity duration-700 -z-10"
                   style={{ background: `linear-gradient(to right, ${color.primary}, ${color.secondary})` }}
                 ></div>
