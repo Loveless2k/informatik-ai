@@ -42,7 +42,7 @@ const ResourcesHero = () => {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white text-glow">
-              Recursos de <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-300 to-blue-200">IA</span> y Tecnología
+              Recursos de <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-300 to-blue-200">IA y Tecnología</span>
             </h1>
 
             <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto tech-text">

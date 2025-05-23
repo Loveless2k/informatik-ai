@@ -156,11 +156,7 @@ export default function BlogContent() {
     <section className="py-20 bg-white dark:bg-gray-900">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
-          title={
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00B4DB] via-[#48D1CC] to-[#00BFFF] font-bold">
-              Noticias de Inteligencia Artificial
-            </span>
-          }
+          title="Noticias de Inteligencia Artificial"
           subtitle={
             <>
               <span className="text-gray-600 dark:text-gray-300">Últimas noticias del mundo de la IA actualizadas automáticamente</span>

@@ -183,10 +183,10 @@ const ContactPage = () => {
                 animate="animate"
               />
               <motion.h1
-                className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-white w-full text-center mb-2"
+                className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-white w-full text-center mb-2 text-glow"
                 variants={itemVariants}
               >
-                Contáctanos
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-300 to-blue-200">Contáctanos</span>
               </motion.h1>
               <div className="bg-gradient-to-r from-[#00B4DB] via-[#48D1CC] to-[#00BFFF] text-transparent bg-clip-text text-3xl md:text-4xl font-bold">
                 Estamos aquí para ayudarte
@@ -506,8 +506,8 @@ const ContactPage = () => {
         {/* SECCIÓN 2: PREGUNTAS FRECUENTES */}
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="mt-8 mb-12 text-center">
-            <h2 className="text-4xl font-bold mb-4">
-              <span className="bg-gradient-to-r from-[#00B4DB] via-[#48D1CC] to-[#00BFFF] text-transparent bg-clip-text">
+            <h2 className="text-4xl font-bold mb-4 text-glow">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-300 to-blue-200">
                 Preguntas Frecuentes
               </span>
             </h2>

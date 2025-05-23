@@ -67,7 +67,7 @@ const ServiceHero = () => {
           </motion.div>
 
           <motion.h1
-            className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-white w-full text-center mb-4"
+            className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-white w-full text-center mb-4 text-glow"
             variants={fadeInUp}
           >
             Servicios de <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-300 to-blue-200">Inteligencia Artificial</span>

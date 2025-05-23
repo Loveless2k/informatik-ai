@@ -64,10 +64,10 @@ const AboutPage = () => {
       >
         <div className="max-w-5xl mx-auto text-center">
           <motion.h1
-            className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-white mb-6"
+            className="text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-white mb-6 text-glow"
             variants={fadeInUp}
           >
-            Sobre Informatik-AI
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-300 to-blue-200">Sobre Informatik-AI</span>
           </motion.h1>
           <motion.p
             className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto"
@@ -96,8 +96,8 @@ const AboutPage = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <div className="mb-8">
-                <h2 className="text-4xl font-bold mb-4">
-                  <span className="bg-gradient-to-r from-[#00B4DB] via-[#48D1CC] to-[#00BFFF] text-transparent bg-clip-text">
+                <h2 className="text-4xl font-bold mb-4 text-glow">
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-300 to-blue-200">
                     Nuestra Historia
                   </span>
                 </h2>
@@ -161,8 +161,8 @@ const AboutPage = () => {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">
-              <span className="bg-gradient-to-r from-[#00B4DB] via-[#48D1CC] to-[#00BFFF] text-transparent bg-clip-text">
+            <h2 className="text-4xl font-bold mb-4 text-glow">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-300 to-blue-200">
                 Misión y Visión
               </span>
             </h2>
@@ -225,8 +225,8 @@ const AboutPage = () => {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">
-              <span className="bg-gradient-to-r from-[#00B4DB] via-[#48D1CC] to-[#00BFFF] text-transparent bg-clip-text">
+            <h2 className="text-4xl font-bold mb-4 text-glow">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-300 to-blue-200">
                 Nuestro Equipo
               </span>
             </h2>
@@ -355,8 +355,8 @@ const AboutPage = () => {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold mb-4">
-              <span className="bg-gradient-to-r from-[#00B4DB] via-[#48D1CC] to-[#00BFFF] text-transparent bg-clip-text">
+            <h2 className="text-4xl font-bold mb-4 text-glow">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-300 to-blue-200">
                 Estructura Organizacional
               </span>
             </h2>
@@ -382,8 +382,8 @@ const AboutPage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           <div className="text-center mb-20">
             <span className="inline-block px-4 py-1.5 mb-4 text-sm font-semibold rounded-full bg-[#00B4DB]/10 text-[#00B4DB] dark:text-[#48D1CC] dark:bg-[#48D1CC]/10">NUESTROS PRINCIPIOS</span>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              <span className="bg-gradient-to-r from-[#00B4DB] via-[#48D1CC] to-[#00BFFF] text-transparent bg-clip-text">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-glow">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-300 to-blue-200">
                 Valores que nos definen
               </span>
             </h2>
