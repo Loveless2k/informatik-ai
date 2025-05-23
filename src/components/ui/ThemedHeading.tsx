@@ -37,28 +37,26 @@ const ThemedHeading = ({
 
   // Variant styles based on theme
   const variantStyles = {
-    primary: isDarkMode 
-      ? 'text-[#00F0FF]' 
-      : 'text-[#007D84]',
-    secondary: isDarkMode 
-      ? 'text-white' 
-      : 'text-[#111111]',
-    gradient: isDarkMode 
-      ? 'text-transparent bg-clip-text bg-gradient-to-r from-[#00F0FF] to-[#48D1CC]' 
-      : 'text-transparent bg-clip-text bg-gradient-to-r from-[#007D84] to-[#00B4DB]',
-    white: 'text-white',
+    primary: isDarkMode
+      ? 'text-white text-glow'
+      : 'text-white text-glow',
+    secondary: isDarkMode
+      ? 'text-white text-glow'
+      : 'text-white text-glow',
+    gradient: 'text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-300 to-blue-200 text-glow',
+    white: 'text-white text-glow',
   };
 
   // Subtitle styles
-  const subtitleStyles = isDarkMode 
-    ? 'text-[#A0A0A0]' 
+  const subtitleStyles = isDarkMode
+    ? 'text-[#A0A0A0]'
     : 'text-[#444444]';
 
   // Animation variants
   const headingVariants = {
     hidden: { opacity: 0, y: -20 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
       transition: {
         duration: 0.5,
@@ -69,8 +67,8 @@ const ThemedHeading = ({
 
   const subtitleVariants = {
     hidden: { opacity: 0, y: -10 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
       transition: {
         duration: 0.5,
@@ -87,7 +85,7 @@ const ThemedHeading = ({
   if (animate) {
     return (
       <div className={`mb-8 ${alignmentStyles} ${className}`}>
-        <motion.h2 
+        <motion.h2
           className={`font-semibold mb-4 ${titleSizes[size]} ${variantStyles[variant]}`}
           initial="hidden"
           whileInView="visible"
@@ -96,9 +94,9 @@ const ThemedHeading = ({
         >
           {title}
         </motion.h2>
-        
+
         {subtitle && (
-          <motion.div 
+          <motion.div
             className={`${subtitleStyles} ${centered ? 'max-w-3xl mx-auto' : ''}`}
             initial="hidden"
             whileInView="visible"
@@ -122,7 +120,7 @@ const ThemedHeading = ({
       <h2 className={`font-semibold mb-4 ${titleSizes[size]} ${variantStyles[variant]}`}>
         {title}
       </h2>
-      
+
       {subtitle && (
         <div className={`${subtitleStyles} ${centered ? 'max-w-3xl mx-auto' : ''}`}>
           {typeof subtitle === 'string' ? (

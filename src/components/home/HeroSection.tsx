@@ -255,21 +255,18 @@ const HeroSection = () => {
             />
 
             <motion.div variants={fadeInUp}>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-tight text-white w-full text-center mb-2">
-                <span className="block sm:inline">Impulsando</span>{" "}
-                <span className="block sm:inline">negocios con</span>{" "}
-                <span className="bg-gradient-to-r from-[#00B4DB] via-[#48D1CC] to-[#00BFFF] text-transparent bg-clip-text">
-                  Inteligencia Artificial
-                </span>
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-tight text-white w-full text-center mb-2 text-glow">
+                Impulsando negocios con{" "}
+                Inteligencia Artificial
               </h1>
               <div className="relative min-h-[1.2em] text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold w-full text-center">
                 <div className="flex justify-center items-center relative">
                   <div className="relative overflow-hidden max-w-[95%] sm:max-w-full">
-                    <span className="bg-gradient-to-r from-[#00B4DB] via-[#48D1CC] to-[#00BFFF] text-transparent bg-clip-text h-[1.2em] inline-block">
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-300 to-blue-200 h-[1.2em] inline-block text-glow">
                       {text || "\u00A0"}
                     </span>
                     <span
-                      className="inline-block h-[1em] border-r-4 border-[#48D1CC] animate-blink ml-1 absolute top-1/2 -translate-y-1/2"
+                      className="inline-block h-[1em] border-r-4 border-blue-300 animate-blink ml-1 absolute top-1/2 -translate-y-1/2"
                       style={{ left: `calc(${text.length}ch)` }}
                     ></span>
                   </div>
