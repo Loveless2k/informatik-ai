@@ -221,7 +221,7 @@ const Footer = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                 </span>
-                <span>Calle IA 123, Ciudad Tech, 12345</span>
+                <span>San Martin 924, Of. 213, Temuco</span>
               </p>
               <p className="text-gray-300 flex items-start group">
                 <span className="w-8 h-8 rounded-full bg-gray-800 group-hover:bg-blue-600 flex items-center justify-center mr-3 transition-colors duration-300">
@@ -229,7 +229,7 @@ const Footer = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                   </svg>
                 </span>
-                <span>+34 555 123 456</span>
+                <span>+56 951172768</span>
               </p>
               <p className="text-gray-300 flex items-start group">
                 <span className="w-8 h-8 rounded-full bg-gray-800 group-hover:bg-blue-600 flex items-center justify-center mr-3 transition-colors duration-300">
