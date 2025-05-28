@@ -14,22 +14,22 @@
       "default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob:",
 
       // Scripts - permitir desde el mismo origen, inline, eval y servicios externos
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://widget.botsonic.com https://bot.writesonic.com https://api-azure.botsonic.ai",
 
       // Estilos - permitir desde el mismo origen, inline y servicios externos
-      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://widget.botsonic.com https://bot.writesonic.com",
 
       // Imágenes - permitir desde el mismo origen, data URLs y sitios confiables
-      "img-src 'self' data: blob: https://www.google-analytics.com https://*.cloudfront.net https://gnews.io",
+      "img-src 'self' data: blob: https://www.google-analytics.com https://*.cloudfront.net https://gnews.io https://widget.botsonic.com https://bot.writesonic.com https://api-azure.botsonic.ai",
 
       // Fuentes - permitir desde el mismo origen y Google Fonts
       "font-src 'self' data: https://fonts.gstatic.com",
 
       // Conectar - permitir conexiones a APIs y servicios necesarios
-      "connect-src 'self' https://www.google-analytics.com https://gnews.io",
+      "connect-src 'self' https://www.google-analytics.com https://gnews.io https://api-azure.botsonic.ai https://bot.writesonic.com https://widget.botsonic.com",
 
       // Frames - permitir mismo origen y algunos externos
-      "frame-src 'self' https://www.youtube.com",
+      "frame-src 'self' https://www.youtube.com https://widget.botsonic.com https://bot.writesonic.com",
 
       // Objetos - restringir pero no bloquear completamente
       "object-src 'self'",
@@ -68,7 +68,7 @@
     // Permissions-Policy (anteriormente Feature-Policy)
     const permissionsPolicy = document.createElement('meta');
     permissionsPolicy.httpEquiv = 'Permissions-Policy';
-    permissionsPolicy.content = 'camera=(), microphone=(), geolocation=()';
+    permissionsPolicy.content = 'camera=(self "https://widget.botsonic.com"), microphone=(self "https://widget.botsonic.com"), geolocation=()';
     document.head.appendChild(permissionsPolicy);
   }
 

@@ -49,6 +49,7 @@ const Header = () => {
     { href: '/success-cases', label: 'Casos de Éxito' },
     { href: '/blog', label: 'Blog' },
     { href: '/resources', label: 'Recursos' },
+    { href: '/chatbot', label: 'Chatbot' },
     { href: '/contact', label: 'Contacto' },
   ];
 

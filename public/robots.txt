@@ -8,6 +8,7 @@ Allow: /services
 Allow: /success-cases
 Allow: /blog
 Allow: /resources
+Allow: /chatbot
 Allow: /contact
 
 # Bloquear acceso a archivos y directorios específicos
