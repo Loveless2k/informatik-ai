@@ -30,6 +30,8 @@ const DynamicBackground = () => {
         return () => mediaQuery.removeListener(handleChange);
       }
     }
+
+    return undefined;
   }, []);
 
   // No renderizar nada durante SSR
@@ -40,53 +42,53 @@ const DynamicBackground = () => {
   // Si el usuario prefiere reducción de movimiento, mostrar un fondo estático
   if (prefersReducedMotion) {
     return (
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-24 -left-24 w-[40rem] h-[40rem] bg-blue-500/30 rounded-full filter blur-[100px]" />
-        <div className="absolute top-1/2 right-1/4 w-[30rem] h-[30rem] bg-teal-500/20 rounded-full filter blur-[100px]" />
-        <div className="absolute bottom-1/4 left-1/3 w-[35rem] h-[35rem] bg-accent/20 rounded-full filter blur-[100px]" />
+      <div className='absolute inset-0 overflow-hidden'>
+        <div className='absolute -top-24 -left-24 w-[40rem] h-[40rem] bg-blue-500/30 rounded-full filter blur-[100px]' />
+        <div className='absolute top-1/2 right-1/4 w-[30rem] h-[30rem] bg-teal-500/20 rounded-full filter blur-[100px]' />
+        <div className='absolute bottom-1/4 left-1/3 w-[35rem] h-[35rem] bg-accent/20 rounded-full filter blur-[100px]' />
       </div>
     );
   }
 
   return (
-    <div className="absolute inset-0 overflow-hidden">
+    <div className='absolute inset-0 overflow-hidden'>
       <motion.div
-        className="absolute -top-24 -left-24 w-[40rem] h-[40rem] bg-blue-500/30 rounded-full filter blur-[100px]"
+        className='absolute -top-24 -left-24 w-[40rem] h-[40rem] bg-blue-500/30 rounded-full filter blur-[100px]'
         animate={{
           scale: [1, 1.2, 1],
           x: [0, 20, 0],
-          y: [0, -20, 0]
+          y: [0, -20, 0],
         }}
         transition={{
           duration: 15,
           repeat: Infinity,
-          repeatType: "reverse"
+          repeatType: 'reverse',
         }}
       />
       <motion.div
-        className="absolute top-1/2 right-1/4 w-[30rem] h-[30rem] bg-teal-500/20 rounded-full filter blur-[100px]"
+        className='absolute top-1/2 right-1/4 w-[30rem] h-[30rem] bg-teal-500/20 rounded-full filter blur-[100px]'
         animate={{
           scale: [1, 1.3, 1],
           x: [0, -30, 0],
-          y: [0, 30, 0]
+          y: [0, 30, 0],
         }}
         transition={{
           duration: 20,
           repeat: Infinity,
-          repeatType: "reverse"
+          repeatType: 'reverse',
         }}
       />
       <motion.div
-        className="absolute bottom-1/4 left-1/3 w-[35rem] h-[35rem] bg-accent/20 rounded-full filter blur-[100px]"
+        className='absolute bottom-1/4 left-1/3 w-[35rem] h-[35rem] bg-accent/20 rounded-full filter blur-[100px]'
         animate={{
           scale: [1, 1.1, 1],
           x: [0, 40, 0],
-          y: [0, 40, 0]
+          y: [0, 40, 0],
         }}
         transition={{
           duration: 25,
           repeat: Infinity,
-          repeatType: "reverse"
+          repeatType: 'reverse',
         }}
       />
     </div>

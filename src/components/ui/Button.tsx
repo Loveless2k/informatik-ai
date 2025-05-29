@@ -33,7 +33,8 @@ const Button = ({
   animate = true,
 }: ButtonProps) => {
   // Base styles
-  const baseStyles = 'inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 shadow-sm hover:shadow-md';
+  const baseStyles =
+    'inline-flex items-center justify-center font-medium rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 shadow-sm hover:shadow-md';
 
   // Get theme context
   const { theme } = useTheme();
@@ -75,9 +76,9 @@ const Button = ({
   // Content with icon
   const content = (
     <>
-      {icon && iconPosition === 'left' && <span className="mr-2">{icon}</span>}
+      {icon && iconPosition === 'left' && <span className='mr-2'>{icon}</span>}
       {children}
-      {icon && iconPosition === 'right' && <span className="ml-2">{icon}</span>}
+      {icon && iconPosition === 'right' && <span className='ml-2'>{icon}</span>}
     </>
   );
 
@@ -86,24 +87,20 @@ const Button = ({
     hover: {
       scale: 1.03,
       transition: {
-        type: "spring",
+        type: 'spring',
         stiffness: 400,
-        damping: 10
-      }
+        damping: 10,
+      },
     },
     tap: {
-      scale: 0.97
-    }
+      scale: 0.97,
+    },
   };
 
   // If href is provided, render as Link
   if (href) {
     return animate ? (
-      <motion.div
-        whileHover="hover"
-        whileTap="tap"
-        variants={buttonVariants}
-      >
+      <motion.div whileHover='hover' whileTap='tap' variants={buttonVariants}>
         <Link href={href} className={buttonStyles}>
           {content}
         </Link>
@@ -122,8 +119,8 @@ const Button = ({
       className={buttonStyles}
       onClick={onClick}
       disabled={disabled}
-      whileHover="hover"
-      whileTap="tap"
+      whileHover='hover'
+      whileTap='tap'
       variants={buttonVariants}
     >
       {content}

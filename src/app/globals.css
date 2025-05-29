@@ -11,52 +11,67 @@
 
 :root {
   /* Light mode variables - Nuevo tema */
-  --background: #E0FBFF;   /* Calipso muy claro */
-  --foreground: #111111;   /* Texto principal casi negro */
+  --background: #e0fbff; /* Calipso muy claro */
+  --foreground: #111111; /* Texto principal casi negro */
 
   /* Modern color palette for Informatik-AI */
-  --primary: #007D84;      /* Calipso medio - Elementos destacados */
-  --primary-dark: #006A70; /* Calipso medio oscuro - Hover */
-  --primary-light: #00F0FF; /* Calipso vibrante - Acentos */
+  --primary: #007d84; /* Calipso medio - Elementos destacados */
+  --primary-dark: #006a70; /* Calipso medio oscuro - Hover */
+  --primary-light: #00f0ff; /* Calipso vibrante - Acentos */
 
-  --secondary: #00B4DB;    /* Calipso - Secondary brand color */
-  --secondary-dark: #0099B8; /* Calipso oscuro - Hover */
-  --secondary-light: #48D1CC; /* Calipso claro - Accents */
+  --secondary: #00b4db; /* Calipso - Secondary brand color */
+  --secondary-dark: #0099b8; /* Calipso oscuro - Hover */
+  --secondary-light: #48d1cc; /* Calipso claro - Accents */
 
   /* Tooltip background */
   --tooltip-bg: rgba(15, 23, 42, 0.9);
 
-  --accent: #00F0FF;       /* Calipso vibrante - Accent color */
-  --accent-dark: #00D6E4;  /* Calipso vibrante oscuro - Hover */
+  --accent: #00f0ff; /* Calipso vibrante - Accent color */
+  --accent-dark: #00d6e4; /* Calipso vibrante oscuro - Hover */
 
-  --success: #10b981;      /* Emerald-500 - Success messages */
-  --warning: #f59e0b;      /* Amber-500 - Warning messages */
-  --error: #ef4444;        /* Red-500 - Error messages */
+  --success: #10b981; /* Emerald-500 - Success messages */
+  --warning: #f59e0b; /* Amber-500 - Warning messages */
+  --error: #ef4444; /* Red-500 - Error messages */
 
-  --gray-light: #E0FBFF;   /* Calipso muy claro - Light background */
-  --gray-medium: #444444;  /* Gris oscuro - Subtítulos */
-  --gray-dark: #111111;    /* Casi negro - Texto principal */
-  --gray-darker: #000000;  /* Negro - Contraste máximo */
+  --gray-light: #e0fbff; /* Calipso muy claro - Light background */
+  --gray-medium: #444444; /* Gris oscuro - Subtítulos */
+  --gray-dark: #111111; /* Casi negro - Texto principal */
+  --gray-darker: #000000; /* Negro - Contraste máximo */
 
   /* Card and container backgrounds */
-  --card-bg: #FFFFFF;
-  --container-bg: #E0FBFF;
+  --card-bg: #ffffff;
+  --container-bg: #e0fbff;
   --header-bg: rgba(224, 251, 255, 0.8); /* Calipso muy claro con opacidad */
-  --footer-bg: #D0F5FF;
+  --footer-bg: #d0f5ff;
 
   /* Borders */
-  --border-color: #B0E5F0;
-  --border-color-hover: #80D0E0;
+  --border-color: #b0e5f0;
+  --border-color-hover: #80d0e0;
 
   /* Shadows */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-md:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg:
+    0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 
   /* Gradients */
-  --gradient-primary: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-  --gradient-cta: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
-  --gradient-hero: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, var(--secondary) 100%);
+  --gradient-primary: linear-gradient(
+    135deg,
+    var(--primary) 0%,
+    var(--secondary) 100%
+  );
+  --gradient-cta: linear-gradient(
+    135deg,
+    var(--accent) 0%,
+    var(--secondary) 100%
+  );
+  --gradient-hero: linear-gradient(
+    135deg,
+    var(--primary-dark) 0%,
+    var(--primary) 50%,
+    var(--secondary) 100%
+  );
   --gradient-card: linear-gradient(to bottom right, var(--gray-light), white);
 
   /* Animation durations */
@@ -78,52 +93,67 @@
 
 /* Dark mode variables - Nuevo tema oscuro */
 .dark {
-  --background: #000000;    /* Negro puro */
-  --foreground: #FFFFFF;    /* Blanco puro */
+  --background: #000000; /* Negro puro */
+  --foreground: #ffffff; /* Blanco puro */
 
   /* Adjusted colors for dark mode */
-  --primary: #00F0FF;       /* Calipso vibrante - Elementos primarios */
-  --primary-dark: #00D6E4;  /* Calipso vibrante oscuro - Hover */
-  --primary-light: #48F0FF; /* Calipso vibrante claro - Accents */
+  --primary: #00f0ff; /* Calipso vibrante - Elementos primarios */
+  --primary-dark: #00d6e4; /* Calipso vibrante oscuro - Hover */
+  --primary-light: #48f0ff; /* Calipso vibrante claro - Accents */
 
-  --secondary: #00B4DB;     /* Calipso - Secondary brand color */
-  --secondary-dark: #0099B8;/* Calipso oscuro - Hover */
-  --secondary-light: #48D1CC;/* Calipso claro - Accents */
+  --secondary: #00b4db; /* Calipso - Secondary brand color */
+  --secondary-dark: #0099b8; /* Calipso oscuro - Hover */
+  --secondary-light: #48d1cc; /* Calipso claro - Accents */
 
-  --accent: #00F0FF;        /* Calipso vibrante - Accent color */
-  --accent-dark: #00D6E4;   /* Calipso vibrante oscuro - Hover */
+  --accent: #00f0ff; /* Calipso vibrante - Accent color */
+  --accent-dark: #00d6e4; /* Calipso vibrante oscuro - Hover */
 
   /* Tooltip background */
   --tooltip-bg: rgba(0, 0, 0, 0.9);
 
-  --success: #34d399;       /* Emerald-400 - Success messages */
-  --warning: #fbbf24;       /* Amber-400 - Warning messages */
-  --error: #f87171;         /* Red-400 - Error messages */
+  --success: #34d399; /* Emerald-400 - Success messages */
+  --warning: #fbbf24; /* Amber-400 - Warning messages */
+  --error: #f87171; /* Red-400 - Error messages */
 
-  --gray-light: #333333;    /* Gris oscuro - Dark mode light gray */
-  --gray-medium: #A0A0A0;   /* Gris claro - Subtítulos */
-  --gray-dark: #FFFFFF;     /* Blanco - Dark mode dark gray */
-  --gray-darker: #FFFFFF;   /* Blanco - Dark mode darker gray */
+  --gray-light: #333333; /* Gris oscuro - Dark mode light gray */
+  --gray-medium: #a0a0a0; /* Gris claro - Subtítulos */
+  --gray-dark: #ffffff; /* Blanco - Dark mode dark gray */
+  --gray-darker: #ffffff; /* Blanco - Dark mode darker gray */
 
   /* Card and container backgrounds */
-  --card-bg: #111111;       /* Casi negro */
-  --container-bg: #000000;  /* Negro puro */
+  --card-bg: #111111; /* Casi negro */
+  --container-bg: #000000; /* Negro puro */
   --header-bg: rgba(0, 0, 0, 0.8); /* Negro con opacidad */
-  --footer-bg: #111111;     /* Casi negro */
+  --footer-bg: #111111; /* Casi negro */
 
   /* Borders */
-  --border-color: #333333;  /* Gris oscuro */
+  --border-color: #333333; /* Gris oscuro */
   --border-color-hover: #444444; /* Gris medio */
 
   /* Shadows */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+  --shadow-md:
+    0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+  --shadow-lg:
+    0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
 
   /* Gradients adjusted for dark mode */
-  --gradient-primary: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-  --gradient-cta: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
-  --gradient-hero: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, var(--secondary) 100%);
+  --gradient-primary: linear-gradient(
+    135deg,
+    var(--primary) 0%,
+    var(--secondary) 100%
+  );
+  --gradient-cta: linear-gradient(
+    135deg,
+    var(--accent) 0%,
+    var(--secondary) 100%
+  );
+  --gradient-hero: linear-gradient(
+    135deg,
+    var(--primary-dark) 0%,
+    var(--primary) 50%,
+    var(--secondary) 100%
+  );
   --gradient-card: linear-gradient(to bottom right, var(--gray-light), #1e293b);
 }
 
@@ -148,8 +178,12 @@ html {
 }
 
 /* Smooth theme transitions */
-html, body, * {
-  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+html,
+body,
+* {
+  transition-property:
+    background-color, border-color, color, fill, stroke, opacity, box-shadow,
+    transform, filter, backdrop-filter;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 300ms;
 }
@@ -161,7 +195,12 @@ html, body, * {
 }
 
 /* Improved Typography with Outfit font */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-sans), 'Outfit', sans-serif;
   font-weight: 600;
   line-height: 1.2;
@@ -246,32 +285,60 @@ p {
 /* Animations */
 /* Animaciones mejoradas con más impacto */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideUp {
-  from { transform: translateY(40px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 @keyframes slideInRight {
-  from { transform: translateX(40px); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
+  from {
+    transform: translateX(40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 @keyframes slideInLeft {
-  from { transform: translateX(-40px); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
+  from {
+    transform: translateX(-40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 @keyframes bounce-subtle {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 @keyframes pulse-slow {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0;
   }
   50% {
@@ -332,31 +399,55 @@ p {
 }
 
 .hover-shadow:hover {
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.2),
+    0 10px 10px -5px rgba(0, 0, 0, 0.1);
 }
 
 /* Additional animations */
 @keyframes float-delay {
-  0% { transform: translateY(-10px); }
-  50% { transform: translateY(10px); }
-  100% { transform: translateY(-10px); }
+  0% {
+    transform: translateY(-10px);
+  }
+  50% {
+    transform: translateY(10px);
+  }
+  100% {
+    transform: translateY(-10px);
+  }
 }
 
 @keyframes spin-slow {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @keyframes spin-slow-reverse {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(-360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
 }
 
 @keyframes blob {
-  0% { transform: scale(1); }
-  33% { transform: scale(1.2); }
-  66% { transform: scale(0.9); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  33% {
+    transform: scale(1.2);
+  }
+  66% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .animate-float {
@@ -389,26 +480,30 @@ p {
 
 /* Grid background */
 .bg-grid-white {
-  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-                    linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
   background-size: 40px 40px;
 }
 
 .dark .bg-grid-white {
-  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-                    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
   background-size: 40px 40px;
 }
 
 .bg-grid-gray-200 {
-  background-image: linear-gradient(to right, rgba(229, 231, 235, 0.5) 1px, transparent 1px),
-                    linear-gradient(to bottom, rgba(229, 231, 235, 0.5) 1px, transparent 1px);
+  background-image:
+    linear-gradient(to right, rgba(229, 231, 235, 0.5) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(229, 231, 235, 0.5) 1px, transparent 1px);
   background-size: 40px 40px;
 }
 
 .dark .bg-grid-gray-200 {
-  background-image: linear-gradient(to right, rgba(71, 85, 105, 0.3) 1px, transparent 1px),
-                    linear-gradient(to bottom, rgba(71, 85, 105, 0.3) 1px, transparent 1px);
+  background-image:
+    linear-gradient(to right, rgba(71, 85, 105, 0.3) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(71, 85, 105, 0.3) 1px, transparent 1px);
   background-size: 40px 40px;
 }
 
@@ -422,7 +517,7 @@ p {
 }
 
 .matrix-bg::before {
-  content: "";
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
@@ -435,8 +530,14 @@ p {
 
 /* Animaciones para la línea de tiempo y FAQs */
 @keyframes fadeInScale {
-  from { opacity: 0; transform: scale(0.9); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 .animate-fade-in-scale {
@@ -444,8 +545,14 @@ p {
 }
 
 @keyframes expandVertical {
-  from { max-height: 0; opacity: 0; }
-  to { max-height: 500px; opacity: 1; }
+  from {
+    max-height: 0;
+    opacity: 0;
+  }
+  to {
+    max-height: 500px;
+    opacity: 1;
+  }
 }
 
 .animate-expand {
@@ -454,8 +561,14 @@ p {
 
 /* Animaciones para el CTA innovador */
 @keyframes particle {
-  0% { transform: translate(0, 0); opacity: 1; }
-  100% { transform: translate(var(--x, 50px), var(--y, 50px)); opacity: 0; }
+  0% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--x, 50px), var(--y, 50px));
+    opacity: 0;
+  }
 }
 
 .animate-particle {
@@ -463,9 +576,15 @@ p {
 }
 
 @keyframes glow {
-  0% { box-shadow: 0 0 5px rgba(59, 130, 246, 0.5); }
-  50% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.8); }
-  100% { box-shadow: 0 0 5px rgba(59, 130, 246, 0.5); }
+  0% {
+    box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.8);
+  }
+  100% {
+    box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+  }
 }
 
 .animate-glow {
@@ -473,9 +592,15 @@ p {
 }
 
 @keyframes rotate3d {
-  0% { transform: perspective(1000px) rotateX(0) rotateY(0); }
-  50% { transform: perspective(1000px) rotateX(10deg) rotateY(10deg); }
-  100% { transform: perspective(1000px) rotateX(0) rotateY(0); }
+  0% {
+    transform: perspective(1000px) rotateX(0) rotateY(0);
+  }
+  50% {
+    transform: perspective(1000px) rotateX(10deg) rotateY(10deg);
+  }
+  100% {
+    transform: perspective(1000px) rotateX(0) rotateY(0);
+  }
 }
 
 .animate-rotate-3d {

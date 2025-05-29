@@ -34,7 +34,9 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
       }
       // Si no hay tema guardado, usar la preferencia del sistema
       else {
-        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const prefersDark = window.matchMedia(
+          '(prefers-color-scheme: dark)'
+        ).matches;
         setTheme(prefersDark ? 'dark' : 'light');
       }
     }
@@ -79,12 +81,16 @@ export const useTheme = () => {
     // Valor predeterminado que imita la interfaz ThemeContextType
     return {
       theme: 'dark' as Theme,
-      setTheme: (theme: Theme) => {
-        console.warn('useTheme usado fuera de ThemeProvider, setTheme no tendrá efecto');
+      setTheme: (_theme: Theme) => {
+        console.warn(
+          'useTheme usado fuera de ThemeProvider, setTheme no tendrá efecto'
+        );
       },
       toggleTheme: () => {
-        console.warn('useTheme usado fuera de ThemeProvider, toggleTheme no tendrá efecto');
-      }
+        console.warn(
+          'useTheme usado fuera de ThemeProvider, toggleTheme no tendrá efecto'
+        );
+      },
     };
   }
 

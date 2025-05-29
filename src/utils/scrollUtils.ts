@@ -4,7 +4,7 @@
 export const scrollToContactForm = () => {
   // Buscar el elemento del formulario de contacto
   const contactForm = document.getElementById('contact-form');
-  
+
   // Si existe, desplazarse suavemente a él
   if (contactForm) {
     contactForm.scrollIntoView({ behavior: 'smooth' });

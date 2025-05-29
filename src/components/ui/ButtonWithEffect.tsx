@@ -27,8 +27,10 @@ const ButtonWithEffect: React.FC<ButtonWithEffectProps> = ({
   disabled = false,
 }) => {
   const [isHovered, setIsHovered] = useState(false);
-  const [isPressed, setIsPressed] = useState(false);
-  const [particles, setParticles] = useState<Array<{ id: number; x: number; y: number; size: number; color: string }>>([]);
+  const [, setIsPressed] = useState(false);
+  const [particles, setParticles] = useState<
+    Array<{ id: number; x: number; y: number; size: number; color: string }>
+  >([]);
   const buttonRef = useRef<HTMLButtonElement | HTMLAnchorElement>(null);
   const particleCount = 15;
   const particleTimeout = useRef<NodeJS.Timeout | null>(null);
@@ -66,34 +68,32 @@ const ButtonWithEffect: React.FC<ButtonWithEffectProps> = ({
   // Efecto de partículas
   const createParticles = (e: React.MouseEvent) => {
     if (effectType !== 'particles' || !buttonRef.current) return;
-    
+
     const rect = buttonRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    
+
     const newParticles = [];
-    
+
     for (let i = 0; i < particleCount; i++) {
-      const angle = Math.random() * Math.PI * 2;
-      const distance = Math.random() * 50 + 10;
-      
       newParticles.push({
         id: Date.now() + i,
         x: x,
         y: y,
         size: Math.random() * 6 + 2,
-        color: variant === 'primary' ? 
-          `rgba(${Math.floor(Math.random() * 100)}, ${Math.floor(Math.random() * 180 + 180)}, ${Math.floor(Math.random() * 180 + 180)}, ${Math.random() * 0.5 + 0.5})` : 
-          `rgba(${Math.floor(Math.random() * 180 + 180)}, ${Math.floor(Math.random() * 180 + 180)}, ${Math.floor(Math.random() * 180 + 180)}, ${Math.random() * 0.5 + 0.5})`,
+        color:
+          variant === 'primary'
+            ? `rgba(${Math.floor(Math.random() * 100)}, ${Math.floor(Math.random() * 180 + 180)}, ${Math.floor(Math.random() * 180 + 180)}, ${Math.random() * 0.5 + 0.5})`
+            : `rgba(${Math.floor(Math.random() * 180 + 180)}, ${Math.floor(Math.random() * 180 + 180)}, ${Math.floor(Math.random() * 180 + 180)}, ${Math.random() * 0.5 + 0.5})`,
       });
     }
-    
+
     setParticles(newParticles);
-    
+
     if (particleTimeout.current) {
       clearTimeout(particleTimeout.current);
     }
-    
+
     particleTimeout.current = setTimeout(() => {
       setParticles([]);
     }, 1000);
@@ -102,27 +102,27 @@ const ButtonWithEffect: React.FC<ButtonWithEffectProps> = ({
   // Efecto de ripple
   const createRipple = (e: React.MouseEvent) => {
     if (effectType !== 'ripple' || !buttonRef.current) return;
-    
+
     const button = buttonRef.current;
     const rect = button.getBoundingClientRect();
-    
+
     const circle = document.createElement('span');
     const diameter = Math.max(rect.width, rect.height);
     const radius = diameter / 2;
-    
+
     circle.style.width = circle.style.height = `${diameter}px`;
     circle.style.left = `${e.clientX - rect.left - radius}px`;
     circle.style.top = `${e.clientY - rect.top - radius}px`;
     circle.classList.add('ripple-effect');
-    
+
     const ripple = button.getElementsByClassName('ripple-effect')[0];
-    
+
     if (ripple) {
       ripple.remove();
     }
-    
+
     button.appendChild(circle);
-    
+
     setTimeout(() => {
       circle.remove();
     }, 600);
@@ -142,29 +142,29 @@ const ButtonWithEffect: React.FC<ButtonWithEffectProps> = ({
     <>
       {/* Efecto de glow */}
       {effectType === 'glow' && isHovered && (
-        <div className="absolute inset-0 rounded-full bg-[#00B4DB]/20 blur-md animate-pulse-slow"></div>
+        <div className='absolute inset-0 rounded-full bg-[#00B4DB]/20 blur-md animate-pulse-slow'></div>
       )}
-      
+
       {/* Partículas */}
       <AnimatePresence>
-        {particles.map((particle) => (
+        {particles.map(particle => (
           <motion.span
             key={particle.id}
-            className="absolute rounded-full pointer-events-none"
-            initial={{ 
-              x: particle.x, 
-              y: particle.y, 
+            className='absolute rounded-full pointer-events-none'
+            initial={{
+              x: particle.x,
+              y: particle.y,
               opacity: 1,
-              scale: 0
+              scale: 0,
             }}
-            animate={{ 
-              x: particle.x + (Math.random() - 0.5) * 100, 
+            animate={{
+              x: particle.x + (Math.random() - 0.5) * 100,
               y: particle.y + (Math.random() - 0.5) * 100,
               opacity: 0,
-              scale: 1
+              scale: 1,
             }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
             style={{
               width: `${particle.size}px`,
               height: `${particle.size}px`,
@@ -173,9 +173,9 @@ const ButtonWithEffect: React.FC<ButtonWithEffectProps> = ({
           />
         ))}
       </AnimatePresence>
-      
+
       {/* Contenido del botón */}
-      <span className="relative z-10">{children}</span>
+      <span className='relative z-10'>{children}</span>
     </>
   );
 
@@ -190,13 +190,13 @@ const ButtonWithEffect: React.FC<ButtonWithEffectProps> = ({
       className={commonClasses}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      onMouseDown={(e) => {
+      onMouseDown={e => {
         setIsPressed(true);
         createParticles(e);
         createRipple(e);
       }}
       onMouseUp={() => setIsPressed(false)}
-      onClick={onClick}
+      {...(onClick && { onClick })}
       style={{ pointerEvents: disabled ? 'none' : 'auto' }}
     >
       {buttonContent}
@@ -207,7 +207,7 @@ const ButtonWithEffect: React.FC<ButtonWithEffectProps> = ({
       className={commonClasses}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      onMouseDown={(e) => {
+      onMouseDown={e => {
         setIsPressed(true);
         createParticles(e);
         createRipple(e);
@@ -222,9 +222,7 @@ const ButtonWithEffect: React.FC<ButtonWithEffectProps> = ({
 
   // Envolver en tooltip si es necesario
   return tooltip ? (
-    <Tooltip text={tooltip}>
-      {ButtonComponent}
-    </Tooltip>
+    <Tooltip text={tooltip}>{ButtonComponent}</Tooltip>
   ) : (
     ButtonComponent
   );

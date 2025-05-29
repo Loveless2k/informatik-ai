@@ -4,8 +4,10 @@ import BlogContent from '@/components/blog/BlogContent';
 
 export const metadata: Metadata = {
   title: 'Blog | Informatik-AI',
-  description: 'Artículos, tutoriales y noticias sobre inteligencia artificial, machine learning y transformación digital.',
-  keywords: 'blog, inteligencia artificial, machine learning, tutoriales, noticias de IA',
+  description:
+    'Artículos, tutoriales y noticias sobre inteligencia artificial, machine learning y transformación digital.',
+  keywords:
+    'blog, inteligencia artificial, machine learning, tutoriales, noticias de IA',
   alternates: {
     languages: {
       'en-US': '/en/blog',
@@ -17,4 +19,3 @@ export const metadata: Metadata = {
 export default function BlogPage() {
   return <BlogContent />;
 }
-

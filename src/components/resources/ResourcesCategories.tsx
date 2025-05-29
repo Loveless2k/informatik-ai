@@ -7,16 +7,27 @@ import Link from 'next/link';
 import SectionHeading from '@/components/ui/SectionHeading';
 import { useTheme } from '@/context/ThemeContext';
 
-
 // Definir las categorías de recursos
 const categories = [
   {
     id: 'guias',
     title: 'Guías y Tutoriales',
-    description: 'Aprende paso a paso cómo implementar soluciones de IA en tu empresa',
+    description:
+      'Aprende paso a paso cómo implementar soluciones de IA en tu empresa',
     icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+      <svg
+        xmlns='http://www.w3.org/2000/svg'
+        className='h-10 w-10'
+        fill='none'
+        viewBox='0 0 24 24'
+        stroke='currentColor'
+      >
+        <path
+          strokeLinecap='round'
+          strokeLinejoin='round'
+          strokeWidth={2}
+          d='M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253'
+        />
       </svg>
     ),
     color: 'from-blue-500 to-blue-600',
@@ -24,10 +35,22 @@ const categories = [
   {
     id: 'plantillas',
     title: 'Plantillas y Frameworks',
-    description: 'Acelera tus proyectos con plantillas prediseñadas y frameworks probados',
+    description:
+      'Acelera tus proyectos con plantillas prediseñadas y frameworks probados',
     icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2" />
+      <svg
+        xmlns='http://www.w3.org/2000/svg'
+        className='h-10 w-10'
+        fill='none'
+        viewBox='0 0 24 24'
+        stroke='currentColor'
+      >
+        <path
+          strokeLinecap='round'
+          strokeLinejoin='round'
+          strokeWidth={2}
+          d='M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2'
+        />
       </svg>
     ),
     color: 'from-teal-500 to-teal-600',
@@ -35,11 +58,28 @@ const categories = [
   {
     id: 'herramientas',
     title: 'Herramientas Gratuitas',
-    description: 'Accede a herramientas y utilidades para potenciar tus proyectos de IA',
+    description:
+      'Accede a herramientas y utilidades para potenciar tus proyectos de IA',
     icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+      <svg
+        xmlns='http://www.w3.org/2000/svg'
+        className='h-10 w-10'
+        fill='none'
+        viewBox='0 0 24 24'
+        stroke='currentColor'
+      >
+        <path
+          strokeLinecap='round'
+          strokeLinejoin='round'
+          strokeWidth={2}
+          d='M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z'
+        />
+        <path
+          strokeLinecap='round'
+          strokeLinejoin='round'
+          strokeWidth={2}
+          d='M15 12a3 3 0 11-6 0 3 3 0 016 0z'
+        />
       </svg>
     ),
     color: 'from-purple-500 to-purple-600',
@@ -47,10 +87,22 @@ const categories = [
   {
     id: 'webinars',
     title: 'Webinars y Eventos',
-    description: 'Participa en sesiones formativas y eventos sobre IA y tecnología',
+    description:
+      'Participa en sesiones formativas y eventos sobre IA y tecnología',
     icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+      <svg
+        xmlns='http://www.w3.org/2000/svg'
+        className='h-10 w-10'
+        fill='none'
+        viewBox='0 0 24 24'
+        stroke='currentColor'
+      >
+        <path
+          strokeLinecap='round'
+          strokeLinejoin='round'
+          strokeWidth={2}
+          d='M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z'
+        />
       </svg>
     ),
     color: 'from-amber-500 to-amber-600',
@@ -81,60 +133,91 @@ const ResourcesCategories = () => {
   };
 
   return (
-    <section id="categorias" className={`py-24 md:py-32 relative overflow-hidden ${
-      isDarkMode
-        ? 'bg-gradient-to-br from-slate-950 via-slate-900 to-gray-800 text-white'
-        : 'bg-gradient-to-br from-white via-blue-50 to-slate-100 text-slate-800'
-    }`}>
+    <section
+      id='categorias'
+      className={`py-24 md:py-32 relative overflow-hidden ${
+        isDarkMode
+          ? 'bg-gradient-to-br from-slate-950 via-slate-900 to-gray-800 text-white'
+          : 'bg-gradient-to-br from-white via-blue-50 to-slate-100 text-slate-800'
+      }`}
+    >
       {/* Patrón de fondo */}
-      <div className={`absolute inset-0 ${
-        isDarkMode ? 'bg-grid-white/[0.04]' : 'bg-grid-slate-300/[0.2]'
-      } bg-[length:30px_30px]`}></div>
+      <div
+        className={`absolute inset-0 ${
+          isDarkMode ? 'bg-grid-white/[0.04]' : 'bg-grid-slate-300/[0.2]'
+        } bg-[length:30px_30px]`}
+      ></div>
 
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
         <SectionHeading
-          title={<span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00B4DB] via-[#48D1CC] to-[#00BFFF] font-bold">Categorías de Recursos</span>}
-          subtitle={<span className={`${isDarkMode ? 'text-gray-300' : 'text-gray-600'} max-w-2xl mx-auto text-base md:text-lg`}>Explora nuestra biblioteca de recursos organizados por categorías para encontrar exactamente lo que necesitas.</span>}
+          title={
+            <span className='text-transparent bg-clip-text bg-gradient-to-r from-[#00B4DB] via-[#48D1CC] to-[#00BFFF] font-bold'>
+              Categorías de Recursos
+            </span>
+          }
+          subtitle={
+            <span
+              className={`${isDarkMode ? 'text-gray-300' : 'text-gray-600'} max-w-2xl mx-auto text-base md:text-lg`}
+            >
+              Explora nuestra biblioteca de recursos organizados por categorías
+              para encontrar exactamente lo que necesitas.
+            </span>
+          }
           centered
-          className="mb-12"
+          className='mb-12'
         />
 
         <motion.div
           ref={ref}
           variants={containerVariants}
-          initial="hidden"
-          animate={inView ? "visible" : "hidden"}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 max-w-7xl mx-auto"
+          initial='hidden'
+          animate={inView ? 'visible' : 'hidden'}
+          className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 max-w-7xl mx-auto'
         >
-          {categories.map((category) => (
+          {categories.map(category => (
             <motion.div
               key={category.id}
               variants={itemVariants}
               className={`relative rounded-2xl overflow-hidden transition-all duration-300 group backdrop-blur-sm shadow-lg hover:shadow-xl ${
-                isDarkMode ? 'bg-white/5 border border-white/10' : 'bg-white border border-gray-200'
+                isDarkMode
+                  ? 'bg-white/5 border border-white/10'
+                  : 'bg-white border border-gray-200'
               }`}
             >
               {/* Elemento decorativo */}
-              <div className="absolute -bottom-12 -right-12 w-32 h-32 bg-gradient-to-br from-[#00B4DB]/10 to-[#48D1CC]/10 rounded-full opacity-10 group-hover:scale-150 transition-transform duration-500"></div>
+              <div className='absolute -bottom-12 -right-12 w-32 h-32 bg-gradient-to-br from-[#00B4DB]/10 to-[#48D1CC]/10 rounded-full opacity-10 group-hover:scale-150 transition-transform duration-500'></div>
 
-              <Link href={`/resources#${category.id}`} className="block h-full">
-                <div className="p-6 flex flex-col h-full relative z-10">
-                  <div className={`w-14 h-14 rounded-full flex items-center justify-center mb-5 shadow-md text-white ${category.color} group-hover:scale-110 transition-transform duration-300`}>
+              <Link href={`/resources#${category.id}`} className='block h-full'>
+                <div className='p-6 flex flex-col h-full relative z-10'>
+                  <div
+                    className={`w-14 h-14 rounded-full flex items-center justify-center mb-5 shadow-md text-white ${category.color} group-hover:scale-110 transition-transform duration-300`}
+                  >
                     {category.icon}
                   </div>
 
-                  <h3 className="text-lg font-semibold mb-2 leading-snug group-hover:text-[#00B4DB] dark:group-hover:text-[#48D1CC] transition-colors">
+                  <h3 className='text-lg font-semibold mb-2 leading-snug group-hover:text-[#00B4DB] dark:group-hover:text-[#48D1CC] transition-colors'>
                     {category.title}
                   </h3>
 
-                  <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-400 flex-grow">
+                  <p className='text-sm leading-relaxed text-gray-600 dark:text-gray-400 flex-grow'>
                     {category.description}
                   </p>
 
-                  <div className="mt-6 text-[#00B4DB] dark:text-[#48D1CC] font-medium flex items-center text-sm">
+                  <div className='mt-6 text-[#00B4DB] dark:text-[#48D1CC] font-medium flex items-center text-sm'>
                     <span>Explorar</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      className='h-4 w-4 ml-2 group-hover:translate-x-1 transition-transform'
+                      fill='none'
+                      viewBox='0 0 24 24'
+                      stroke='currentColor'
+                    >
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        strokeWidth={2}
+                        d='M14 5l7 7m0 0l-7 7m7-7H3'
+                      />
                     </svg>
                   </div>
                 </div>

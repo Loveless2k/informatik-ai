@@ -25,7 +25,7 @@ const OptimizedImage = ({
   priority = false,
   objectFit = 'cover',
   quality = 85,
-  animation = 'fade'
+  animation = 'fade',
 }: OptimizedImageProps) => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isIntersecting, setIsIntersecting] = useState(false);
@@ -46,8 +46,8 @@ const OptimizedImage = ({
     if (!isClient) return;
 
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
+      entries => {
+        entries.forEach(entry => {
           if (entry.isIntersecting) {
             setIsIntersecting(true);
             observer.disconnect();
@@ -58,7 +58,9 @@ const OptimizedImage = ({
     );
 
     // Crear un elemento div para observar
-    const element = document.getElementById(`image-container-${src.replace(/[^a-zA-Z0-9]/g, '')}`);
+    const element = document.getElementById(
+      `image-container-${src.replace(/[^a-zA-Z0-9]/g, '')}`
+    );
     if (element) {
       observer.observe(element);
     }
@@ -76,7 +78,7 @@ const OptimizedImage = ({
     hidden: {
       opacity: 0,
       scale: animation === 'zoom' ? 0.9 : 1,
-      y: animation === 'slide' ? 20 : 0
+      y: animation === 'slide' ? 20 : 0,
     },
     visible: {
       opacity: 1,
@@ -84,9 +86,9 @@ const OptimizedImage = ({
       y: 0,
       transition: {
         duration: 0.5,
-        ease: [0.22, 1, 0.36, 1]
-      }
-    }
+        ease: [0.22, 1, 0.36, 1],
+      },
+    },
   };
 
   return (
@@ -100,7 +102,7 @@ const OptimizedImage = ({
           {/* Placeholder mientras carga la imagen */}
           {!isLoaded && (
             <div
-              className="absolute inset-0 bg-gray-200 dark:bg-gray-800 animate-pulse"
+              className='absolute inset-0 bg-gray-200 dark:bg-gray-800 animate-pulse'
               style={{ zIndex: 1 }}
             />
           )}
@@ -108,10 +110,10 @@ const OptimizedImage = ({
           {/* Imagen real - Renderizado condicional para animaciones */}
           {isClient ? (
             <motion.div
-              initial="hidden"
-              animate={isLoaded ? "visible" : "hidden"}
+              initial='hidden'
+              animate={isLoaded ? 'visible' : 'hidden'}
               variants={variants}
-              className="w-full h-full"
+              className='w-full h-full'
             >
               <Image
                 src={src}
@@ -126,7 +128,7 @@ const OptimizedImage = ({
               />
             </motion.div>
           ) : (
-            <div className="w-full h-full">
+            <div className='w-full h-full'>
               <Image
                 src={src}
                 alt={alt}
@@ -136,7 +138,7 @@ const OptimizedImage = ({
                 priority={priority}
                 onLoad={() => setIsLoaded(true)}
                 style={{ objectFit }}
-                className="w-full h-full"
+                className='w-full h-full'
               />
             </div>
           )}
@@ -145,7 +147,7 @@ const OptimizedImage = ({
 
       {/* Placeholder cuando la imagen no está en el viewport */}
       {!isIntersecting && !priority && (
-        <div className="w-full h-full bg-gray-200 dark:bg-gray-800" />
+        <div className='w-full h-full bg-gray-200 dark:bg-gray-800' />
       )}
     </div>
   );

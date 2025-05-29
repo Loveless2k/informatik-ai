@@ -12,8 +12,16 @@ import { generateMetadata } from '@/components/seo/Metadata';
 export const metadata: Metadata = {
   ...generateMetadata({
     title: 'Servicios de IA y Tecnología',
-    description: 'Descubre nuestros servicios especializados en IA, formación, consultoría estratégica, automatización y desarrollo a medida para empresas.',
-    keywords: ['servicios de IA', 'formación in company', 'asesoría estratégica', 'automatización', 'desarrollo a medida', 'consultoría tecnológica'],
+    description:
+      'Descubre nuestros servicios especializados en IA, formación, consultoría estratégica, automatización y desarrollo a medida para empresas.',
+    keywords: [
+      'servicios de IA',
+      'formación in company',
+      'asesoría estratégica',
+      'automatización',
+      'desarrollo a medida',
+      'consultoría tecnológica',
+    ],
     canonical: '/services',
     ogType: 'website',
   }),

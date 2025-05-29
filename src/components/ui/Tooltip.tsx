@@ -17,7 +17,7 @@ const Tooltip: React.FC<TooltipProps> = ({
   className = '',
 }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
+  const [, setIsHovered] = useState(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
 
@@ -25,15 +25,40 @@ const Tooltip: React.FC<TooltipProps> = ({
   const getPosition = () => {
     switch (position) {
       case 'top':
-        return { bottom: '100%', left: '50%', transform: 'translateX(-50%)', marginBottom: '8px' };
+        return {
+          bottom: '100%',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          marginBottom: '8px',
+        };
       case 'bottom':
-        return { top: '100%', left: '50%', transform: 'translateX(-50%)', marginTop: '8px' };
+        return {
+          top: '100%',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          marginTop: '8px',
+        };
       case 'left':
-        return { right: '100%', top: '50%', transform: 'translateY(-50%)', marginRight: '8px' };
+        return {
+          right: '100%',
+          top: '50%',
+          transform: 'translateY(-50%)',
+          marginRight: '8px',
+        };
       case 'right':
-        return { left: '100%', top: '50%', transform: 'translateY(-50%)', marginLeft: '8px' };
+        return {
+          left: '100%',
+          top: '50%',
+          transform: 'translateY(-50%)',
+          marginLeft: '8px',
+        };
       default:
-        return { bottom: '100%', left: '50%', transform: 'translateX(-50%)', marginBottom: '8px' };
+        return {
+          bottom: '100%',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          marginBottom: '8px',
+        };
     }
   };
 
@@ -159,16 +184,16 @@ const Tooltip: React.FC<TooltipProps> = ({
         {isVisible && (
           <motion.div
             ref={tooltipRef}
-            className="absolute z-50 pointer-events-none"
+            className='absolute z-50 pointer-events-none'
             style={getPosition()}
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
+            initial='hidden'
+            animate='visible'
+            exit='hidden'
             variants={getAnimation()}
             transition={{ duration: 0.2 }}
           >
             <div
-              className="px-3 py-2 text-sm font-medium text-white rounded-md shadow-lg whitespace-nowrap"
+              className='px-3 py-2 text-sm font-medium text-white rounded-md shadow-lg whitespace-nowrap'
               style={{
                 backgroundColor: 'var(--tooltip-bg, rgba(15, 23, 42, 0.9))',
                 backdropFilter: 'blur(4px)',

@@ -20,7 +20,7 @@ const DualToneText = ({
   firstPartColor = 'text-white',
   secondPartColor = 'text-secondary-light', // Color secundario más brillante
   glowColor = '#14b8a6',
-  letterSpacing = 'widest'
+  letterSpacing = 'widest',
 }: DualToneTextProps) => {
   // Estado para controlar si estamos en el cliente
   const [isClient, setIsClient] = useState(false);
@@ -33,40 +33,40 @@ const DualToneText = ({
   // Variantes para la animación del texto principal
   const firstPartVariants = {
     initial: {
-      textShadow: `0 0 0px ${glowColor}`
+      textShadow: `0 0 0px ${glowColor}`,
     },
     animate: {
       textShadow: [
         `0 0 1px ${glowColor}`,
         `0 0 3px ${glowColor}`,
-        `0 0 1px ${glowColor}`
+        `0 0 1px ${glowColor}`,
       ],
       transition: {
         duration: 2,
         repeat: Infinity,
-        ease: "easeInOut"
-      }
-    }
+        ease: 'easeInOut',
+      },
+    },
   };
 
   // Variantes para la animación del texto destacado
   const secondPartVariants = {
     initial: {
-      textShadow: `0 0 2px ${glowColor}`
+      textShadow: `0 0 2px ${glowColor}`,
     },
     animate: {
       textShadow: [
         `0 0 3px ${glowColor}`,
         `0 0 10px ${glowColor}`,
         `0 0 5px ${glowColor}`,
-        `0 0 3px ${glowColor}`
+        `0 0 3px ${glowColor}`,
       ],
       transition: {
         duration: 2,
         repeat: Infinity,
-        ease: "easeInOut"
-      }
-    }
+        ease: 'easeInOut',
+      },
+    },
   };
 
   // Mapear los valores de letterSpacing a clases de Tailwind
@@ -94,26 +94,31 @@ const DualToneText = ({
   const getResponsiveTrackingClass = () => {
     if (typeof letterSpacing === 'string' && letterSpacing.includes(' ')) {
       // Si contiene espacios, asumimos que es un valor responsive como "tighter sm:normal md:normal lg:wide"
-      return letterSpacing.split(' ').map(spacing => {
-        if (spacing.includes(':')) {
-          const [breakpoint, value] = spacing.split(':');
-          return `${breakpoint}:${getTrackingClass(value)}`;
-        }
-        return getTrackingClass(spacing);
-      }).join(' ');
+      return letterSpacing
+        .split(' ')
+        .map(spacing => {
+          if (spacing.includes(':')) {
+            const [breakpoint, value] = spacing.split(':');
+            return `${breakpoint}:${getTrackingClass(value)}`;
+          }
+          return getTrackingClass(spacing);
+        })
+        .join(' ');
     }
     return getTrackingClass();
   };
 
   return (
-    <div className={`inline-flex items-center ${getResponsiveTrackingClass()} font-medium ${className} whitespace-nowrap`}>
+    <div
+      className={`inline-flex items-center ${getResponsiveTrackingClass()} font-medium ${className} whitespace-nowrap`}
+    >
       {/* Primera parte del texto */}
-      <span className="relative">
+      <span className='relative'>
         {isClient ? (
           <motion.span
             className={`${firstPartColor}`}
-            initial="initial"
-            animate="animate"
+            initial='initial'
+            animate='animate'
             variants={firstPartVariants}
           >
             {firstPart}
@@ -124,12 +129,12 @@ const DualToneText = ({
       </span>
 
       {/* Segunda parte del texto con mayor énfasis */}
-      <span className="relative ml-[1px]">
+      <span className='relative ml-[1px]'>
         {isClient ? (
           <motion.span
             className={`${secondPartColor} font-bold`}
-            initial="initial"
-            animate="animate"
+            initial='initial'
+            animate='animate'
             variants={secondPartVariants}
           >
             {secondPart}

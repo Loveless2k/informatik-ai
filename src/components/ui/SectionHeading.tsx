@@ -19,19 +19,16 @@ const SectionHeading = ({
   noGlow = false, // Por defecto, todos los títulos tendrán el efecto de resplandor
 }: SectionHeadingProps) => {
   // Get theme context
-  let themeContext: { theme: string } = { theme: 'light' };
-  try {
-    themeContext = useTheme();
-  } catch (error) {
-    // Mantener el valor por defecto
-  }
-  const isDarkMode = themeContext.theme === 'dark';
+  const { theme } = useTheme();
+  const isDarkMode = theme === 'dark';
 
   return (
     <div className={`mb-12 ${centered ? 'text-center' : ''} ${className}`}>
-      <h2 className={`text-3xl md:text-4xl lg:text-5xl font-bold mb-4 ${noGlow ? '' : 'text-glow'}`}>
+      <h2
+        className={`text-3xl md:text-4xl lg:text-5xl font-bold mb-4 ${noGlow ? '' : 'text-glow'}`}
+      >
         {typeof title === 'string' ? (
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-300 to-blue-200">
+          <span className='text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-300 to-blue-200'>
             {title}
           </span>
         ) : (
@@ -39,7 +36,9 @@ const SectionHeading = ({
         )}
       </h2>
       {subtitle && (
-        <p className={`text-xl ${isDarkMode ? 'text-gray-300' : 'text-gray-600'} max-w-3xl mx-auto ${subtitleClassName}`}>
+        <p
+          className={`text-xl ${isDarkMode ? 'text-gray-300' : 'text-gray-600'} max-w-3xl mx-auto ${subtitleClassName}`}
+        >
           {subtitle}
         </p>
       )}

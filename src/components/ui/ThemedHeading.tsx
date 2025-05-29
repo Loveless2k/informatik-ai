@@ -37,20 +37,15 @@ const ThemedHeading = ({
 
   // Variant styles based on theme
   const variantStyles = {
-    primary: isDarkMode
-      ? 'text-white text-glow'
-      : 'text-white text-glow',
-    secondary: isDarkMode
-      ? 'text-white text-glow'
-      : 'text-white text-glow',
-    gradient: 'text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-300 to-blue-200 text-glow',
+    primary: isDarkMode ? 'text-white text-glow' : 'text-white text-glow',
+    secondary: isDarkMode ? 'text-white text-glow' : 'text-white text-glow',
+    gradient:
+      'text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-300 to-blue-200 text-glow',
     white: 'text-white text-glow',
   };
 
   // Subtitle styles
-  const subtitleStyles = isDarkMode
-    ? 'text-[#A0A0A0]'
-    : 'text-[#444444]';
+  const subtitleStyles = isDarkMode ? 'text-[#A0A0A0]' : 'text-[#444444]';
 
   // Animation variants
   const headingVariants = {
@@ -60,9 +55,9 @@ const ThemedHeading = ({
       y: 0,
       transition: {
         duration: 0.5,
-        ease: "easeOut"
-      }
-    }
+        ease: 'easeOut',
+      },
+    },
   };
 
   const subtitleVariants = {
@@ -73,9 +68,9 @@ const ThemedHeading = ({
       transition: {
         duration: 0.5,
         delay: 0.2,
-        ease: "easeOut"
-      }
-    }
+        ease: 'easeOut',
+      },
+    },
   };
 
   // Alignment styles
@@ -87,9 +82,9 @@ const ThemedHeading = ({
       <div className={`mb-8 ${alignmentStyles} ${className}`}>
         <motion.h2
           className={`font-semibold mb-4 ${titleSizes[size]} ${variantStyles[variant]}`}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
+          initial='hidden'
+          whileInView='visible'
+          viewport={{ once: true, margin: '-100px' }}
           variants={headingVariants}
         >
           {title}
@@ -98,13 +93,13 @@ const ThemedHeading = ({
         {subtitle && (
           <motion.div
             className={`${subtitleStyles} ${centered ? 'max-w-3xl mx-auto' : ''}`}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
+            initial='hidden'
+            whileInView='visible'
+            viewport={{ once: true, margin: '-100px' }}
             variants={subtitleVariants}
           >
             {typeof subtitle === 'string' ? (
-              <p className="text-lg md:text-xl leading-relaxed">{subtitle}</p>
+              <p className='text-lg md:text-xl leading-relaxed'>{subtitle}</p>
             ) : (
               subtitle
             )}
@@ -117,14 +112,18 @@ const ThemedHeading = ({
   // Non-animated version
   return (
     <div className={`mb-8 ${alignmentStyles} ${className}`}>
-      <h2 className={`font-semibold mb-4 ${titleSizes[size]} ${variantStyles[variant]}`}>
+      <h2
+        className={`font-semibold mb-4 ${titleSizes[size]} ${variantStyles[variant]}`}
+      >
         {title}
       </h2>
 
       {subtitle && (
-        <div className={`${subtitleStyles} ${centered ? 'max-w-3xl mx-auto' : ''}`}>
+        <div
+          className={`${subtitleStyles} ${centered ? 'max-w-3xl mx-auto' : ''}`}
+        >
           {typeof subtitle === 'string' ? (
-            <p className="text-lg md:text-xl leading-relaxed">{subtitle}</p>
+            <p className='text-lg md:text-xl leading-relaxed'>{subtitle}</p>
           ) : (
             subtitle
           )}

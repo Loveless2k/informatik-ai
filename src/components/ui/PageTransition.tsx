@@ -37,6 +37,8 @@ const PageTransition = ({ children }: PageTransitionProps) => {
         return () => mediaQuery.removeListener(handleChange);
       }
     }
+
+    return undefined;
   }, []);
 
   // Variantes para la animación de transición
@@ -70,12 +72,12 @@ const PageTransition = ({ children }: PageTransitionProps) => {
 
   // Si el usuario prefiere reducción de movimiento, simplemente hacer un fade
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence mode='wait'>
       <motion.div
         key={pathname}
-        initial="initial"
-        animate="animate"
-        exit="exit"
+        initial='initial'
+        animate='animate'
+        exit='exit'
         variants={pageVariants}
       >
         {children}

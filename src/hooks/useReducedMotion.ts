@@ -13,7 +13,7 @@ export function useReducedMotion(): boolean {
   useEffect(() => {
     // Comprobar si el navegador soporta la media query de preferencia de reducción de movimiento
     const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-    
+
     // Actualizar el estado con el valor actual
     setPrefersReducedMotion(mediaQuery.matches);
 

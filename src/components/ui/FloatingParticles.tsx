@@ -44,11 +44,11 @@ const FloatingParticles = () => {
   }
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {particles.map((particle) => (
+    <div className='absolute inset-0 overflow-hidden pointer-events-none'>
+      {particles.map(particle => (
         <motion.div
           key={particle.id}
-          className="absolute bg-white rounded-full opacity-30"
+          className='absolute bg-white rounded-full opacity-30'
           style={{
             top: `${particle.top}%`,
             left: `${particle.left}%`,
@@ -57,12 +57,12 @@ const FloatingParticles = () => {
           }}
           animate={{
             y: [0, -100],
-            opacity: [0, 0.5, 0]
+            opacity: [0, 0.5, 0],
           }}
           transition={{
             duration: particle.duration,
             repeat: Infinity,
-            delay: particle.delay
+            delay: particle.delay,
           }}
         />
       ))}

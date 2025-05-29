@@ -1,4 +1,3 @@
-import React from 'react';
 import { Metadata } from 'next';
 
 interface SEOProps {
@@ -18,20 +17,23 @@ export function generateMetadata({
   ogImage = '/images/og-image.jpg',
   ogType = 'website',
   canonical,
-  noIndex = false
+  noIndex = false,
 }: SEOProps): Metadata {
   // Construir título completo
   const fullTitle = `${title} | Informatik-AI`;
-  
+
   // URL base para rutas absolutas
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://informatik-ai.com';
-  
+  const baseUrl =
+    process.env.NEXT_PUBLIC_BASE_URL || 'https://informatik-ai.com';
+
   // URL canónica
   const canonicalUrl = canonical ? `${baseUrl}${canonical}` : undefined;
-  
+
   // URL de la imagen OG
-  const ogImageUrl = ogImage.startsWith('http') ? ogImage : `${baseUrl}${ogImage}`;
-  
+  const ogImageUrl = ogImage.startsWith('http')
+    ? ogImage
+    : `${baseUrl}${ogImage}`;
+
   return {
     title: fullTitle,
     description,

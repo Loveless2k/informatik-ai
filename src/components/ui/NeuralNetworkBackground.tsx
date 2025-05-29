@@ -37,8 +37,8 @@ const NeuralNetworkBackground = () => {
       setIsDarkMode(document.documentElement.classList.contains('dark'));
 
       // Observar cambios en la clase 'dark' del documento
-      const observer = new MutationObserver((mutations) => {
-        mutations.forEach((mutation) => {
+      const observer = new MutationObserver(mutations => {
+        mutations.forEach(mutation => {
           if (mutation.attributeName === 'class') {
             setIsDarkMode(document.documentElement.classList.contains('dark'));
           }
@@ -51,6 +51,8 @@ const NeuralNetworkBackground = () => {
         observer.disconnect();
       };
     }
+
+    return undefined;
   }, []);
 
   // Estado para nodos y conexiones
@@ -61,9 +63,10 @@ const NeuralNetworkBackground = () => {
   const getConfig = () => {
     // Detectar si estamos en un dispositivo móvil
     const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-    const isLowPower = typeof window !== 'undefined' &&
+    const isLowPower =
+      typeof window !== 'undefined' &&
       (window.navigator.userAgent.includes('Mobile') ||
-       window.navigator.userAgent.includes('Android'));
+        window.navigator.userAgent.includes('Android'));
 
     return {
       // Reducir la complejidad en dispositivos móviles
@@ -118,9 +121,15 @@ const NeuralNetworkBackground = () => {
     // Crear nodos en capas con distribución mejorada
     for (let layer = 0; layer < config.layerCount; layer++) {
       // Distribución no lineal de nodos por capa para un aspecto más orgánico
-      const nodesInLayer = Math.floor(config.nodeCount / config.layerCount) +
-                          (layer === 0 ? 3 : layer === config.layerCount - 1 ? 3 :
-                           layer === Math.floor(config.layerCount / 2) ? 2 : 0);
+      const nodesInLayer =
+        Math.floor(config.nodeCount / config.layerCount) +
+        (layer === 0
+          ? 3
+          : layer === config.layerCount - 1
+            ? 3
+            : layer === Math.floor(config.layerCount / 2)
+              ? 2
+              : 0);
 
       for (let i = 0; i < nodesInLayer; i++) {
         // Distribución horizontal no lineal para un aspecto más natural
@@ -141,10 +150,12 @@ const NeuralNetworkBackground = () => {
           id: nodes.length,
           x,
           y,
-          radius: config.nodeMinRadius + Math.random() * (config.nodeMaxRadius - config.nodeMinRadius),
+          radius:
+            config.nodeMinRadius +
+            Math.random() * (config.nodeMaxRadius - config.nodeMinRadius),
           pulseState: Math.random(),
           pulseSpeed: 0.003 + Math.random() * 0.007, // Velocidades más lentas y variadas
-          layer
+          layer,
         });
       }
     }
@@ -159,7 +170,11 @@ const NeuralNetworkBackground = () => {
         const targetCount = 2 + Math.floor(Math.random() * 2); // 2-3 conexiones por nodo
         const shuffledTargets = [...toNodes].sort(() => Math.random() - 0.5);
 
-        for (let i = 0; i < Math.min(targetCount, shuffledTargets.length); i++) {
+        for (
+          let i = 0;
+          i < Math.min(targetCount, shuffledTargets.length);
+          i++
+        ) {
           if (connections.length < config.maxConnections) {
             connections.push({
               fromId: fromNode.id,
@@ -168,7 +183,7 @@ const NeuralNetworkBackground = () => {
               progress: 0,
               speed: 0.003 + Math.random() * 0.006, // Velocidades más lentas para mayor elegancia
               lifetime: 70 + Math.random() * 130, // Duración más larga
-              currentLife: 0
+              currentLife: 0,
             });
           }
         }
@@ -193,7 +208,8 @@ const NeuralNetworkBackground = () => {
     if (Math.random() < config.pulseFrequency) {
       // Seleccionar nodos de entrada (primera capa) aleatoriamente
       const inputNodes = nodes.filter(node => node.layer === 0);
-      const randomInputNode = inputNodes[Math.floor(Math.random() * inputNodes.length)];
+      const randomInputNode =
+        inputNodes[Math.floor(Math.random() * inputNodes.length)];
 
       // Activar conexiones desde este nodo
       connections
@@ -224,8 +240,9 @@ const NeuralNetworkBackground = () => {
             // Activar conexiones salientes desde el nodo destino
             if (toNode.layer < config.layerCount - 1) {
               // Limitar la cantidad de conexiones activadas para evitar sobrecarga visual
-              const outgoingConnections = connections
-                .filter(nextConn => nextConn.fromId === toNode.id && !nextConn.active);
+              const outgoingConnections = connections.filter(
+                nextConn => nextConn.fromId === toNode.id && !nextConn.active
+              );
 
               // Seleccionar solo 1-2 conexiones para activar
               const connectionsToActivate = outgoingConnections
@@ -286,10 +303,18 @@ const NeuralNetworkBackground = () => {
 
         if (conn.active) {
           // Dibujar conexión activa con gradiente mejorado
-          const gradient = ctx.createLinearGradient(fromNode.x, fromNode.y, toNode.x, toNode.y);
+          const gradient = ctx.createLinearGradient(
+            fromNode.x,
+            fromNode.y,
+            toNode.x,
+            toNode.y
+          );
           gradient.addColorStop(0, colors.connection);
           gradient.addColorStop(conn.progress, colors.activeConnection);
-          gradient.addColorStop(Math.min(conn.progress + 0.05, 1), colors.connection);
+          gradient.addColorStop(
+            Math.min(conn.progress + 0.05, 1),
+            colors.connection
+          );
           gradient.addColorStop(1, colors.connection);
           ctx.strokeStyle = gradient;
         } else {
@@ -306,9 +331,10 @@ const NeuralNetworkBackground = () => {
       if (node.pulseState < 0.2) {
         ctx.beginPath();
         ctx.arc(node.x, node.y, node.radius * 2, 0, Math.PI * 2);
-        ctx.fillStyle = node.layer % 2 === 0
-          ? `rgba(37, 99, 235, ${0.1 * (1 - node.pulseState * 5)})`  // Azul
-          : `rgba(14, 165, 233, ${0.1 * (1 - node.pulseState * 5)})`; // Azul claro
+        ctx.fillStyle =
+          node.layer % 2 === 0
+            ? `rgba(37, 99, 235, ${0.1 * (1 - node.pulseState * 5)})` // Azul
+            : `rgba(14, 165, 233, ${0.1 * (1 - node.pulseState * 5)})`; // Azul claro
         ctx.fill();
       }
 
@@ -319,13 +345,12 @@ const NeuralNetworkBackground = () => {
       // Alternar colores entre capas para crear más profundidad visual
       const isAlternateLayer = node.layer % 2 === 0;
       const baseColor = isAlternateLayer ? colors.node : colors.secondaryNode;
-      const pulseColor = isAlternateLayer ? colors.nodePulse : colors.secondaryActive;
+      const pulseColor = isAlternateLayer
+        ? colors.nodePulse
+        : colors.secondaryActive;
 
       // Color del nodo basado en su estado de pulso con transición más suave
-      const pulseIntensity = Math.sin(node.pulseState * Math.PI * 2) * 0.5 + 0.5;
-      ctx.fillStyle = node.pulseState < 0.2
-        ? pulseColor
-        : baseColor;
+      ctx.fillStyle = node.pulseState < 0.2 ? pulseColor : baseColor;
 
       ctx.fill();
     });
@@ -385,9 +410,15 @@ const NeuralNetworkBackground = () => {
 
       if (typeof mediaQuery.addEventListener === 'function') {
         mediaQuery.addEventListener('change', handleMotionPreferenceChange);
-        return () => mediaQuery.removeEventListener('change', handleMotionPreferenceChange);
+        return () =>
+          mediaQuery.removeEventListener(
+            'change',
+            handleMotionPreferenceChange
+          );
       }
     }
+
+    return undefined;
   }, []);
 
   // Efecto para configurar el canvas y la animación
@@ -410,7 +441,10 @@ const NeuralNetworkBackground = () => {
     return () => {
       window.removeEventListener('resize', handleResize);
       // Limpiar la animación según el tipo de referencia
-      if (typeof animationRef.current === 'number' && !config.optimizeForLowPower) {
+      if (
+        typeof animationRef.current === 'number' &&
+        !config.optimizeForLowPower
+      ) {
         cancelAnimationFrame(animationRef.current);
       }
     };
@@ -424,12 +458,12 @@ const NeuralNetworkBackground = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 w-full h-full"
+      className='absolute inset-0 w-full h-full'
       style={{
         opacity: config.optimizeForLowPower ? 0.3 : 0.4, // Reducir opacidad en dispositivos de baja potencia
         willChange: 'transform', // Optimización de rendimiento
       }}
-      aria-hidden="true" // Mejora de accesibilidad
+      aria-hidden='true' // Mejora de accesibilidad
     />
   );
 };

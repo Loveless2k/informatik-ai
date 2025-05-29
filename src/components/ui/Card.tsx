@@ -29,31 +29,34 @@ const Card = ({
   const cardContent = (
     <>
       {imageSrc && (
-        <div className="relative h-48 w-full mb-4 overflow-hidden rounded-t-lg">
-          <Image
-            src={imageSrc}
-            alt={imageAlt}
-            fill
-            className="object-cover"
-          />
+        <div className='relative h-48 w-full mb-4 overflow-hidden rounded-t-lg'>
+          <Image src={imageSrc} alt={imageAlt} fill className='object-cover' />
         </div>
       )}
       {children}
-      <div className="px-3 py-4 pt-0">
-        <h3 className={`text-lg font-bold mb-2 ${
-          isDarkMode ? 'text-white' : 'text-[#111111]'
-        }`}>{title}</h3>
-        {description && <p className={`mb-3 text-xs leading-relaxed ${
-          isDarkMode ? 'text-[#A0A0A0]' : 'text-[#444444]'
-        }`}>{description}</p>}
+      <div className='px-3 py-4 pt-0'>
+        <h3
+          className={`text-lg font-bold mb-2 ${
+            isDarkMode ? 'text-white' : 'text-[#111111]'
+          }`}
+        >
+          {title}
+        </h3>
+        {description && (
+          <p
+            className={`mb-3 text-xs leading-relaxed ${
+              isDarkMode ? 'text-[#A0A0A0]' : 'text-[#444444]'
+            }`}
+          >
+            {description}
+          </p>
+        )}
       </div>
     </>
   );
 
   const cardClasses = `rounded-lg shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg ${
-    isDarkMode
-      ? 'bg-[#111111] text-white'
-      : 'bg-white text-[#111111]'
+    isDarkMode ? 'bg-[#111111] text-white' : 'bg-white text-[#111111]'
   } ${className}`;
 
   if (href) {

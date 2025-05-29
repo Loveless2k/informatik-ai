@@ -10,8 +10,16 @@ import { generateMetadata } from '@/components/seo/Metadata';
 export const metadata: Metadata = {
   ...generateMetadata({
     title: 'Soluciones Inteligentes de IA para Empresas',
-    description: 'Informatik-AI ofrece soluciones de IA de vanguardia para empresas, incluyendo consultoría de IA, machine learning, analítica de datos y desarrollo personalizado de IA.',
-    keywords: ['soluciones de IA', 'inteligencia artificial', 'machine learning', 'analítica de datos', 'inteligencia empresarial', 'transformación digital'],
+    description:
+      'Informatik-AI ofrece soluciones de IA de vanguardia para empresas, incluyendo consultoría de IA, machine learning, analítica de datos y desarrollo personalizado de IA.',
+    keywords: [
+      'soluciones de IA',
+      'inteligencia artificial',
+      'machine learning',
+      'analítica de datos',
+      'inteligencia empresarial',
+      'transformación digital',
+    ],
     canonical: '/',
   }),
   alternates: {
