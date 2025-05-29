@@ -45,6 +45,30 @@ const ContactPage = () => {
   const { theme } = useTheme();
   const isDarkMode = theme === 'dark';
 
+  // Estado para las coordenadas de la animación neural
+  const [neuralPoints, setNeuralPoints] = useState<Array<{cx: number, cy: number, r: string, duration: string}>>([]);
+  const [neuralLines, setNeuralLines] = useState<Array<{x1: number, y1: number, x2: number, y2: number}>>([]);
+
+  // Generar coordenadas fijas solo en el cliente
+  useEffect(() => {
+    const points = Array.from({ length: 15 }).map(() => ({
+      cx: Math.random() * 100,
+      cy: Math.random() * 100,
+      r: '0.5',
+      duration: `${3 + Math.random() * 5}s`
+    }));
+
+    const lines = Array.from({ length: 20 }).map(() => ({
+      x1: Math.random() * 100,
+      y1: Math.random() * 100,
+      x2: Math.random() * 100,
+      y2: Math.random() * 100
+    }));
+
+    setNeuralPoints(points);
+    setNeuralLines(lines);
+  }, []);
+
   // Efecto para mostrar las preguntas frecuentes
   useEffect(() => {
     const showFaqs = () => {
@@ -146,25 +170,25 @@ const ContactPage = () => {
                 </radialGradient>
               </defs>
               {/* Puntos de la red neural */}
-              {Array.from({ length: 15 }).map((_, i) => (
+              {neuralPoints.map((point, i) => (
                 <circle
                   key={i}
-                  cx={Math.random() * 100}
-                  cy={Math.random() * 100}
-                  r='0.5'
+                  cx={point.cx}
+                  cy={point.cy}
+                  r={point.r}
                   fill='url(#nodeGradient)'
                   className='animate-pulse'
-                  style={{ animationDuration: `${3 + Math.random() * 5}s` }}
+                  style={{ animationDuration: point.duration }}
                 />
               ))}
               {/* Líneas de conexión */}
-              {Array.from({ length: 20 }).map((_, i) => (
+              {neuralLines.map((line, i) => (
                 <line
                   key={i}
-                  x1={Math.random() * 100}
-                  y1={Math.random() * 100}
-                  x2={Math.random() * 100}
-                  y2={Math.random() * 100}
+                  x1={line.x1}
+                  y1={line.y1}
+                  x2={line.x2}
+                  y2={line.y2}
                   stroke='#3B82F6'
                   strokeWidth='0.1'
                   strokeOpacity='0.3'
