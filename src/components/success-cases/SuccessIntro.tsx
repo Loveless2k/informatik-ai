@@ -130,32 +130,81 @@ const SuccessIntro = () => {
                   </svg>
                 ),
               },
-            ].map((item, i) => (
-              <div
-                key={i}
-                className={`p-6 rounded-xl border transition-all duration-300 shadow-md ${
-                  isDarkMode
-                    ? `bg-${item.color}-900/30 border-${item.color}-800/30 shadow-${item.color}-900/10`
-                    : `bg-${item.color}-50 border-${item.color}-100`
-                }`}
-              >
+            ].map((item, i) => {
+              // Define static classes to avoid Tailwind purging issues
+              const getItemClasses = (color: string, isDark: boolean) => {
+                const baseClasses = 'p-6 rounded-xl border transition-all duration-300 shadow-md';
+                if (color === 'purple') {
+                  return isDark
+                    ? `${baseClasses} bg-purple-900/30 border-purple-800/30 shadow-purple-900/10`
+                    : `${baseClasses} bg-purple-50 border-purple-100`;
+                } else if (color === 'blue') {
+                  return isDark
+                    ? `${baseClasses} bg-blue-900/30 border-blue-800/30 shadow-blue-900/10`
+                    : `${baseClasses} bg-blue-50 border-blue-100`;
+                } else if (color === 'pink') {
+                  return isDark
+                    ? `${baseClasses} bg-pink-900/30 border-pink-800/30 shadow-pink-900/10`
+                    : `${baseClasses} bg-pink-50 border-pink-100`;
+                }
+                return baseClasses;
+              };
+
+              const getIconClasses = (color: string, isDark: boolean) => {
+                const baseClasses = 'w-14 h-14 rounded-lg mb-4 flex items-center justify-center';
+                if (color === 'purple') {
+                  return isDark
+                    ? `${baseClasses} bg-purple-800/30 text-purple-400`
+                    : `${baseClasses} bg-purple-100 text-purple-600`;
+                } else if (color === 'blue') {
+                  return isDark
+                    ? `${baseClasses} bg-blue-800/30 text-blue-400`
+                    : `${baseClasses} bg-blue-100 text-blue-600`;
+                } else if (color === 'pink') {
+                  return isDark
+                    ? `${baseClasses} bg-pink-800/30 text-pink-400`
+                    : `${baseClasses} bg-pink-100 text-pink-600`;
+                }
+                return baseClasses;
+              };
+
+              const getTitleClasses = (color: string, isDark: boolean) => {
+                const baseClasses = 'text-xl font-bold mb-3';
+                if (color === 'purple') {
+                  return isDark
+                    ? `${baseClasses} text-purple-300`
+                    : `${baseClasses} text-purple-800`;
+                } else if (color === 'blue') {
+                  return isDark
+                    ? `${baseClasses} text-blue-300`
+                    : `${baseClasses} text-blue-800`;
+                } else if (color === 'pink') {
+                  return isDark
+                    ? `${baseClasses} text-pink-300`
+                    : `${baseClasses} text-pink-800`;
+                }
+                return baseClasses;
+              };
+
+              return (
                 <div
-                  className={`w-14 h-14 rounded-lg mb-4 flex items-center justify-center ${isDarkMode ? `bg-${item.color}-800/30 text-${item.color}-400` : `bg-${item.color}-100 text-${item.color}-600`}`}
+                  key={i}
+                  className={getItemClasses(item.color, isDarkMode)}
                 >
-                  {item.icon}
+                  <div className={getIconClasses(item.color, isDarkMode)}>
+                    {item.icon}
+                  </div>
+                  <h3 className={getTitleClasses(item.color, isDarkMode)}>
+                    {item.title}
+                  </h3>
+                  <p
+                    className={`${isDarkMode ? 'text-gray-300' : 'text-slate-700'}`}
+                  >
+                    {item.desc}
+                  </p>
                 </div>
-                <h3
-                  className={`text-xl font-bold mb-3 ${isDarkMode ? `text-${item.color}-300` : `text-${item.color}-800`}`}
-                >
-                  {item.title}
-                </h3>
-                <p
-                  className={`${isDarkMode ? 'text-gray-300' : 'text-slate-700'}`}
-                >
-                  {item.desc}
-                </p>
-              </div>
-            ))}
+              );
+            })}
           </motion.div>
         </div>
       </div>

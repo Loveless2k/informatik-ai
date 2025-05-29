@@ -59,11 +59,7 @@ export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, [theme, mounted]);
 
-  // Evitar problemas de hidratación
-  if (!mounted) {
-    return <>{children}</>;
-  }
-
+  // Siempre renderizar el provider para evitar problemas de hidratación
   return (
     <ThemeContext.Provider value={{ theme, setTheme, toggleTheme }}>
       {children}

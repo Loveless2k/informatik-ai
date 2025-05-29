@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import SectionHeading from '@/components/ui/SectionHeading';
@@ -8,71 +8,8 @@ import { useTheme } from '@/context/ThemeContext';
 
 const CamiDevCase = () => {
   const ref = useRef<HTMLDivElement>(null);
-  const [isMounted, setIsMounted] = useState(false);
   const { theme } = useTheme();
   const isDarkMode = theme === 'dark';
-
-  // Inicializar con valores por defecto para evitar errores de hidratación
-  const [scrollProps, setScrollProps] = useState({
-    opacity: 1,
-    y: 0,
-    scale: 1,
-  });
-
-  // Solo configurar el scroll y las transformaciones en el cliente
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
-  // Simplificamos los efectos de scroll para evitar problemas de caché
-  useEffect(() => {
-    if (!isMounted || typeof window === 'undefined') return;
-
-    // Función simplificada para actualizar el scroll
-    const updateScroll = () => {
-      if (!ref.current) return;
-
-      const rect = ref.current.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-
-      // Simplificamos el cálculo de visibilidad
-      const isVisible = rect.top < windowHeight && rect.bottom > 0;
-
-      // Valores simplificados
-      setScrollProps({
-        opacity: isVisible ? 1 : 0.5,
-        y: isVisible ? 0 : 20,
-        scale: isVisible ? 1 : 0.95,
-      });
-    };
-
-    // Configurar el listener de scroll
-    window.addEventListener('scroll', updateScroll);
-    window.addEventListener('resize', updateScroll);
-
-    // Llamar inicialmente para establecer los valores
-    updateScroll();
-
-    // Limpiar al desmontar
-    return () => {
-      window.removeEventListener('scroll', updateScroll);
-      window.removeEventListener('resize', updateScroll);
-    };
-  }, [isMounted]);
-
-  // No renderizar nada hasta que el componente esté montado en el cliente
-  if (!isMounted) {
-    return (
-      <section
-        id='camidev'
-        className={`py-20 ${isDarkMode ? 'bg-gradient-to-br from-cyan-950 via-gray-900 to-cyan-950' : 'bg-gradient-to-br from-cyan-50 via-white to-cyan-100'} relative overflow-hidden`}
-      >
-        <div className='container mx-auto px-4 sm:px-6 lg:px-8 relative z-10'>
-          <div className='h-[1200px]'></div>
-        </div>
-      </section>
-    );
-  }
 
   return (
     <section
@@ -107,11 +44,10 @@ const CamiDevCase = () => {
 
         <motion.div
           ref={ref}
-          style={{
-            opacity: scrollProps.opacity,
-            y: scrollProps.y,
-            scale: scrollProps.scale,
-          }}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
           className='max-w-6xl mx-auto'
         >
           <div className='grid grid-cols-1 lg:grid-cols-2 gap-12 items-center'>

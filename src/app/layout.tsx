@@ -51,10 +51,8 @@ export default function RootLayout({
   return (
     <html lang='es' className='scroll-smooth'>
       <head>
-        {/* Add static routing script for better client-side navigation in static export */}
-        <script src='/static-routing.js' defer></script>
-        {/* Add security headers script */}
-        <script src='/security-headers.js' defer></script>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
       </head>
       <ThemeProvider>
         <body

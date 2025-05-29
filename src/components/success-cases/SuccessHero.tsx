@@ -1,27 +1,61 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { motion, useInView, useAnimation } from 'framer-motion';
 import Button from '@/components/ui/Button';
-import NeuralNetworkBackground from '@/components/ui/NeuralNetworkBackground';
 
 const SuccessHero = () => {
   const controls = useAnimation();
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
-  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    setIsMounted(true);
-    if (isMounted && isInView) {
+    if (isInView) {
       controls.start('visible');
     }
-  }, [controls, isInView, isMounted]);
+  }, [controls, isInView]);
 
   return (
     <section className='relative py-32 md:py-44 overflow-hidden bg-gradient-to-br from-gray-950 via-gray-900 to-gray-800 code-lines-bg'>
       <div className='absolute top-0 left-1/4 w-1/2 h-1/3 rounded-full filter blur-[120px] bg-blue-900/30'></div>
-      {isMounted && <NeuralNetworkBackground />}
+      {/* Fondo neural simplificado para evitar problemas de hidratación */}
+      <div className='absolute inset-0'>
+        <svg
+          className='w-full h-full opacity-10'
+          viewBox='0 0 100 100'
+          xmlns='http://www.w3.org/2000/svg'
+        >
+          <defs>
+            <radialGradient
+              id='nodeGradient'
+              cx='50%'
+              cy='50%'
+              r='50%'
+              fx='50%'
+              fy='50%'
+            >
+              <stop offset='0%' stopColor='#60A5FA' stopOpacity='0.8' />
+              <stop offset='100%' stopColor='#3B82F6' stopOpacity='0' />
+            </radialGradient>
+          </defs>
+          {/* Puntos de la red neural con posiciones fijas */}
+          <circle cx='20' cy='30' r='0.5' fill='url(#nodeGradient)' className='animate-pulse' />
+          <circle cx='40' cy='20' r='0.5' fill='url(#nodeGradient)' className='animate-pulse' />
+          <circle cx='60' cy='40' r='0.5' fill='url(#nodeGradient)' className='animate-pulse' />
+          <circle cx='80' cy='25' r='0.5' fill='url(#nodeGradient)' className='animate-pulse' />
+          <circle cx='30' cy='60' r='0.5' fill='url(#nodeGradient)' className='animate-pulse' />
+          <circle cx='70' cy='70' r='0.5' fill='url(#nodeGradient)' className='animate-pulse' />
+          <circle cx='15' cy='80' r='0.5' fill='url(#nodeGradient)' className='animate-pulse' />
+          <circle cx='85' cy='60' r='0.5' fill='url(#nodeGradient)' className='animate-pulse' />
+          {/* Líneas de conexión */}
+          <line x1='20' y1='30' x2='40' y2='20' stroke='#3B82F6' strokeWidth='0.1' strokeOpacity='0.3' />
+          <line x1='40' y1='20' x2='60' y2='40' stroke='#3B82F6' strokeWidth='0.1' strokeOpacity='0.3' />
+          <line x1='60' y1='40' x2='80' y2='25' stroke='#3B82F6' strokeWidth='0.1' strokeOpacity='0.3' />
+          <line x1='30' y1='60' x2='70' y2='70' stroke='#3B82F6' strokeWidth='0.1' strokeOpacity='0.3' />
+          <line x1='15' y1='80' x2='30' y2='60' stroke='#3B82F6' strokeWidth='0.1' strokeOpacity='0.3' />
+          <line x1='70' y1='70' x2='85' y2='60' stroke='#3B82F6' strokeWidth='0.1' strokeOpacity='0.3' />
+        </svg>
+      </div>
       <div className='absolute inset-0 bg-grid-white/[0.03] bg-[length:40px_40px]'></div>
       <div className='scan-effect absolute inset-0 opacity-30'></div>
       <div className='matrix-bg absolute inset-0 opacity-10'></div>
@@ -29,15 +63,14 @@ const SuccessHero = () => {
       <div className='container relative z-10 mx-auto px-4 sm:px-6 lg:px-8'>
         <div className='max-w-5xl mx-auto text-center'>
           <div ref={ref}>
-            {isMounted ? (
-              <motion.div
-                initial='hidden'
-                animate={controls}
-                variants={{
-                  hidden: { opacity: 0 },
-                  visible: { opacity: 1, transition: { staggerChildren: 0.2 } },
-                }}
-              >
+            <motion.div
+              initial='hidden'
+              animate={controls}
+              variants={{
+                hidden: { opacity: 0 },
+                visible: { opacity: 1, transition: { staggerChildren: 0.2 } },
+              }}
+            >
                 <motion.h1
                   className='text-5xl md:text-6xl lg:text-7xl font-extrabold text-white mb-6 leading-tight text-glow'
                   variants={{
@@ -100,13 +133,11 @@ const SuccessHero = () => {
                   </Button>
                 </motion.div>
               </motion.div>
-            ) : null}
           </div>
 
           {/* Gráfico animado de crecimiento */}
           <div className='mt-16 relative h-40 md:h-60'>
-            {isMounted && (
-              <motion.svg
+            <motion.svg
                 className='w-full h-full'
                 viewBox='0 0 1000 300'
                 xmlns='http://www.w3.org/2000/svg'
@@ -199,7 +230,6 @@ const SuccessHero = () => {
                   +290K
                 </motion.text>
               </motion.svg>
-            )}
           </div>
         </div>
       </div>
