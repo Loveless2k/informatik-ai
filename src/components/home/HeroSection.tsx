@@ -1,53 +1,37 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import ButtonWithEffect from '@/components/ui/ButtonWithEffect';
 import { motion, useAnimation } from 'framer-motion';
 import NeuralNetworkBackground from '@/components/ui/NeuralNetworkBackground';
 import { useTheme } from '@/context/ThemeContext';
 
-const HeroSection = () => {
-  // Estado para controlar animaciones
-  const [, setIsButtonHovered] = useState(false); // Mantenemos el setter para los eventos
-  const [isMounted, setIsMounted] = useState(false);
+/**
+ * Hero Section component with typing animation and responsive design
+ * @returns JSX.Element
+ */
+const HeroSection: React.FC = () => {
+  // Animation controls
+  const controls = useAnimation();
 
-  // Estado para el texto rotativo
-  const [phraseIndex, setPhraseIndex] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [text, setText] = useState('');
-  const [typingSpeed, setTypingSpeed] = useState(150);
+  // Component state
+  const [isButtonHovered, setIsButtonHovered] = useState<boolean>(false);
+  const [isMounted, setIsMounted] = useState<boolean>(false);
 
-  // Detectar si estamos en un dispositivo móvil
-  const [isMobile, setIsMobile] = useState(false);
+  // Typing animation state
+  const [phraseIndex, setPhraseIndex] = useState<number>(0);
+  const [isDeleting, setIsDeleting] = useState<boolean>(false);
+  const [text, setText] = useState<string>('');
+  const [isMobile, setIsMobile] = useState<boolean>(false);
 
-  // Efecto para detectar el tamaño de la pantalla inicialmente
-  useEffect(() => {
-    const isMobileNow = window.innerWidth < 640; // sm breakpoint en Tailwind
-    setIsMobile(isMobileNow);
-  }, []);
+  // Refs
+  const typingTimeout = useRef<NodeJS.Timeout | null>(null);
 
-  // Efecto para manejar cambios en el tamaño de la ventana
-  useEffect(() => {
-    const handleResize = () => {
-      const isMobileNow = window.innerWidth < 640; // sm breakpoint en Tailwind
+  // Theme context
+  const { theme } = useTheme();
+  const isDarkMode = theme === 'dark';
 
-      if (isMobile !== isMobileNow) {
-        setIsMobile(isMobileNow);
-        // Reiniciar la animación cuando cambia entre móvil y desktop
-        setText('');
-        setIsDeleting(false);
-        setPhraseIndex(0);
-      }
-    };
-
-    // Añadir listener para cambios de tamaño
-    window.addEventListener('resize', handleResize);
-
-    // Limpiar
-    return () => window.removeEventListener('resize', handleResize);
-  }, [isMobile, setText, setIsDeleting, setPhraseIndex]);
-
-  // Lista de frases para mostrar (versiones para móvil y desktop)
+  // Responsive phrases configuration
   const phrases = isMobile
     ? ['Formación', 'Asesoría', 'Cursos', 'Automatización', 'Desarrollo']
     : [
@@ -58,152 +42,103 @@ const HeroSection = () => {
         'Desarrollo a Medida',
       ];
 
-  // Referencia para cancelar el timeout
-  const typingTimeout = useRef<NodeJS.Timeout | null>(null);
+  // Optimized resize handler
+  const handleResize = useCallback(() => {
+    const isMobileNow = window.innerWidth < 640;
+    if (isMobile !== isMobileNow) {
+      setIsMobile(isMobileNow);
+      setText('');
+      setIsDeleting(false);
+      setPhraseIndex(0);
+    }
+  }, [isMobile]);
 
-  // Obtener el tema actual
-  const { theme } = useTheme();
-  const isDarkMode = theme === 'dark';
+  // Initialize component
+  useEffect(() => {
+    setIsMounted(true);
+    setIsMobile(window.innerWidth < 640);
+    controls.start('visible');
+  }, [controls]);
 
-  // Efecto para el texto de escritura
+  // Handle window resize
+  useEffect(() => {
+    window.addEventListener('resize', handleResize, { passive: true });
+    return () => window.removeEventListener('resize', handleResize);
+  }, [handleResize]);
+
+  // Typing animation effect
   useEffect(() => {
     if (!isMounted) return;
 
     const currentPhrase = phrases[phraseIndex];
 
-    // Lógica para escribir y borrar texto
-    if (!isDeleting && text === currentPhrase) {
-      // Pausa antes de empezar a borrar
-      typingTimeout.current = setTimeout(() => {
-        setIsDeleting(true);
-        setTypingSpeed(80); // Más rápido al borrar
-      }, 1500);
-    } else if (isDeleting && text === '') {
-      // Cambiar a la siguiente frase
-      setIsDeleting(false);
-      setPhraseIndex((phraseIndex + 1) % phrases.length);
-      setTypingSpeed(150); // Velocidad normal al escribir
-    } else {
-      // Escribir o borrar un carácter
-      typingTimeout.current = setTimeout(() => {
-        setText(prev => {
-          if (isDeleting) {
-            return prev.substring(0, prev.length - 1);
-          } else {
-            return currentPhrase.substring(0, prev.length + 1);
-          }
-        });
-      }, typingSpeed);
-    }
-
-    // Limpiar timeout al desmontar
-    return () => {
-      if (typingTimeout.current) clearTimeout(typingTimeout.current);
-    };
-  }, [isMounted, text, isDeleting, phraseIndex, phrases, typingSpeed]);
-
-  // Controles de animación
-  const controls = useAnimation();
-
-  // Efecto para iniciar animaciones después del montaje
-  useEffect(() => {
-    setIsMounted(true);
-    controls.start('visible');
-  }, [controls]);
-
-  // Efecto para el texto rotativo
-  useEffect(() => {
-    // Inicializar con la primera frase si el texto está vacío
-    if (text === '' && !isDeleting) {
-      setText(phrases[0].charAt(0));
-      return;
-    }
-
-    // Función para manejar el efecto de escritura
     const handleTyping = () => {
-      // Obtener la frase actual
-      const currentPhrase = phrases[phraseIndex];
-
-      // Si está borrando, eliminar un carácter
-      if (isDeleting) {
-        setText(prevText => prevText.substring(0, prevText.length - 1));
-        setTypingSpeed(50); // Más rápido al borrar
-      } else {
-        // Si está escribiendo, añadir un carácter
-        setText(prevText => currentPhrase.substring(0, prevText.length + 1));
-        setTypingSpeed(150); // Más lento al escribir
-      }
-
-      // Lógica para cambiar entre escribir y borrar
       if (!isDeleting && text === currentPhrase) {
-        // Pausa antes de empezar a borrar
-        setTimeout(() => {
+        // Pause before starting to delete
+        typingTimeout.current = setTimeout(() => {
           setIsDeleting(true);
-        }, 2000);
-        return;
+        }, 1500);
       } else if (isDeleting && text === '') {
+        // Move to next phrase
         setIsDeleting(false);
-        // Cambiar a la siguiente frase
-        setPhraseIndex(prevIndex => (prevIndex + 1) % phrases.length);
-        // No programar el siguiente paso aquí, esperar a que el efecto se ejecute de nuevo
-        return;
+        setPhraseIndex((prev) => (prev + 1) % phrases.length);
+      } else {
+        // Type or delete character
+        const speed = isDeleting ? 80 : 150;
+        typingTimeout.current = setTimeout(() => {
+          setText(prev => {
+            if (isDeleting) {
+              return prev.substring(0, prev.length - 1);
+            } else {
+              return currentPhrase.substring(0, prev.length + 1);
+            }
+          });
+        }, speed);
       }
-
-      // Programar la próxima actualización
-      const nextTimeout = setTimeout(
-        handleTyping,
-        isDeleting ? 50 : text.length === 0 ? 500 : 150
-      );
-
-      // Guardar la referencia del timeout
-      typingTimeout.current = nextTimeout;
     };
 
-    // Iniciar el efecto de escritura
-    const timeout = setTimeout(handleTyping, typingSpeed);
-    typingTimeout.current = timeout;
+    handleTyping();
 
-    // Limpiar el timeout al desmontar o cuando cambian las dependencias
+    // Cleanup timeout
     return () => {
       if (typingTimeout.current) {
         clearTimeout(typingTimeout.current);
       }
     };
-  }, [text, isDeleting, phraseIndex, phrases]);
+  }, [isMounted, text, isDeleting, phraseIndex, phrases]);
 
-  // Variantes de animación mejoradas
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 40 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.9,
-        ease: [0.22, 1, 0.36, 1],
+  // Animation variants with accessibility support
+  const animationVariants = {
+    fadeInUp: {
+      hidden: { opacity: 0, y: 40 },
+      visible: {
+        opacity: 1,
+        y: 0,
+        transition: {
+          duration: 0.9,
+          ease: [0.22, 1, 0.36, 1],
+        },
       },
     },
-  };
-
-  const staggerContainer = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.2,
+    staggerContainer: {
+      hidden: { opacity: 0 },
+      visible: {
+        opacity: 1,
+        transition: {
+          staggerChildren: 0.15,
+          delayChildren: 0.2,
+        },
       },
     },
-  };
-
-  // Variantes para el efecto de destello del título
-  const glowVariants = {
-    initial: { opacity: 0.3 },
-    animate: {
-      opacity: [0.3, 0.6, 0.3],
-      transition: {
-        duration: 3,
-        repeat: Infinity,
-        ease: 'easeInOut',
+    glowEffect: {
+      initial: { opacity: 0.3 },
+      animate: {
+        opacity: [0.3, 0.6, 0.3],
+        transition: {
+          duration: 3,
+          repeat: Infinity,
+          ease: 'easeInOut',
+        },
       },
     },
   };
@@ -227,33 +162,39 @@ const HeroSection = () => {
         className='container relative z-10 mx-auto px-4 sm:px-6 lg:px-8'
         initial='hidden'
         animate={controls}
-        variants={staggerContainer}
+        variants={animationVariants.staggerContainer}
       >
         <div className='max-w-5xl mx-auto text-center'>
-          {/* Título con efecto de resplandor */}
+          {/* Title with glow effect */}
           <div className='relative mb-6 sm:mb-8'>
             <motion.div
               className={`absolute inset-0 rounded-full filter blur-[80px] -z-10 ${
                 isDarkMode ? 'bg-blue-900/20' : 'bg-blue-800/10'
               }`}
-              variants={glowVariants}
+              variants={animationVariants.glowEffect}
               initial='initial'
               animate='animate'
             />
 
-            <motion.div variants={fadeInUp}>
+            <motion.div variants={animationVariants.fadeInUp}>
               <h1 className='text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold leading-tight text-white w-full text-center mb-2 text-glow'>
-                Impulsando negocios con Inteligencia Artificial
+                Impulsando negocios con{' '}
+                <span className='text-white'>Inteligencia Artificial</span>
               </h1>
               <div className='relative min-h-[1.2em] text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold w-full text-center'>
                 <div className='flex justify-center items-center relative'>
                   <div className='relative overflow-hidden max-w-[95%] sm:max-w-full'>
-                    <span className='text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-300 to-blue-200 h-[1.2em] inline-block text-glow'>
+                    <span
+                      className='text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-300 to-blue-200 h-[1.2em] inline-block text-glow'
+                      aria-live="polite"
+                      aria-label={`Servicio actual: ${text}`}
+                    >
                       {text || '\u00A0'}
                     </span>
                     <span
                       className='inline-block h-[1em] border-r-4 border-blue-300 animate-blink ml-1 absolute top-1/2 -translate-y-1/2'
                       style={{ left: `calc(${text.length}ch)` }}
+                      aria-hidden="true"
                     ></span>
                   </div>
                 </div>
@@ -263,14 +204,14 @@ const HeroSection = () => {
 
           <motion.p
             className='text-base sm:text-lg md:text-xl mt-4 sm:mt-6 mb-6 sm:mb-8 text-gray-300 max-w-4xl mx-auto'
-            variants={fadeInUp}
+            variants={animationVariants.fadeInUp}
           >
             Domina la IA. Lidera la transformación empresarial.
           </motion.p>
 
           <motion.div
             className='flex flex-col sm:flex-row gap-5 sm:gap-6 justify-center items-center'
-            variants={fadeInUp}
+            variants={animationVariants.fadeInUp}
           >
             {/* Botón principal con efecto de partículas */}
             <motion.div
