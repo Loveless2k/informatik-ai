@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
@@ -8,6 +8,7 @@ import MobileMenu from '@/components/ui/MobileMenu';
 import ThemeToggle from '@/components/ui/ThemeToggle';
 import DataStreamButton from '@/components/ui/buttons/DataStreamButton';
 import { useTheme } from '@/context/ThemeContext';
+import { useScrollPosition } from '@/hooks/useScrollPosition';
 
 // Types
 interface NavLink {
@@ -51,23 +52,19 @@ const logoVariants = {
  */
 const Header: React.FC<HeaderProps> = ({ className = '' }) => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-  const [scrolled, setScrolled] = useState<boolean>(false);
 
-  // Theme context
-  const { theme } = useTheme();
-  const isDarkMode = theme === 'dark';
+  // Theme context - use resolvedTheme for actual theme value
+  const { resolvedTheme } = useTheme();
+  const isDarkMode = resolvedTheme === 'dark';
 
-  // Optimized scroll handler with useCallback
-  const handleScroll = useCallback(() => {
-    const isScrolled = window.scrollY > 10;
-    setScrolled(isScrolled);
-  }, []);
+  // Use optimized scroll position hook
+  const { scrollPosition } = useScrollPosition({
+    throttleMs: 16, // 60fps for smooth animations
+    disabled: false
+  });
 
-  // Handle scroll effect for header background transition
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [handleScroll]);
+  // Check if scrolled past threshold for header styling
+  const scrolled = scrollPosition.y > 10;
 
   // Toggle mobile menu with useCallback for performance
   const toggleMenu = useCallback(() => {
@@ -79,8 +76,8 @@ const Header: React.FC<HeaderProps> = ({ className = '' }) => {
     setIsMenuOpen(false);
   }, []);
 
-  // Dynamic header styles based on scroll and theme
-  const getHeaderStyles = () => {
+  // Memoized header styles for performance optimization
+  const headerStyles = useMemo(() => {
     const baseStyles = 'sticky top-0 z-50 transition-all duration-500';
     const scrolledStyles = scrolled
       ? isDarkMode
@@ -91,11 +88,11 @@ const Header: React.FC<HeaderProps> = ({ className = '' }) => {
         : 'bg-[#E0FBFF]/80 backdrop-blur-xl py-3 sm:py-4 md:py-5';
 
     return `${baseStyles} ${scrolledStyles} ${className}`;
-  };
+  }, [scrolled, isDarkMode, className]);
 
   return (
     <motion.header
-      className={getHeaderStyles()}
+      className={headerStyles}
       initial="initial"
       animate="animate"
       variants={headerVariants}

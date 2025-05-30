@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev -p 3006",
     "build": "next build",
+    "build:analyze": "ANALYZE=true next build",
     "start": "next start -p 3001",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
@@ -13,7 +14,9 @@
     "type-check": "tsc --noEmit",
     "export": "next build",
     "serve-static": "npx serve out -p 3002",
-    "serve": "http-server -p 3002"
+    "serve": "http-server -p 3002",
+    "analyze": "npm run build:analyze",
+    "bundle-size": "npm run build && npx bundlesize"
   },
   "dependencies": {
     "framer-motion": "^12.7.4",
@@ -24,6 +27,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@next/bundle-analyzer": "^15.3.3",
     "@types/node": "22.15.17",
     "@types/react": "^19",
     "@types/react-dom": "^19",

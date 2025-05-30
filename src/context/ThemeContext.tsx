@@ -1,94 +1,198 @@
 'use client';
 
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState, useCallback, useMemo } from 'react';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
+import { useMediaQuery, BREAKPOINTS } from '@/hooks/useMediaQuery';
 
-type Theme = 'light' | 'dark';
+// Types
+type Theme = 'light' | 'dark' | 'system';
+type ResolvedTheme = 'light' | 'dark';
 
 interface ThemeContextType {
   theme: Theme;
+  resolvedTheme: ResolvedTheme;
   setTheme: (theme: Theme) => void;
   toggleTheme: () => void;
+  isLoading: boolean;
+  systemTheme: ResolvedTheme;
+}
+
+interface ThemeProviderProps {
+  children: React.ReactNode;
+  defaultTheme?: Theme;
+  enableSystem?: boolean;
+  disableTransitionOnChange?: boolean;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
-  const [theme, setTheme] = useState<Theme>('light');
-  const [mounted, setMounted] = useState(false);
-
-  // Función para cambiar entre temas
-  const toggleTheme = () => {
-    setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
-  };
-
-  // Efecto para inicializar el tema basado en las preferencias del usuario
-  useEffect(() => {
-    // Verificar si estamos en el cliente
-    if (typeof window !== 'undefined') {
-      // Verificar si hay un tema guardado en localStorage
-      const savedTheme = localStorage.getItem('theme') as Theme | null;
-
-      // Si hay un tema guardado, usarlo
-      if (savedTheme) {
-        setTheme(savedTheme);
-      }
-      // Si no hay tema guardado, usar la preferencia del sistema
-      else {
-        const prefersDark = window.matchMedia(
-          '(prefers-color-scheme: dark)'
-        ).matches;
-        setTheme(prefersDark ? 'dark' : 'light');
-      }
+/**
+ * Optimized ThemeProvider with localStorage persistence and system theme detection
+ */
+export const ThemeProvider: React.FC<ThemeProviderProps> = ({
+  children,
+  defaultTheme = 'system',
+  enableSystem = true,
+  disableTransitionOnChange = false
+}) => {
+  // Use optimized localStorage hook
+  const { value: storedTheme, setValue: setStoredTheme, isLoading } = useLocalStorage<Theme>(
+    'theme',
+    defaultTheme,
+    {
+      syncAcrossTabs: true,
+      onError: (error) => console.warn('Theme localStorage error:', error)
     }
+  );
 
-    setMounted(true);
-  }, []);
+  // Detect system theme preference
+  const { matches: prefersDark } = useMediaQuery(BREAKPOINTS.dark, {
+    defaultValue: false,
+    initializeWithValue: false
+  });
 
-  // Efecto para actualizar el localStorage y la clase del documento cuando cambia el tema
-  useEffect(() => {
-    if (!mounted || typeof window === 'undefined') return;
+  // Memoized system theme
+  const systemTheme: ResolvedTheme = useMemo(() => {
+    return prefersDark ? 'dark' : 'light';
+  }, [prefersDark]);
 
-    // Guardar el tema en localStorage
-    localStorage.setItem('theme', theme);
+  // Current theme state
+  const [theme, setThemeState] = useState<Theme>(storedTheme);
 
-    // Actualizar la clase del documento
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
+  // Resolve the actual theme (handle 'system' theme)
+  const resolvedTheme: ResolvedTheme = useMemo(() => {
+    if (theme === 'system') {
+      return systemTheme;
+    }
+    return theme as ResolvedTheme;
+  }, [theme, systemTheme]);
+
+  // Optimized theme setter
+  const setTheme = useCallback((newTheme: Theme) => {
+    setThemeState(newTheme);
+    setStoredTheme(newTheme);
+  }, [setStoredTheme]);
+
+  // Optimized theme toggler
+  const toggleTheme = useCallback(() => {
+    if (theme === 'system') {
+      // If currently system, toggle to opposite of system preference
+      setTheme(systemTheme === 'dark' ? 'light' : 'dark');
     } else {
-      document.documentElement.classList.remove('dark');
+      // Toggle between light and dark
+      setTheme(theme === 'light' ? 'dark' : 'light');
     }
-  }, [theme, mounted]);
+  }, [theme, systemTheme, setTheme]);
 
-  // Siempre renderizar el provider para evitar problemas de hidratación
+  // Update theme state when stored theme changes
+  useEffect(() => {
+    setThemeState(storedTheme);
+  }, [storedTheme]);
+
+  // Apply theme to document
+  useEffect(() => {
+    if (isLoading || typeof window === 'undefined') return;
+
+    const root = document.documentElement;
+
+    // Disable transitions temporarily if requested
+    if (disableTransitionOnChange) {
+      const css = document.createElement('style');
+      css.appendChild(
+        document.createTextNode(
+          `*,*::before,*::after{-webkit-transition:none!important;-moz-transition:none!important;-o-transition:none!important;-ms-transition:none!important;transition:none!important}`
+        )
+      );
+      document.head.appendChild(css);
+
+      // Force reflow
+      (() => window.getComputedStyle(document.body))();
+
+      // Re-enable transitions after a frame
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          document.head.removeChild(css);
+        });
+      });
+    }
+
+    // Apply theme class
+    if (resolvedTheme === 'dark') {
+      root.classList.add('dark');
+      root.style.colorScheme = 'dark';
+    } else {
+      root.classList.remove('dark');
+      root.style.colorScheme = 'light';
+    }
+  }, [resolvedTheme, isLoading, disableTransitionOnChange]);
+
+  // Memoized context value for performance
+  const contextValue = useMemo(() => ({
+    theme,
+    resolvedTheme,
+    setTheme,
+    toggleTheme,
+    isLoading,
+    systemTheme,
+  }), [theme, resolvedTheme, setTheme, toggleTheme, isLoading, systemTheme]);
+
   return (
-    <ThemeContext.Provider value={{ theme, setTheme, toggleTheme }}>
+    <ThemeContext.Provider value={contextValue}>
       {children}
     </ThemeContext.Provider>
   );
 };
 
-// Hook personalizado para usar el contexto del tema
-export const useTheme = () => {
+/**
+ * Optimized hook to use theme context with better error handling and performance
+ */
+export const useTheme = (): ThemeContextType => {
   const context = useContext(ThemeContext);
 
-  // En lugar de lanzar un error, devolvemos un valor predeterminado
-  // Esto evita errores durante la hidratación o cuando se usa fuera del ThemeProvider
+  // Provide fallback values for better development experience
   if (context === undefined) {
-    // Valor predeterminado que imita la interfaz ThemeContextType
+    console.warn(
+      'useTheme must be used within a ThemeProvider. Falling back to default values.'
+    );
+
+    // Return default values that match the interface
     return {
-      theme: 'dark' as Theme,
+      theme: 'light',
+      resolvedTheme: 'light',
       setTheme: (_theme: Theme) => {
-        console.warn(
-          'useTheme usado fuera de ThemeProvider, setTheme no tendrá efecto'
-        );
+        console.warn('useTheme: setTheme called outside of ThemeProvider');
       },
       toggleTheme: () => {
-        console.warn(
-          'useTheme usado fuera de ThemeProvider, toggleTheme no tendrá efecto'
-        );
+        console.warn('useTheme: toggleTheme called outside of ThemeProvider');
       },
+      isLoading: false,
+      systemTheme: 'light',
     };
   }
 
   return context;
+};
+
+/**
+ * Hook to get only the resolved theme (optimized for components that only need the current theme)
+ */
+export const useResolvedTheme = (): ResolvedTheme => {
+  const { resolvedTheme } = useTheme();
+  return resolvedTheme;
+};
+
+/**
+ * Hook to check if theme is loading
+ */
+export const useThemeLoading = (): boolean => {
+  const { isLoading } = useTheme();
+  return isLoading;
+};
+
+/**
+ * Hook to get system theme preference
+ */
+export const useSystemTheme = (): ResolvedTheme => {
+  const { systemTheme } = useTheme();
+  return systemTheme;
 };
