@@ -1,9 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Button from '@/components/ui/Button';
+import emailjs from '@emailjs/browser';
 
 const ContactForm = () => {
+  const form = useRef<HTMLFormElement>(null);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -21,23 +23,52 @@ const ContactForm = () => {
     message: '',
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showLogs, setShowLogs] = useState(false);
+  const [logs, setLogs] = useState<string[]>([]);
+
+  const addLog = (message: string) => {
+    const timestamp = new Date().toLocaleTimeString();
+    const logMessage = `[${timestamp}] ${message}`;
+    setLogs(prev => [...prev, logMessage]);
+    console.log(logMessage);
+  };
+
+  useEffect(() => {
+    // Inicializar EmailJS con tu clave pública correcta
+    emailjs.init('NuEMLaMO5zEqU4ka1');
+    addLog('✅ EmailJS inicializado correctamente con clave pública');
+  }, []);
+
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) => {
     const { name, value } = e.target;
+
+    // Mapear los nombres de campo para el estado interno
+    const stateField = name === 'user_name' ? 'name' :
+                       name === 'user_email' ? 'email' : name;
+
+    addLog(`📝 Campo ${name} cambiado a: ${value}`);
+
     setFormData(prev => ({
       ...prev,
-      [name]: value,
+      [stateField]: value,
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    addLog('📝 Formulario enviado');
 
-    // Basic validation
+    // Limpiar mensajes anteriores
+    setFormStatus({ type: null, message: '' });
+
+    // Validación básica
     if (!formData.name || !formData.email || !formData.message) {
+      addLog('❌ Validación fallida: campos requeridos faltantes');
       setFormStatus({
         type: 'error',
         message: 'Por favor, completa todos los campos requeridos.',
@@ -45,18 +76,28 @@ const ContactForm = () => {
       return;
     }
 
-    // In a real application, you would send the form data to your backend
-    // For now, we'll just simulate a successful submission
+    setIsSubmitting(true);
+    addLog('📧 Iniciando envío de email con EmailJS...');
+    addLog(`📋 Datos: ${JSON.stringify(formData, null, 2)}`);
 
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      // Enviar email usando EmailJS
+      const result = await emailjs.sendForm(
+        'service_1k212a9',
+        'template_93m0kce',
+        form.current!,
+        'NuEMLaMO5zEqU4ka1'
+      );
+
+      addLog('✅ Email enviado exitosamente');
+      addLog(`📊 Resultado: ${JSON.stringify(result, null, 2)}`);
+
       setFormStatus({
         type: 'success',
-        message:
-          '¡Gracias por tu mensaje! Nos pondremos en contacto contigo pronto.',
+        message: '¡Gracias por tu mensaje! Nos pondremos en contacto contigo pronto.',
       });
 
-      // Reset form
+      // Resetear formulario
       setFormData({
         name: '',
         email: '',
@@ -65,7 +106,26 @@ const ContactForm = () => {
         message: '',
         service: '',
       });
-    }, 1000);
+
+    } catch (error: any) {
+      addLog(`❌ Error al enviar email: ${JSON.stringify(error, null, 2)}`);
+
+      let errorMessage = 'Hubo un error al enviar el mensaje. Por favor, inténtalo de nuevo.';
+
+      if (error.text) {
+        errorMessage = `Error: ${error.text}`;
+      } else if (error.message) {
+        errorMessage = `Error: ${error.message}`;
+      }
+
+      setFormStatus({
+        type: 'error',
+        message: errorMessage,
+      });
+    } finally {
+      addLog('🏁 Proceso de envío completado');
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -91,7 +151,8 @@ const ContactForm = () => {
           </div>
         </div>
       ) : (
-        <form onSubmit={handleSubmit}>
+        <form ref={form} onSubmit={handleSubmit}>
+          {/* Error message */}
           {formStatus.type === 'error' && (
             <div className='bg-red-900/30 border border-red-700 text-red-300 px-6 py-4 rounded-lg mb-6 animate-fade-in'>
               <div className='flex items-center'>
@@ -114,6 +175,7 @@ const ContactForm = () => {
             </div>
           )}
 
+          {/* Form fields */}
           <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6'>
             <div>
               <label
@@ -125,7 +187,7 @@ const ContactForm = () => {
               <input
                 type='text'
                 id='name'
-                name='name'
+                name='user_name'
                 value={formData.name}
                 onChange={handleChange}
                 className='w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition-colors text-white placeholder-gray-400'
@@ -144,7 +206,7 @@ const ContactForm = () => {
               <input
                 type='email'
                 id='email'
-                name='email'
+                name='user_email'
                 value={formData.email}
                 onChange={handleChange}
                 className='w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition-colors text-white placeholder-gray-400'
@@ -154,6 +216,7 @@ const ContactForm = () => {
             </div>
           </div>
 
+          {/* Rest of the form remains the same but with updated name attributes */}
           <div className='grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6'>
             <div>
               <label
@@ -246,13 +309,51 @@ const ContactForm = () => {
             ></textarea>
           </div>
 
+          {/* Debug Logs Section */}
+          <div className='mb-6'>
+            <button
+              type='button'
+              onClick={() => setShowLogs(!showLogs)}
+              className='text-sm text-gray-400 hover:text-gray-300 underline'
+            >
+              {showLogs ? 'Ocultar' : 'Mostrar'} logs de debug
+            </button>
+
+            {showLogs && (
+              <div className='mt-4 p-4 bg-gray-800/50 border border-gray-600 rounded-lg max-h-60 overflow-y-auto'>
+                <div className='flex justify-between items-center mb-2'>
+                  <h4 className='text-sm font-medium text-gray-300'>Logs de Debug</h4>
+                  <button
+                    type='button'
+                    onClick={() => setLogs([])}
+                    className='text-xs text-red-400 hover:text-red-300'
+                  >
+                    Limpiar
+                  </button>
+                </div>
+                <div className='space-y-1'>
+                  {logs.length === 0 ? (
+                    <p className='text-xs text-gray-500'>No hay logs aún...</p>
+                  ) : (
+                    logs.map((log, index) => (
+                      <div key={index} className='text-xs text-gray-300 font-mono'>
+                        {log}
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+
           <div className='flex justify-center sm:justify-start'>
             <Button
               type='submit'
               size='lg'
-              className='w-full sm:w-auto bg-gradient-to-r from-blue-500 to-teal-400 hover:from-blue-600 hover:to-teal-500 text-white px-6 sm:px-8 py-3 rounded-lg shadow-lg hover:shadow-blue-500/20 transition-all duration-300 hover:-translate-y-1'
+              disabled={isSubmitting}
+              className='w-full sm:w-auto bg-gradient-to-r from-blue-500 to-teal-400 hover:from-blue-600 hover:to-teal-500 text-white px-6 sm:px-8 py-3 rounded-lg shadow-lg hover:shadow-blue-500/20 transition-all duration-300 hover:-translate-y-1 disabled:opacity-70 disabled:cursor-not-allowed'
             >
-              Enviar Mensaje
+              {isSubmitting ? 'Enviando...' : 'Enviar Mensaje'}
             </Button>
           </div>
         </form>
@@ -262,3 +363,4 @@ const ContactForm = () => {
 };
 
 export default ContactForm;
+
