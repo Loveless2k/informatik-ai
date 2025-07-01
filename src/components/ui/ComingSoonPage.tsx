@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
+import Link from 'next/link';
 
 /**
  * Componente que se muestra cuando PRENDER_Y_APAGAR_PAGINA está OFF
@@ -361,6 +362,25 @@ export default function ComingSoonPage() {
           </div>
         )}
 
+
+
+
+
+        <footer className="mt-8 text-center text-gray-400 text-sm space-x-4">
+          <Link href="/aviso-legal" className="hover:text-gray-200">
+            Aviso Legal
+          </Link>
+          <span>|</span>
+          <Link href="/politica-privacidad" className="hover:text-gray-200">
+            Política de Privacidad
+          </Link>
+          <span>|</span>
+          <Link href="/politica-cookies" className="hover:text-gray-200">
+            Política de Cookies
+          </Link>
+        </footer>{/* Enlaces Legales */}
+
+      
       </div>
     </div>
   );
