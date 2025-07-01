@@ -48,6 +48,9 @@ export default function RootLayout({
     }
   }, []);
 
+  // Verificar si la página está encendida
+  const isPaginaEncendida = process.env.PRENDER_Y_APAGAR_PAGINA === 'ON';
+
   return (
     <html lang='es' className='scroll-smooth'>
       <head>
@@ -58,11 +61,11 @@ export default function RootLayout({
         <body
           className={`${outfit.variable} ${geistSans.variable} ${geistMono.variable} ${inter.variable} font-outfit antialiased min-h-screen flex flex-col`}
         >
-          <Header />
-          <main className='flex-grow'>
+          {isPaginaEncendida && <Header />}
+          <main className={isPaginaEncendida ? 'flex-grow' : 'min-h-screen'}>
             <PageTransition>{children}</PageTransition>
           </main>
-          <Footer />
+          {isPaginaEncendida && <Footer />}
         </body>
       </ThemeProvider>
     </html>

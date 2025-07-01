@@ -4,6 +4,7 @@ import AboutSection from '@/components/home/AboutSection';
 import WhyChooseUsSection from '@/components/home/WhyChooseUsSection';
 import ProcessAndFaqSection from '@/components/home/ProcessAndFaqSection';
 import CtaSection from '@/components/home/CtaSection';
+import ComingSoonPage from '@/components/ui/ComingSoonPage';
 import type { Metadata } from 'next';
 import { generateMetadata } from '@/components/seo/Metadata';
 
@@ -30,7 +31,18 @@ export const metadata: Metadata = {
   },
 };
 
+
+
 export default function Home() {
+  // Verificar la variable de entorno
+  const isPaginaEncendida = process.env.PRENDER_Y_APAGAR_PAGINA === 'ON';
+
+  // Si la página está "apagada", mostrar la página de "Hola llegamos"
+  if (!isPaginaEncendida) {
+    return <ComingSoonPage />;
+  }
+
+  // Si la página está "encendida", mostrar el contenido normal
   return (
     <>
       <HeroSection />
