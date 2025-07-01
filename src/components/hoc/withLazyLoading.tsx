@@ -1,6 +1,6 @@
 'use client';
 
-import React, { Suspense, ComponentType, lazy, ReactElement } from 'react';
+import React, { Suspense, ComponentType, lazy, ReactElement, ErrorInfo } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import LoadingSkeleton, { ComponentLoadingSkeleton, PageLoadingSkeleton } from '@/components/ui/LoadingSkeleton';
 
@@ -9,8 +9,7 @@ interface LazyLoadingOptions {
   fallback?: ReactElement;
   errorFallback?: ComponentType<{ error: Error; resetErrorBoundary: () => void }>;
   skeletonType?: 'page' | 'component' | 'hero' | 'services' | 'testimonials' | 'contact';
-  retryCount?: number;
-  onError?: (error: Error, errorInfo: { componentStack: string }) => void;
+  onError?: (error: Error, errorInfo: ErrorInfo) => void;
 }
 
 interface LazyComponentProps {
@@ -110,7 +109,6 @@ export const withLazyLoading = <P extends LazyComponentProps>(
     fallback,
     errorFallback = DefaultErrorFallback,
     skeletonType = 'component',
-    retryCount = 2,
     onError,
   } = options;
 
@@ -124,7 +122,7 @@ export const withLazyLoading = <P extends LazyComponentProps>(
     return (
       <ErrorBoundary
         FallbackComponent={errorFallback}
-        onError={onError}
+        {...(onError && { onError })}
         onReset={() => {
           // Optional: Add retry logic here
           window.location.reload();
@@ -138,7 +136,7 @@ export const withLazyLoading = <P extends LazyComponentProps>(
   };
 
   // Set display name for debugging
-  EnhancedComponent.displayName = `withLazyLoading(${LazyComponent.displayName || 'Component'})`;
+  EnhancedComponent.displayName = `withLazyLoading(Component)`;
 
   return EnhancedComponent;
 };

@@ -21,10 +21,15 @@ interface FormData {
 }
 
 const services = [
-  { id: 'predictive-analysis', label: 'Análisis Predictivo' },
-  { id: 'report-automation', label: 'Automatización de Reportes' },
-  { id: 'ecommerce-ai', label: 'IA para E-commerce' },
-  { id: 'other', label: 'Otro' }
+  { id: 'strategy',          label: 'Estrategia' },
+  { id: 'avatars',           label: 'Avatares' },
+  { id: 'training',          label: 'Formación' },
+  { id: 'course-development',label: 'Desarrollo de cursos' },
+  { id: 'automation',        label: 'Automatización' },
+  { id: 'custom-software',   label: 'Software a medida' },
+  { id: 'chatbot',           label: 'ChatBot' },
+  { id:'otro',           label: 'Otro' }
+
 ];
 
 export default function ComingSoonPage() {
