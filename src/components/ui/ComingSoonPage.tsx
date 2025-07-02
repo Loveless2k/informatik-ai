@@ -241,10 +241,10 @@ export default function ComingSoonPage() {
             {/* Paso 3: Contacto */}
             {currentStep === 'contact' && (
               <div className="animate-fade-in">
-                <h2 className="text-2xl font-semibold text-white mb-6">
+                <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-white mb-4 sm:mb-6 leading-relaxed">
                   <span className="text-cyan-400">3/5</span> Entendido. ¿Dónde podemos contactarte?
                 </h2>
-                <div className="space-y-4">
+                <div className="space-y-3 sm:space-y-4">
                   <input
                     type="email"
                     value={inputValue.split('|')[0] || ''}
@@ -254,7 +254,7 @@ export default function ComingSoonPage() {
                     }}
                     onKeyPress={handleKeyPress}
                     placeholder="tu@email.com"
-                    className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition-colors text-white placeholder-gray-400"
+                    className="w-full px-3 sm:px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition-colors text-white placeholder-gray-400 text-sm sm:text-base"
                     autoFocus
                   />
                   <input
@@ -266,12 +266,12 @@ export default function ComingSoonPage() {
                     }}
                     onKeyPress={handleKeyPress}
                     placeholder="Teléfono (opcional)"
-                    className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition-colors text-white placeholder-gray-400"
+                    className="w-full px-3 sm:px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition-colors text-white placeholder-gray-400 text-sm sm:text-base"
                   />
                   <button
                     onClick={handleNext}
                     disabled={!inputValue.split('|')[0]?.trim()}
-                    className="w-full px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full px-4 sm:px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base font-medium"
                   >
                     Continuar →
                   </button>
@@ -282,25 +282,26 @@ export default function ComingSoonPage() {
             {/* Paso 4: Empresa */}
             {currentStep === 'company' && (
               <div className="animate-fade-in">
-                <h2 className="text-2xl font-semibold text-white mb-6">
+                <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-white mb-4 sm:mb-6 leading-relaxed">
                   <span className="text-cyan-400">4/5</span> ¿Para qué empresa sería?
                 </h2>
-                <div className="flex gap-4">
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                   <input
                     type="text"
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleNext()}
                     placeholder="Nombre de tu empresa"
-                    className="flex-1 px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition-colors text-white placeholder-gray-400"
+                    className="flex-1 px-3 sm:px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition-colors text-white placeholder-gray-400 text-sm sm:text-base"
                     autoFocus
                   />
                   <button
                     onClick={handleNext}
                     disabled={!inputValue.trim()}
-                    className="px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="px-4 sm:px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base font-medium min-w-[60px] sm:min-w-[80px]"
                   >
-                    →
+                    <span className="hidden sm:inline">→</span>
+                    <span className="sm:hidden">Continuar</span>
                   </button>
                 </div>
               </div>
@@ -309,30 +310,34 @@ export default function ComingSoonPage() {
             {/* Paso 5: Mensaje */}
             {currentStep === 'message' && (
               <div className="animate-fade-in">
-                <h2 className="text-2xl font-semibold text-white mb-6">
+                <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-white mb-4 sm:mb-6 leading-relaxed">
                   <span className="text-cyan-400">5/5</span> Genial. Por último, cuéntanos un poco sobre tu proyecto o desafío.
                 </h2>
-                <div className="space-y-4">
+                <div className="space-y-3 sm:space-y-4">
                   <textarea
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     placeholder="Describe tu proyecto, desafío o cómo podemos ayudarte..."
                     rows={4}
-                    className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition-colors text-white placeholder-gray-400 resize-none"
+                    className="w-full px-3 sm:px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition-colors text-white placeholder-gray-400 resize-none text-sm sm:text-base min-h-[100px] sm:min-h-[120px]"
                     autoFocus
                   />
                   <button
                     onClick={handleNext}
                     disabled={!inputValue.trim() || isSubmitting}
-                    className="w-full px-6 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold rounded-lg hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                    className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold rounded-lg hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm sm:text-base"
                   >
                     {isSubmitting ? (
                       <>
-                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                        Enviando...
+                        <div className="w-4 h-4 sm:w-5 sm:h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        <span className="hidden sm:inline">Enviando...</span>
+                        <span className="sm:hidden">Enviando</span>
                       </>
                     ) : (
-                      'Enviar Consulta →'
+                      <>
+                        <span className="hidden sm:inline">Enviar Consulta →</span>
+                        <span className="sm:hidden">Enviar →</span>
+                      </>
                     )}
                   </button>
                 </div>
