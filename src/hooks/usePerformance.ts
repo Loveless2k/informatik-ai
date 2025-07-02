@@ -3,7 +3,7 @@
 import { useEffect, useCallback, useRef, useState } from 'react';
 
 // Types
-interface PerformanceMetrics {
+export interface PerformanceMetrics {
   fcp?: number; // First Contentful Paint
   lcp?: number; // Largest Contentful Paint
   fid?: number; // First Input Delay
@@ -11,13 +11,13 @@ interface PerformanceMetrics {
   ttfb?: number; // Time to First Byte
 }
 
-interface UsePerformanceOptions {
+export interface UsePerformanceOptions {
   enableMetrics?: boolean;
   enableResourceTiming?: boolean;
   onMetric?: (metric: { name: string; value: number; rating: 'good' | 'needs-improvement' | 'poor' }) => void;
 }
 
-interface UsePerformanceReturn {
+export interface UsePerformanceReturn {
   metrics: PerformanceMetrics;
   measureFunction: (name: string, fn: () => void | Promise<void>) => Promise<number>;
   markStart: (name: string) => void;
@@ -147,6 +147,8 @@ export const usePerformance = (options: UsePerformanceOptions = {}): UsePerforma
         console.warn('Performance Observer not supported:', error);
       }
     }
+
+    return undefined;
   }, [enableMetrics, onMetric, getPerformanceRating]);
 
   // Measure function execution time

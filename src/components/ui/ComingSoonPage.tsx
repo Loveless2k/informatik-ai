@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import emailjs from '@emailjs/browser';
 import Link from 'next/link';
 
@@ -33,7 +33,6 @@ const services = [
 ];
 
 export default function ComingSoonPage() {
-  const form = useRef<HTMLFormElement>(null);
   const [currentStep, setCurrentStep] = useState<FormStep>('initial');
   const [formData, setFormData] = useState<FormData>({
     name: '',
@@ -153,24 +152,24 @@ export default function ComingSoonPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black p-4">
-      <div className="w-full max-w-2xl mx-auto">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black p-4 sm:p-6 lg:p-8">
+      <div className="w-full max-w-2xl lg:max-w-4xl mx-auto">
 
         {/* Estado Inicial */}
         {currentStep === 'initial' && (
-          <div className="text-center animate-fade-in">
-            <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
+          <div className="text-center animate-fade-in px-2 sm:px-4">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 leading-tight">
               ¿Listo para cultivar tu{' '}
               <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
                 inteligencia?
               </span>
             </h1>
-            <p className="text-xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg sm:text-xl text-gray-300 mb-8 sm:mb-12 max-w-3xl mx-auto leading-relaxed px-2">
               Hablemos de cómo Informatik-AI puede transformar tu negocio.
             </p>
             <button
               onClick={handleStartConversation}
-              className="group relative px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+              className="group relative px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-cyan-500/25 transition-all duration-300 hover:scale-105 hover:shadow-2xl text-sm sm:text-base w-full sm:w-auto max-w-xs sm:max-w-none"
             >
               <span className="relative z-10">Iniciar Conversación</span>
               <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-xl opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
@@ -180,9 +179,9 @@ export default function ComingSoonPage() {
 
         {/* Formulario Conversacional */}
         {currentStep !== 'initial' && currentStep !== 'success' && (
-          <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-8 animate-slide-up">
+          <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-4 sm:p-6 lg:p-8 animate-slide-up mx-2 sm:mx-0">
             {/* Indicador de Progreso */}
-            <div className="mb-8">
+            <div className="mb-6 sm:mb-8">
               <div className="w-full bg-gray-700 rounded-full h-2">
                 <div
                   className="bg-gradient-to-r from-cyan-400 to-blue-500 h-2 rounded-full transition-all duration-500 ease-out"
@@ -194,25 +193,26 @@ export default function ComingSoonPage() {
             {/* Paso 1: Nombre */}
             {currentStep === 'name' && (
               <div className="animate-fade-in">
-                <h2 className="text-2xl font-semibold text-white mb-6">
+                <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-white mb-4 sm:mb-6">
                   <span className="text-cyan-400">1/5</span> ¡Hola! Empecemos por tu nombre.
                 </h2>
-                <div className="flex gap-4">
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                   <input
                     type="text"
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyPress={handleKeyPress}
                     placeholder="Tu nombre completo"
-                    className="flex-1 px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition-colors text-white placeholder-gray-400"
+                    className="flex-1 px-3 sm:px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition-colors text-white placeholder-gray-400 text-sm sm:text-base"
                     autoFocus
                   />
                   <button
                     onClick={handleNext}
                     disabled={!inputValue.trim()}
-                    className="px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="px-4 sm:px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base font-medium"
                   >
-                    →
+                    <span className="hidden sm:inline">→</span>
+                    <span className="sm:hidden">Continuar</span>
                   </button>
                 </div>
               </div>

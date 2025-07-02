@@ -32,7 +32,6 @@ const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   children,
   defaultTheme = 'system',
-  enableSystem = true,
   disableTransitionOnChange = false
 }) => {
   // Use optimized localStorage hook

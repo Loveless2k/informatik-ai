@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800px" height="800px" viewBox="0 0 800 800" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Circuit Pattern</title>
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g transform="translate(50.000000, 50.000000)">
+            <!-- Main Grid Lines - Using brand colors -->
+            <line x1="0" y1="0" x2="700" y2="0" opacity="0.1" stroke="#3b82f6" stroke-width="1.5"></line>
+            <line x1="0" y1="100" x2="700" y2="100" opacity="0.1" stroke="#3b82f6" stroke-width="1.5"></line>
+            <line x1="0" y1="200" x2="700" y2="200" opacity="0.1" stroke="#3b82f6" stroke-width="1.5"></line>
+            <line x1="0" y1="300" x2="700" y2="300" opacity="0.1" stroke="#3b82f6" stroke-width="1.5"></line>
+            <line x1="0" y1="400" x2="700" y2="400" opacity="0.1" stroke="#3b82f6" stroke-width="1.5"></line>
+            <line x1="0" y1="500" x2="700" y2="500" opacity="0.1" stroke="#3b82f6" stroke-width="1.5"></line>
+            <line x1="0" y1="600" x2="700" y2="600" opacity="0.1" stroke="#3b82f6" stroke-width="1.5"></line>
+            <line x1="0" y1="700" x2="700" y2="700" opacity="0.1" stroke="#3b82f6" stroke-width="1.5"></line>
+
+            <line x1="0" y1="0" x2="0" y2="700" opacity="0.1" stroke="#3b82f6" stroke-width="1.5"></line>
+            <line x1="100" y1="0" x2="100" y2="700" opacity="0.1" stroke="#3b82f6" stroke-width="1.5"></line>
+            <line x1="200" y1="0" x2="200" y2="700" opacity="0.1" stroke="#3b82f6" stroke-width="1.5"></line>
+            <line x1="300" y1="0" x2="300" y2="700" opacity="0.1" stroke="#3b82f6" stroke-width="1.5"></line>
+            <line x1="400" y1="0" x2="400" y2="700" opacity="0.1" stroke="#3b82f6" stroke-width="1.5"></line>
+            <line x1="500" y1="0" x2="500" y2="700" opacity="0.1" stroke="#3b82f6" stroke-width="1.5"></line>
+            <line x1="600" y1="0" x2="600" y2="700" opacity="0.1" stroke="#3b82f6" stroke-width="1.5"></line>
+            <line x1="700" y1="0" x2="700" y2="700" opacity="0.1" stroke="#3b82f6" stroke-width="1.5"></line>
+
+            <!-- Circuit Elements - Using brand colors -->
+            <!-- Top Left Section -->
+            <path d="M0,0 L100,0 L100,100 L200,100" opacity="0.4" stroke="#4fd1c5" stroke-width="2"></path>
+            <circle cx="200" cy="100" r="5" opacity="0.5" fill="#4fd1c5"></circle>
+            <path d="M200,100 L300,100 L300,200 L400,200" opacity="0.4" stroke="#4fd1c5" stroke-width="2"></path>
+            <circle cx="400" cy="200" r="5" opacity="0.5" fill="#4fd1c5"></circle>
+
+            <!-- Top Right Section -->
+            <path d="M700,0 L600,0 L600,100 L500,100" opacity="0.4" stroke="#3b82f6" stroke-width="2"></path>
+            <circle cx="500" cy="100" r="5" opacity="0.5" fill="#3b82f6"></circle>
+            <path d="M500,100 L400,100 L400,200" opacity="0.4" stroke="#3b82f6" stroke-width="2"></path>
+
+            <!-- Bottom Left Section -->
+            <path d="M0,700 L100,700 L100,600 L200,600" opacity="0.4" stroke="#4fd1c5" stroke-width="2"></path>
+            <circle cx="200" cy="600" r="5" opacity="0.5" fill="#4fd1c5"></circle>
+            <path d="M200,600 L300,600 L300,500 L400,500" opacity="0.4" stroke="#4fd1c5" stroke-width="2"></path>
+            <circle cx="400" cy="500" r="5" opacity="0.5" fill="#4fd1c5"></circle>
+
+            <!-- Bottom Right Section -->
+            <path d="M700,700 L600,700 L600,600 L500,600" opacity="0.4" stroke="#3b82f6" stroke-width="2"></path>
+            <circle cx="500" cy="600" r="5" opacity="0.5" fill="#3b82f6"></circle>
+            <path d="M500,600 L400,600 L400,500" opacity="0.4" stroke="#3b82f6" stroke-width="2"></path>
+
+            <!-- Center Elements -->
+            <path d="M300,300 L400,300 L400,400 L500,400" opacity="0.5" stroke="#0ea5e9" stroke-width="2.5"></path>
+            <circle cx="300" cy="300" r="8" opacity="0.6" fill="#0ea5e9"></circle>
+            <circle cx="500" cy="400" r="8" opacity="0.6" fill="#0ea5e9"></circle>
+
+            <!-- Additional Connections -->
+            <path d="M200,200 L300,200 L300,300" opacity="0.3" stroke="#4fd1c5" stroke-width="2"></path>
+            <path d="M500,200 L600,200 L600,300" opacity="0.3" stroke="#3b82f6" stroke-width="2"></path>
+            <path d="M200,500 L300,500 L300,400" opacity="0.3" stroke="#4fd1c5" stroke-width="2"></path>
+            <path d="M500,500 L600,500 L600,400" opacity="0.3" stroke="#3b82f6" stroke-width="2"></path>
+
+            <!-- Diagonal Elements -->
+            <path d="M100,200 L200,300 L300,400" opacity="0.25" stroke="#4fd1c5" stroke-width="1.5"></path>
+            <path d="M400,300 L500,200 L600,100" opacity="0.25" stroke="#3b82f6" stroke-width="1.5"></path>
+            <path d="M100,500 L200,400 L300,300" opacity="0.25" stroke="#4fd1c5" stroke-width="1.5"></path>
+            <path d="M400,400 L500,500 L600,600" opacity="0.25" stroke="#3b82f6" stroke-width="1.5"></path>
+
+            <!-- Small Nodes -->
+            <circle cx="100" cy="200" r="3" opacity="0.4" fill="#4fd1c5"></circle>
+            <circle cx="200" cy="300" r="3" opacity="0.4" fill="#4fd1c5"></circle>
+            <circle cx="300" cy="400" r="3" opacity="0.4" fill="#4fd1c5"></circle>
+            <circle cx="400" cy="300" r="3" opacity="0.4" fill="#3b82f6"></circle>
+            <circle cx="500" cy="200" r="3" opacity="0.4" fill="#3b82f6"></circle>
+            <circle cx="600" cy="100" r="3" opacity="0.4" fill="#3b82f6"></circle>
+            <circle cx="100" cy="500" r="3" opacity="0.4" fill="#4fd1c5"></circle>
+            <circle cx="200" cy="400" r="3" opacity="0.4" fill="#4fd1c5"></circle>
+            <circle cx="400" cy="400" r="3" opacity="0.4" fill="#3b82f6"></circle>
+            <circle cx="500" cy="500" r="3" opacity="0.4" fill="#3b82f6"></circle>
+            <circle cx="600" cy="600" r="3" opacity="0.4" fill="#3b82f6"></circle>
+        </g>
+    </g>
+</svg>

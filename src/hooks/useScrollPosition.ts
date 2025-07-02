@@ -3,18 +3,18 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 
 // Types
-interface ScrollPosition {
+export interface ScrollPosition {
   x: number;
   y: number;
 }
 
-interface UseScrollPositionOptions {
+export interface UseScrollPositionOptions {
   throttleMs?: number;
   element?: React.RefObject<HTMLElement>;
   disabled?: boolean;
 }
 
-interface UseScrollPositionReturn {
+export interface UseScrollPositionReturn {
   scrollPosition: ScrollPosition;
   isScrolled: boolean;
   scrollDirection: 'up' | 'down' | null;
@@ -50,12 +50,12 @@ export const useScrollPosition = (
   // Refs for performance optimization
   const lastScrollY = useRef(0);
   const ticking = useRef(false);
+  const lastCallTime = useRef(0);
 
   // Throttled scroll handler
   const handleScroll = useCallback(() => {
     if (disabled || typeof window === 'undefined') return;
 
-    const target = element?.current || window;
     const scrollX = element?.current ? element.current.scrollLeft : window.pageXOffset || 0;
     const scrollY = element?.current ? element.current.scrollTop : window.pageYOffset || 0;
 
@@ -75,11 +75,13 @@ export const useScrollPosition = (
 
   // Throttled scroll event handler
   const onScroll = useCallback(() => {
-    if (!ticking.current) {
+    const now = Date.now();
+    if (!ticking.current && (now - lastCallTime.current >= throttleMs)) {
+      lastCallTime.current = now;
       requestAnimationFrame(handleScroll);
       ticking.current = true;
     }
-  }, [handleScroll]);
+  }, [handleScroll, throttleMs]);
 
   // Effect to set up scroll listener
   useEffect(() => {

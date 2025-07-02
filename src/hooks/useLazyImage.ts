@@ -4,22 +4,22 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { useIntersectionObserver } from './useIntersectionObserver';
 
 // Types
-interface UseLazyImageOptions {
+export interface UseLazyImageOptions {
   threshold?: number;
   rootMargin?: string;
   placeholder?: string;
   fallback?: string;
   onLoad?: () => void;
-  onError?: (error: Event) => void;
+  onError?: (error: string | Event) => void;
   eager?: boolean;
 }
 
-interface UseLazyImageReturn {
+export interface UseLazyImageReturn {
   src: string;
   isLoading: boolean;
   isLoaded: boolean;
   hasError: boolean;
-  ref: React.RefObject<HTMLImageElement>;
+  ref: React.RefCallback<HTMLImageElement>;
 }
 
 /**

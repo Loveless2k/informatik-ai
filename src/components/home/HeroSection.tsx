@@ -15,7 +15,6 @@ const HeroSection: React.FC = () => {
   const controls = useAnimation();
 
   // Component state
-  const [isButtonHovered, setIsButtonHovered] = useState<boolean>(false);
   const [isMounted, setIsMounted] = useState<boolean>(false);
 
   // Typing animation state
@@ -216,8 +215,6 @@ const HeroSection: React.FC = () => {
             {/* Botón principal con efecto de partículas */}
             <motion.div
               className='w-full sm:w-auto'
-              onMouseEnter={() => setIsButtonHovered(true)}
-              onMouseLeave={() => setIsButtonHovered(false)}
             >
               <ButtonWithEffect
                 href='/services'

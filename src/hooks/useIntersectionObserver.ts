@@ -3,14 +3,14 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 
 // Types
-interface UseIntersectionObserverOptions extends IntersectionObserverInit {
+export interface UseIntersectionObserverOptions extends IntersectionObserverInit {
   freezeOnceVisible?: boolean;
   initialIsIntersecting?: boolean;
   onIntersect?: (entry: IntersectionObserverEntry) => void;
 }
 
-interface UseIntersectionObserverReturn {
-  ref: React.RefObject<HTMLElement>;
+export interface UseIntersectionObserverReturn {
+  ref: React.RefObject<HTMLElement | null>;
   isIntersecting: boolean;
   entry: IntersectionObserverEntry | null;
 }
@@ -143,7 +143,7 @@ export const useIntersectionObserver = (
  * ```
  */
 export const useIntersectionObserverMultiple = (
-  options: IntersectionObserverOptions = {}
+  options: UseIntersectionObserverOptions = {}
 ) => {
   const [intersections, setIntersections] = useState<Record<string, boolean>>({});
   const observerRef = useRef<IntersectionObserver | null>(null);

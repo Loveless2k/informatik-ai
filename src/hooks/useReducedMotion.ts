@@ -4,13 +4,13 @@ import { useMediaQuery, BREAKPOINTS } from './useMediaQuery';
 import { useMemo } from 'react';
 
 // Types
-interface ReducedMotionConfig {
+export interface ReducedMotionConfig {
   respectUserPreference?: boolean;
   fallbackValue?: boolean;
   disableAnimations?: boolean;
 }
 
-interface UseReducedMotionReturn {
+export interface UseReducedMotionReturn {
   prefersReducedMotion: boolean;
   shouldAnimate: boolean;
   getAnimationProps: (props: any) => any;

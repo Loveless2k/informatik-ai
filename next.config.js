@@ -3,33 +3,59 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 });
 
 /** @type {import('next').NextConfig} */
+const ContentSecurityPolicy = `
+  default-src 'self';
+  script-src 'self' 'unsafe-eval' 'unsafe-inline';
+  style-src 'self' 'unsafe-inline';
+  img-src 'self' data: blob: https:;
+  font-src 'self' data:;
+  connect-src 'self' https://api.emailjs.com;
+  frame-src 'self';
+  object-src 'none';
+  base-uri 'self';
+  form-action 'self';
+  frame-ancestors 'none';
+  upgrade-insecure-requests;
+`;
+
 const nextConfig = {
-  /* config options here */
   trailingSlash: true,
   reactStrictMode: true,
-  output: 'export',  // Changed from 'standalone' to 'export' for static site generation
+  output: 'export',
+  distDir: 'dist',
+
   images: {
-    unoptimized: true, // Required for static export
+    unoptimized: true,
   },
 
-  // Bundle optimization
-  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
-    // Only apply optimizations in production builds
+  // ✅ Cabeceras HTTP con CSP
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          {
+            key: 'Content-Security-Policy',
+            value: ContentSecurityPolicy.replace(/\n/g, '').trim(),
+          },
+        ],
+      },
+    ];
+  },
+
+  webpack: (config, { dev, isServer }) => {
     if (!dev && !isServer) {
-      // Optimize bundle splitting
       config.optimization.splitChunks = {
         chunks: 'all',
         cacheGroups: {
           default: false,
           vendors: false,
-          // Vendor chunk for node_modules
           vendor: {
             name: 'vendor',
             chunks: 'all',
             test: /node_modules/,
             priority: 20,
           },
-          // Framework chunk for React and Next.js
           framework: {
             chunks: 'all',
             name: 'framework',
@@ -37,7 +63,6 @@ const nextConfig = {
             priority: 40,
             enforce: true,
           },
-          // Framer Motion chunk
           framerMotion: {
             name: 'framer-motion',
             chunks: 'all',
@@ -52,10 +77,9 @@ const nextConfig = {
     return config;
   },
 
-  // Disable server-side features that won't work in static export
   experimental: {
-    // Ensure we're not using any experimental features that require a server
+    // tus flags experimentales aquí si los usas
   },
-}
+};
 
 module.exports = withBundleAnalyzer(nextConfig);

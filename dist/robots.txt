@@ -1,0 +1,25 @@
+# robots.txt para informatik-ai.com
+User-agent: *
+Allow: /
+
+# Permitir acceso a todas las páginas principales
+Allow: /about
+Allow: /services
+Allow: /success-cases
+Allow: /blog
+Allow: /resources
+Allow: /chatbot
+Allow: /contact
+
+# Bloquear acceso a archivos y directorios específicos
+Disallow: /api/
+Disallow: /_next/
+Disallow: /*.json$
+Disallow: /*.js$
+Disallow: /*.css$
+Disallow: /theme-components
+Disallow: /theme-example
+Disallow: /logo-comparison
+
+# Sitemap
+Sitemap: https://informatik-ai.com/sitemap.xml

@@ -3,17 +3,17 @@
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 
 // Types
-interface UseDebouncedValueOptions {
+export interface UseDebouncedValueOptions {
   leading?: boolean;
   trailing?: boolean;
   maxWait?: number;
 }
 
-interface UseDebouncedCallbackOptions extends UseDebouncedValueOptions {
+export interface UseDebouncedCallbackOptions extends UseDebouncedValueOptions {
   deps?: React.DependencyList;
 }
 
-interface DebouncedFunction<T extends (...args: any[]) => any> {
+export interface DebouncedFunction<T extends (...args: any[]) => any> {
   (...args: Parameters<T>): void;
   cancel: () => void;
   flush: () => void;
@@ -176,7 +176,7 @@ export const useDebouncedCallback = <T extends (...args: any[]) => any>(
   const maxTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const lastCallTimeRef = useRef<number>(0);
   const lastInvokeTimeRef = useRef<number>(0);
-  const lastArgsRef = useRef<Parameters<T>>();
+  const lastArgsRef = useRef<Parameters<T> | undefined>(undefined);
   const leadingRef = useRef<boolean>(true);
 
   // Memoize callback with dependencies

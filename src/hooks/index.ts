@@ -16,8 +16,11 @@ export { default as usePerformance, useRenderPerformance } from './usePerformanc
 export { default as useLazyImage, useLazyImages, useImagePreloader } from './useLazyImage';
 
 // Re-export types for convenience
-export type { UseScrollPositionOptions, UseScrollPositionReturn } from './useScrollPosition';
-export type { UseLocalStorageOptions, UseLocalStorageReturn } from './useLocalStorage';
+export type { UseScrollPositionOptions, UseScrollPositionReturn, ScrollPosition } from './useScrollPosition';
+export type { UseLocalStorageOptions, UseLocalStorageReturn, SetValue } from './useLocalStorage';
 export type { UseIntersectionObserverOptions, UseIntersectionObserverReturn } from './useIntersectionObserver';
 export type { UseMediaQueryOptions, UseMediaQueryReturn } from './useMediaQuery';
 export type { UseDebouncedValueOptions, UseDebouncedCallbackOptions, DebouncedFunction } from './useDebounce';
+export type { ReducedMotionConfig, UseReducedMotionReturn } from './useReducedMotion';
+export type { PerformanceMetrics, UsePerformanceOptions, UsePerformanceReturn } from './usePerformance';
+export type { UseLazyImageOptions, UseLazyImageReturn } from './useLazyImage';

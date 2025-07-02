@@ -1,0 +1,24 @@
+1:"$Sreact.fragment"
+2:I[4970,[],"ClientSegmentRoot"]
+3:I[3159,["43","static/chunks/framer-motion-785b45058990d5e9.js","177","static/chunks/app/layout-f3eaf760fe62df1b.js"],"default"]
+4:I[7555,[],""]
+5:I[1295,[],""]
+6:I[9543,["43","static/chunks/framer-motion-785b45058990d5e9.js","345","static/chunks/app/not-found-64f449140f794438.js"],"default"]
+8:I[6202,["43","static/chunks/framer-motion-785b45058990d5e9.js","831","static/chunks/app/blog/page-5e7482deffedb193.js"],"default"]
+9:I[9665,[],"MetadataBoundary"]
+b:I[9665,[],"OutletBoundary"]
+e:I[4911,[],"AsyncMetadataOutlet"]
+10:I[9665,[],"ViewportBoundary"]
+12:I[6614,[],""]
+:HL["/_next/static/css/fe798c347d586f60.css","style"]
+:HL["/_next/static/css/e1ea5ab3e9634649.css","style"]
+0:{"P":null,"b":"8ITTiw29n5pL962rqoxQf","p":"","c":["","blog",""],"i":false,"f":[[["",{"children":["blog",{"children":["__PAGE__",{}]}]},"$undefined","$undefined",true],["",["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/css/fe798c347d586f60.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","link","1",{"rel":"stylesheet","href":"/_next/static/css/e1ea5ab3e9634649.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]],["$","$L2",null,{"Component":"$3","slots":{"children":["$","$L4",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","$L6",null,{}],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]},"params":{},"promise":"$@7"}]]}],{"children":["blog",["$","$1","c",{"children":[null,["$","$L4",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":["__PAGE__",["$","$1","c",{"children":[["$","$L8",null,{}],["$","$L9",null,{"children":"$La"}],null,["$","$Lb",null,{"children":["$Lc","$Ld",["$","$Le",null,{"promise":"$@f"}]]}]]}],{},null,false]},null,false]},null,false],["$","$1","h",{"children":[null,["$","$1","SmXF_yyGDw88fMLhif1_6",{"children":[["$","$L10",null,{"children":"$L11"}],null]}],null]}],false]],"m":"$undefined","G":["$12","$undefined"],"s":false,"S":true}
+13:"$Sreact.suspense"
+14:I[4911,[],"AsyncMetadata"]
+7:{}
+a:["$","$13",null,{"fallback":null,"children":["$","$L14",null,{"promise":"$@15"}]}]
+d:null
+11:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
+c:null
+15:{"metadata":[["$","title","0",{"children":"Blog | Informatik-AI"}],["$","meta","1",{"name":"description","content":"Artículos, tutoriales y noticias sobre inteligencia artificial, machine learning y transformación digital."}],["$","meta","2",{"name":"keywords","content":"blog, inteligencia artificial, machine learning, tutoriales, noticias de IA"}],["$","link","3",{"rel":"alternate","hrefLang":"en-US","href":"/en/blog"}],["$","link","4",{"rel":"alternate","hrefLang":"es-ES","href":"/blog"}],["$","link","5",{"rel":"icon","href":"/favicon.ico","type":"image/x-icon","sizes":"16x16"}]],"error":null,"digest":"$undefined"}
+f:{"metadata":"$15:metadata","error":null,"digest":"$undefined"}

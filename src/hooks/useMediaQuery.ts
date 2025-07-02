@@ -3,12 +3,12 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 
 // Types
-interface UseMediaQueryOptions {
+export interface UseMediaQueryOptions {
   defaultValue?: boolean;
   initializeWithValue?: boolean;
 }
 
-interface UseMediaQueryReturn {
+export interface UseMediaQueryReturn {
   matches: boolean;
   media: string;
 }

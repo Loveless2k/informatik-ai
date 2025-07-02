@@ -1,0 +1,27 @@
+1:"$Sreact.fragment"
+2:I[4970,[],"ClientSegmentRoot"]
+3:I[3159,["43","static/chunks/framer-motion-785b45058990d5e9.js","177","static/chunks/app/layout-f3eaf760fe62df1b.js"],"default"]
+4:I[7555,[],""]
+5:I[1295,[],""]
+6:I[9543,["43","static/chunks/framer-motion-785b45058990d5e9.js","345","static/chunks/app/not-found-64f449140f794438.js"],"default"]
+8:I[2789,["43","static/chunks/framer-motion-785b45058990d5e9.js","752","static/chunks/app/resources/page-587b0bd6d3126eca.js"],"default"]
+9:I[5921,["43","static/chunks/framer-motion-785b45058990d5e9.js","752","static/chunks/app/resources/page-587b0bd6d3126eca.js"],"default"]
+a:I[685,["43","static/chunks/framer-motion-785b45058990d5e9.js","752","static/chunks/app/resources/page-587b0bd6d3126eca.js"],"default"]
+b:I[1475,["43","static/chunks/framer-motion-785b45058990d5e9.js","752","static/chunks/app/resources/page-587b0bd6d3126eca.js"],"default"]
+c:I[9665,[],"MetadataBoundary"]
+e:I[9665,[],"OutletBoundary"]
+11:I[4911,[],"AsyncMetadataOutlet"]
+13:I[9665,[],"ViewportBoundary"]
+15:I[6614,[],""]
+:HL["/_next/static/css/fe798c347d586f60.css","style"]
+:HL["/_next/static/css/e1ea5ab3e9634649.css","style"]
+0:{"P":null,"b":"8ITTiw29n5pL962rqoxQf","p":"","c":["","resources",""],"i":false,"f":[[["",{"children":["resources",{"children":["__PAGE__",{}]}]},"$undefined","$undefined",true],["",["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/css/fe798c347d586f60.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","link","1",{"rel":"stylesheet","href":"/_next/static/css/e1ea5ab3e9634649.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]],["$","$L2",null,{"Component":"$3","slots":{"children":["$","$L4",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","$L6",null,{}],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]},"params":{},"promise":"$@7"}]]}],{"children":["resources",["$","$1","c",{"children":[null,["$","$L4",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":["__PAGE__",["$","$1","c",{"children":[[["$","$L8",null,{}],["$","$L9",null,{}],["$","$La",null,{}],["$","$Lb",null,{}]],["$","$Lc",null,{"children":"$Ld"}],null,["$","$Le",null,{"children":["$Lf","$L10",["$","$L11",null,{"promise":"$@12"}]]}]]}],{},null,false]},null,false]},null,false],["$","$1","h",{"children":[null,["$","$1","x-iDf9N-PED3q9l5TkDhG",{"children":[["$","$L13",null,{"children":"$L14"}],null]}],null]}],false]],"m":"$undefined","G":["$15","$undefined"],"s":false,"S":true}
+16:"$Sreact.suspense"
+17:I[4911,[],"AsyncMetadata"]
+7:{}
+d:["$","$16",null,{"fallback":null,"children":["$","$L17",null,{"promise":"$@18"}]}]
+10:null
+14:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
+f:null
+18:{"metadata":[["$","title","0",{"children":"Recursos de IA y Tecnología | Informatik-AI"}],["$","meta","1",{"name":"description","content":"Accede a guías, tutoriales, plantillas y herramientas gratuitas sobre inteligencia artificial, automatización y transformación digital."}],["$","meta","2",{"name":"keywords","content":"recursos de IA, guías de inteligencia artificial, tutoriales de IA, plantillas de automatización, herramientas gratuitas, recursos tecnológicos"}],["$","meta","3",{"name":"robots","content":"index, follow"}],["$","link","4",{"rel":"alternate","hrefLang":"en-US","href":"/en/resources"}],["$","link","5",{"rel":"alternate","hrefLang":"es-ES","href":"/resources"}],["$","meta","6",{"property":"og:title","content":"Recursos de IA y Tecnología | Informatik-AI"}],["$","meta","7",{"property":"og:description","content":"Accede a guías, tutoriales, plantillas y herramientas gratuitas sobre inteligencia artificial, automatización y transformación digital."}],["$","meta","8",{"property":"og:url","content":"https://informatik-ai.com/resources/"}],["$","meta","9",{"property":"og:site_name","content":"Informatik-AI"}],["$","meta","10",{"property":"og:locale","content":"es_ES"}],["$","meta","11",{"property":"og:image","content":"https://informatik-ai.com/images/og-image.jpg"}],["$","meta","12",{"property":"og:image:width","content":"1200"}],["$","meta","13",{"property":"og:image:height","content":"630"}],["$","meta","14",{"property":"og:image:alt","content":"Recursos de IA y Tecnología"}],["$","meta","15",{"property":"og:type","content":"website"}],["$","meta","16",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","17",{"name":"twitter:creator","content":"@InformatikAI"}],["$","meta","18",{"name":"twitter:title","content":"Recursos de IA y Tecnología | Informatik-AI"}],["$","meta","19",{"name":"twitter:description","content":"Accede a guías, tutoriales, plantillas y herramientas gratuitas sobre inteligencia artificial, automatización y transformación digital."}],["$","meta","20",{"name":"twitter:image","content":"https://informatik-ai.com/images/og-image.jpg"}],["$","link","21",{"rel":"icon","href":"/favicon.ico","type":"image/x-icon","sizes":"16x16"}]],"error":null,"digest":"$undefined"}
+12:{"metadata":"$18:metadata","error":null,"digest":"$undefined"}

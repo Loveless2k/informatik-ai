@@ -1,8 +1,8 @@
 'use client';
 
-import React, { forwardRef, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import Link from 'next/link';
-import { motion, MotionProps } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useTheme } from '@/context/ThemeContext';
 
 // Types

@@ -1,0 +1,30 @@
+1:"$Sreact.fragment"
+2:I[4970,[],"ClientSegmentRoot"]
+3:I[3159,["43","static/chunks/framer-motion-785b45058990d5e9.js","177","static/chunks/app/layout-f3eaf760fe62df1b.js"],"default"]
+4:I[7555,[],""]
+5:I[1295,[],""]
+6:I[9543,["43","static/chunks/framer-motion-785b45058990d5e9.js","345","static/chunks/app/not-found-64f449140f794438.js"],"default"]
+8:I[7612,["43","static/chunks/framer-motion-785b45058990d5e9.js","763","static/chunks/app/services/page-91bd05eff973c758.js"],"default"]
+9:I[2851,["43","static/chunks/framer-motion-785b45058990d5e9.js","763","static/chunks/app/services/page-91bd05eff973c758.js"],"default"]
+a:I[5102,["43","static/chunks/framer-motion-785b45058990d5e9.js","763","static/chunks/app/services/page-91bd05eff973c758.js"],"default"]
+b:I[5007,["43","static/chunks/framer-motion-785b45058990d5e9.js","763","static/chunks/app/services/page-91bd05eff973c758.js"],"default"]
+c:I[9592,["43","static/chunks/framer-motion-785b45058990d5e9.js","763","static/chunks/app/services/page-91bd05eff973c758.js"],"default"]
+d:I[2796,["43","static/chunks/framer-motion-785b45058990d5e9.js","763","static/chunks/app/services/page-91bd05eff973c758.js"],"default"]
+e:I[1475,["43","static/chunks/framer-motion-785b45058990d5e9.js","763","static/chunks/app/services/page-91bd05eff973c758.js"],"default"]
+f:I[9665,[],"MetadataBoundary"]
+11:I[9665,[],"OutletBoundary"]
+14:I[4911,[],"AsyncMetadataOutlet"]
+16:I[9665,[],"ViewportBoundary"]
+18:I[6614,[],""]
+:HL["/_next/static/css/fe798c347d586f60.css","style"]
+:HL["/_next/static/css/e1ea5ab3e9634649.css","style"]
+0:{"P":null,"b":"8ITTiw29n5pL962rqoxQf","p":"","c":["","services",""],"i":false,"f":[[["",{"children":["services",{"children":["__PAGE__",{}]}]},"$undefined","$undefined",true],["",["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/css/fe798c347d586f60.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","link","1",{"rel":"stylesheet","href":"/_next/static/css/e1ea5ab3e9634649.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]],["$","$L2",null,{"Component":"$3","slots":{"children":["$","$L4",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[["$","$L6",null,{}],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]},"params":{},"promise":"$@7"}]]}],{"children":["services",["$","$1","c",{"children":[null,["$","$L4",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L5",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":["__PAGE__",["$","$1","c",{"children":[[["$","$L8",null,{}],["$","$L9",null,{}],["$","$La",null,{}],["$","$Lb",null,{}],["$","$Lc",null,{}],["$","$Ld",null,{}],["$","$Le",null,{}]],["$","$Lf",null,{"children":"$L10"}],null,["$","$L11",null,{"children":["$L12","$L13",["$","$L14",null,{"promise":"$@15"}]]}]]}],{},null,false]},null,false]},null,false],["$","$1","h",{"children":[null,["$","$1","yUoocU4vuaGiuTb0b20U-",{"children":[["$","$L16",null,{"children":"$L17"}],null]}],null]}],false]],"m":"$undefined","G":["$18","$undefined"],"s":false,"S":true}
+19:"$Sreact.suspense"
+1a:I[4911,[],"AsyncMetadata"]
+7:{}
+10:["$","$19",null,{"fallback":null,"children":["$","$L1a",null,{"promise":"$@1b"}]}]
+13:null
+17:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
+12:null
+1b:{"metadata":[["$","title","0",{"children":"Servicios de IA y Tecnología | Informatik-AI"}],["$","meta","1",{"name":"description","content":"Descubre nuestros servicios especializados en IA, formación, consultoría estratégica, automatización y desarrollo a medida para empresas."}],["$","meta","2",{"name":"keywords","content":"servicios de IA, formación in company, asesoría estratégica, automatización, desarrollo a medida, consultoría tecnológica"}],["$","meta","3",{"name":"robots","content":"index, follow"}],["$","link","4",{"rel":"alternate","hrefLang":"en-US","href":"/en/services"}],["$","link","5",{"rel":"alternate","hrefLang":"es-ES","href":"/services"}],["$","meta","6",{"property":"og:title","content":"Servicios de IA y Tecnología | Informatik-AI"}],["$","meta","7",{"property":"og:description","content":"Descubre nuestros servicios especializados en IA, formación, consultoría estratégica, automatización y desarrollo a medida para empresas."}],["$","meta","8",{"property":"og:url","content":"https://informatik-ai.com/services/"}],["$","meta","9",{"property":"og:site_name","content":"Informatik-AI"}],["$","meta","10",{"property":"og:locale","content":"es_ES"}],["$","meta","11",{"property":"og:image","content":"https://informatik-ai.com/images/og-image.jpg"}],["$","meta","12",{"property":"og:image:width","content":"1200"}],["$","meta","13",{"property":"og:image:height","content":"630"}],["$","meta","14",{"property":"og:image:alt","content":"Servicios de IA y Tecnología"}],["$","meta","15",{"property":"og:type","content":"website"}],["$","meta","16",{"name":"twitter:card","content":"summary_large_image"}],["$","meta","17",{"name":"twitter:creator","content":"@InformatikAI"}],["$","meta","18",{"name":"twitter:title","content":"Servicios de IA y Tecnología | Informatik-AI"}],["$","meta","19",{"name":"twitter:description","content":"Descubre nuestros servicios especializados en IA, formación, consultoría estratégica, automatización y desarrollo a medida para empresas."}],["$","meta","20",{"name":"twitter:image","content":"https://informatik-ai.com/images/og-image.jpg"}],["$","link","21",{"rel":"icon","href":"/favicon.ico","type":"image/x-icon","sizes":"16x16"}]],"error":null,"digest":"$undefined"}
+15:{"metadata":"$1b:metadata","error":null,"digest":"$undefined"}

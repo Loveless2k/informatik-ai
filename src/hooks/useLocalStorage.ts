@@ -3,9 +3,9 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 
 // Types
-type SetValue<T> = T | ((val: T) => T);
+export type SetValue<T> = T | ((val: T) => T);
 
-interface UseLocalStorageOptions {
+export interface UseLocalStorageOptions {
   serializer?: {
     read: (value: string) => any;
     write: (value: any) => string;
@@ -14,7 +14,7 @@ interface UseLocalStorageOptions {
   onError?: (error: Error) => void;
 }
 
-interface UseLocalStorageReturn<T> {
+export interface UseLocalStorageReturn<T> {
   value: T;
   setValue: (value: SetValue<T>) => void;
   removeValue: () => void;
