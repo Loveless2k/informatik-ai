@@ -50,6 +50,12 @@ export default function ComingSoonPage() {
     emailjs.init('NuEMLaMO5zEqU4ka1');
   }, []);
 
+  // Función para validar formato de email
+  const isValidEmail = (email: string): boolean => {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
+  };
+
   const getProgressPercentage = () => {
     const stepProgress = {
       initial: 0,
@@ -158,6 +164,19 @@ export default function ComingSoonPage() {
         {/* Estado Inicial */}
         {currentStep === 'initial' && (
           <div className="text-center animate-fade-in px-2 sm:px-4">
+            {/* Logo de Informatik-AI */}
+            <div className="mb-6 sm:mb-8 md:mb-10 lg:mb-12">
+              <div className="relative inline-block">
+                <img
+                  src="/images/logos/logoInformatik-ai2.png"
+                  alt="Informatik-AI Logo"
+                  className="h-12 sm:h-16 md:h-20 lg:h-24 xl:h-28 w-auto mx-auto drop-shadow-2xl hover:scale-105 transition-transform duration-300"
+                />
+                {/* Efecto de brillo sutil */}
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/20 via-transparent to-blue-500/20 rounded-lg blur-xl opacity-50"></div>
+              </div>
+            </div>
+
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 leading-tight">
               ¿Listo para cultivar tu{' '}
               <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
@@ -165,7 +184,7 @@ export default function ComingSoonPage() {
               </span>
             </h1>
             <p className="text-lg sm:text-xl text-gray-300 mb-8 sm:mb-12 max-w-3xl mx-auto leading-relaxed px-2">
-              Hablemos de cómo Informatik-AI puede transformar tu negocio.
+              Hablemos de cómo <span className="text-cyan-400 font-semibold">Informatik-AI</span> puede transformar tu negocio.
             </p>
             <button
               onClick={handleStartConversation}
@@ -180,6 +199,15 @@ export default function ComingSoonPage() {
         {/* Formulario Conversacional */}
         {currentStep !== 'initial' && currentStep !== 'success' && (
           <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-4 sm:p-6 lg:p-8 animate-slide-up mx-2 sm:mx-0">
+            {/* Header con logo pequeño */}
+            <div className="flex items-center justify-center mb-4 sm:mb-6">
+              <img
+                src="/images/logos/logoInformatik-ai2.png"
+                alt="Informatik-AI"
+                className="h-6 sm:h-8 md:h-10 w-auto opacity-80 hover:opacity-100 transition-opacity duration-300"
+              />
+            </div>
+
             {/* Indicador de Progreso */}
             <div className="mb-6 sm:mb-8">
               <div className="w-full bg-gray-700 rounded-full h-2">
@@ -249,28 +277,67 @@ export default function ComingSoonPage() {
                     type="email"
                     value={inputValue.split('|')[0] || ''}
                     onChange={(e) => {
+                      // Solo permitir caracteres válidos para email: letras, números, @, ., -, _
+                      const emailValue = e.target.value.replace(/[^a-zA-Z0-9@.\-_]/g, '');
                       const phone = inputValue.split('|')[1] || '';
-                      setInputValue(`${e.target.value}|${phone}`);
+                      setInputValue(`${emailValue}|${phone}`);
                     }}
-                    onKeyPress={handleKeyPress}
+                    onKeyPress={(e) => {
+                      // Permitir solo caracteres válidos para email y teclas de control
+                      const allowedKeys = /[a-zA-Z0-9@.\-_]/;
+                      const isControlKey = e.key === 'Backspace' || e.key === 'Delete' || e.key === 'Tab' || e.key === 'Enter' || e.key === 'ArrowLeft' || e.key === 'ArrowRight';
+
+                      if (!allowedKeys.test(e.key) && !isControlKey) {
+                        e.preventDefault();
+                      }
+
+                      // Mantener funcionalidad original para Enter
+                      if (e.key === 'Enter') {
+                        handleKeyPress(e);
+                      }
+                    }}
                     placeholder="tu@email.com"
-                    className="w-full px-3 sm:px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition-colors text-white placeholder-gray-400 text-sm sm:text-base"
+                    className={`w-full px-3 sm:px-4 py-3 bg-gray-700/50 border rounded-lg focus:outline-none focus:ring-2 transition-colors text-white placeholder-gray-400 text-sm sm:text-base ${
+                      inputValue.split('|')[0]?.trim() && !isValidEmail(inputValue.split('|')[0]?.trim())
+                        ? 'border-red-500 focus:ring-red-400 focus:border-red-400'
+                        : 'border-gray-600 focus:ring-cyan-400 focus:border-cyan-400'
+                    }`}
                     autoFocus
                   />
+                  {inputValue.split('|')[0]?.trim() && !isValidEmail(inputValue.split('|')[0]?.trim()) && (
+                    <p className="text-red-400 text-xs sm:text-sm mt-1">
+                      Por favor, ingresa un email válido
+                    </p>
+                  )}
                   <input
                     type="tel"
                     value={inputValue.split('|')[1] || ''}
                     onChange={(e) => {
+                      // Solo permitir números, espacios, guiones y paréntesis
+                      const phoneValue = e.target.value.replace(/[^0-9\s\-\(\)\+]/g, '');
                       const email = inputValue.split('|')[0] || '';
-                      setInputValue(`${email}|${e.target.value}`);
+                      setInputValue(`${email}|${phoneValue}`);
                     }}
-                    onKeyPress={handleKeyPress}
-                    placeholder="Teléfono (opcional)"
+                    onKeyPress={(e) => {
+                      // Permitir solo números, espacios, guiones, paréntesis, + y teclas de control
+                      const allowedKeys = /[0-9\s\-\(\)\+]/;
+                      const isControlKey = e.key === 'Backspace' || e.key === 'Delete' || e.key === 'Tab' || e.key === 'Enter' || e.key === 'ArrowLeft' || e.key === 'ArrowRight';
+
+                      if (!allowedKeys.test(e.key) && !isControlKey) {
+                        e.preventDefault();
+                      }
+
+                      // Mantener funcionalidad original para Enter
+                      if (e.key === 'Enter') {
+                        handleKeyPress(e);
+                      }
+                    }}
+                    placeholder="Teléfono (opcional) - ej: +56 9 1234 5678"
                     className="w-full px-3 sm:px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition-colors text-white placeholder-gray-400 text-sm sm:text-base"
                   />
                   <button
                     onClick={handleNext}
-                    disabled={!inputValue.split('|')[0]?.trim()}
+                    disabled={!inputValue.split('|')[0]?.trim() || !isValidEmail(inputValue.split('|')[0]?.trim())}
                     className="w-full px-4 sm:px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base font-medium"
                   >
                     Continuar →
@@ -357,156 +424,63 @@ export default function ComingSoonPage() {
               <div className="absolute bottom-4 left-4 w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 bg-gradient-to-br from-blue-400/10 to-purple-400/10 rounded-full blur-xl"></div>
 
               {/* Contenido principal */}
-              <div className="relative z-10">
-                {/* Icono de éxito con animación mejorada */}
-                <div className="relative mb-4 sm:mb-6 md:mb-8 lg:mb-10">
-                  <div className="relative">
-                    <div className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 bg-gradient-to-r from-green-400 via-emerald-500 to-green-600 rounded-full flex items-center justify-center mx-auto shadow-lg shadow-green-500/25 animate-pulse">
-                      <svg className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 text-white drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    {/* Círculos decorativos animados */}
-                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                      <div className="w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 lg:w-36 lg:h-36 border-2 border-green-400/20 rounded-full animate-ping"></div>
-                    </div>
-                    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                      <div className="w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36 lg:w-40 lg:h-40 border border-emerald-400/10 rounded-full animate-pulse"></div>
-                    </div>
+              <div className="animate-fade-in">
+                {/* Icono de éxito simple */}
+                <div className="mb-6 sm:mb-8">
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-r from-green-400 to-green-600 rounded-full flex items-center justify-center mx-auto shadow-lg">
+                    <svg className="w-8 h-8 sm:w-10 sm:h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                    </svg>
                   </div>
-
-                  {/* Partículas flotantes */}
-                  <div className="absolute top-0 left-1/4 w-1 h-1 sm:w-2 sm:h-2 bg-cyan-400 rounded-full animate-bounce" style={{animationDelay: '0.5s'}}></div>
-                  <div className="absolute top-1/4 right-1/4 w-1 h-1 sm:w-2 sm:h-2 bg-green-400 rounded-full animate-bounce" style={{animationDelay: '1s'}}></div>
-                  <div className="absolute bottom-1/4 left-1/3 w-1 h-1 sm:w-2 sm:h-2 bg-blue-400 rounded-full animate-bounce" style={{animationDelay: '1.5s'}}></div>
                 </div>
 
-                {/* Título principal responsive */}
-                <div className="mb-4 sm:mb-6 md:mb-8 lg:mb-10">
-                  <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-2 sm:mb-3 md:mb-4 leading-tight tracking-tight">
-                    <span className="inline-block animate-bounce" style={{animationDelay: '0.1s'}}>🎉</span>
-                    {' '}¡Perfecto,{' '}
-                    <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent">
-                      {formData.name}
-                    </span>!
+                {/* Título principal */}
+                <div className="mb-6 sm:mb-8">
+                  <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight">
+                    ¡Gracias, {formData.name}!
                   </h2>
-                  <div className="w-12 sm:w-16 md:w-20 lg:w-24 h-0.5 sm:h-1 bg-gradient-to-r from-cyan-400 via-green-400 to-emerald-500 mx-auto rounded-full shadow-lg shadow-cyan-400/25"></div>
+                  <p className="text-lg sm:text-xl text-gray-300 leading-relaxed">
+                    Tu consulta ha sido enviada exitosamente.
+                  </p>
                 </div>
 
-                {/* Mensaje principal con diseño mejorado */}
-                <div className="space-y-3 sm:space-y-4 md:space-y-6 lg:space-y-8 mb-4 sm:mb-6 md:mb-8 lg:mb-10">
-                  {/* Card principal del mensaje */}
-                  <div className="relative bg-gradient-to-r from-gray-700/40 via-gray-700/30 to-gray-700/40 rounded-xl sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 lg:p-8 border border-gray-600/30 backdrop-blur-sm">
-                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/5 to-green-500/5 rounded-xl sm:rounded-2xl md:rounded-3xl"></div>
-                    <div className="relative z-10">
-                      <p className="text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-gray-100 leading-relaxed font-medium">
-                        Tu consulta sobre{' '}
-                        <span className="inline-flex items-center px-2 sm:px-3 md:px-4 py-1 sm:py-1.5 md:py-2 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 text-cyan-300 font-bold rounded-lg sm:rounded-xl border border-cyan-500/40 shadow-lg shadow-cyan-500/10 text-xs sm:text-sm md:text-base lg:text-lg">
-                          ✨ {formData.service}
-                        </span>
-                        {' '}ha sido recibida exitosamente.
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Cards de información responsive */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6 text-xs sm:text-sm md:text-base">
-                    {/* Card de contacto */}
-                    <div className="bg-gradient-to-br from-blue-500/15 to-blue-600/10 rounded-lg sm:rounded-xl md:rounded-2xl p-3 sm:p-4 md:p-5 lg:p-6 border border-blue-500/25 backdrop-blur-sm hover:border-blue-400/40 transition-all duration-300 group">
-                      <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
-                        <div className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-blue-500/20 rounded-lg sm:rounded-xl flex items-center justify-center group-hover:bg-blue-500/30 transition-colors">
-                          <svg className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                          </svg>
-                        </div>
-                        <span className="text-blue-300 font-semibold text-sm sm:text-base md:text-lg">Contacto</span>
-                      </div>
-                      <p className="text-gray-300 break-all leading-relaxed">{formData.email}</p>
-                    </div>
-
-                    {/* Card de tiempo de respuesta */}
-                    <div className="bg-gradient-to-br from-green-500/15 to-emerald-600/10 rounded-lg sm:rounded-xl md:rounded-2xl p-3 sm:p-4 md:p-5 lg:p-6 border border-green-500/25 backdrop-blur-sm hover:border-green-400/40 transition-all duration-300 group">
-                      <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
-                        <div className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-green-500/20 rounded-lg sm:rounded-xl flex items-center justify-center group-hover:bg-green-500/30 transition-colors">
-                          <svg className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                          </svg>
-                        </div>
-                        <span className="text-green-300 font-semibold text-sm sm:text-base md:text-lg">Respuesta</span>
-                      </div>
-                      <p className="text-gray-300 leading-relaxed">24-48 horas</p>
-                    </div>
-
-                    {/* Card de prioridad (nuevo) */}
-                    <div className="bg-gradient-to-br from-purple-500/15 to-purple-600/10 rounded-lg sm:rounded-xl md:rounded-2xl p-3 sm:p-4 md:p-5 lg:p-6 border border-purple-500/25 backdrop-blur-sm hover:border-purple-400/40 transition-all duration-300 group sm:col-span-2 lg:col-span-1">
-                      <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
-                        <div className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-purple-500/20 rounded-lg sm:rounded-xl flex items-center justify-center group-hover:bg-purple-500/30 transition-colors">
-                          <svg className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                          </svg>
-                        </div>
-                        <span className="text-purple-300 font-semibold text-sm sm:text-base md:text-lg">Prioridad</span>
-                      </div>
-                      <p className="text-gray-300 leading-relaxed">Alta ⭐</p>
-                    </div>
+                {/* Información del mensaje */}
+                <div className="space-y-4 sm:space-y-6 mb-6 sm:mb-8">
+                  <div className="bg-gray-700/30 rounded-xl p-4 sm:p-6 border border-gray-600/30">
+                    <p className="text-base sm:text-lg text-gray-200 leading-relaxed mb-4">
+                      Hemos recibido tu consulta sobre{' '}
+                      <span className="text-cyan-400 font-semibold">{formData.service}</span>.
+                    </p>
+                    <p className="text-sm sm:text-base text-gray-300">
+                      Un especialista se pondrá en contacto contigo en{' '}
+                      <span className="text-cyan-400 font-semibold break-all">{formData.email}</span>{' '}
+                      en las próximas 24-48 horas.
+                    </p>
                   </div>
                 </div>
 
-                {/* Próximos pasos con diseño mejorado */}
-                <div className="relative bg-gradient-to-br from-cyan-500/15 via-blue-500/10 to-purple-500/15 rounded-xl sm:rounded-2xl md:rounded-3xl p-4 sm:p-5 md:p-6 lg:p-8 border border-cyan-500/25 mb-4 sm:mb-6 md:mb-8 lg:mb-10 backdrop-blur-sm overflow-hidden">
-                  {/* Efectos de fondo */}
-                  <div className="absolute top-0 right-0 w-20 h-20 sm:w-32 sm:h-32 bg-gradient-to-bl from-cyan-400/10 to-transparent rounded-full blur-xl"></div>
-                  <div className="absolute bottom-0 left-0 w-16 h-16 sm:w-24 sm:h-24 bg-gradient-to-tr from-blue-400/10 to-transparent rounded-full blur-lg"></div>
-
-                  <div className="relative z-10">
-                    <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-cyan-300 mb-3 sm:mb-4 md:mb-6 flex items-center gap-2 sm:gap-3">
-                      <div className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-lg sm:rounded-xl flex items-center justify-center shadow-lg shadow-cyan-500/25">
-                        <svg className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                        </svg>
-                      </div>
-                      <span className="bg-gradient-to-r from-cyan-300 to-blue-300 bg-clip-text text-transparent">
-                        ¿Qué sigue?
-                      </span>
-                    </h3>
-
-                    <div className="space-y-3 sm:space-y-4 md:space-y-5 text-xs sm:text-sm md:text-base lg:text-lg text-gray-300">
-                      {[
-                        {
-                          number: 1,
-                          text: "Revisaremos tu consulta en detalle",
-                          icon: "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z",
-                          color: "from-green-500 to-emerald-500"
-                        },
-                        {
-                          number: 2,
-                          text: "Un especialista te contactará para agendar una reunión",
-                          icon: "M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z",
-                          color: "from-blue-500 to-cyan-500"
-                        },
-                        {
-                          number: 3,
-                          text: "Desarrollaremos una propuesta personalizada",
-                          icon: "M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z",
-                          color: "from-purple-500 to-pink-500"
-                        }
-                      ].map((step) => (
-                        <div key={step.number} className="flex items-start gap-3 sm:gap-4 md:gap-5 group hover:transform hover:translate-x-1 transition-all duration-300">
-                          <div className={`flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 bg-gradient-to-r ${step.color} rounded-lg sm:rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300`}>
-                            <span className="text-white font-bold text-xs sm:text-sm md:text-base">{step.number}</span>
-                          </div>
-                          <div className="flex-1 pt-1 sm:pt-1.5 md:pt-2">
-                            <p className="leading-relaxed group-hover:text-white transition-colors duration-300">{step.text}</p>
-                          </div>
-                          <div className="flex-shrink-0 w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-gray-500 group-hover:text-cyan-400 transition-colors duration-300 mt-1 sm:mt-1.5 md:mt-2">
-                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={step.icon} />
-                            </svg>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
+                {/* Próximos pasos */}
+                <div className="bg-cyan-500/10 rounded-xl p-4 sm:p-6 border border-cyan-500/20 mb-6 sm:mb-8">
+                  <h3 className="text-lg sm:text-xl font-semibold text-cyan-300 mb-4 flex items-center gap-2">
+                    <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                    </svg>
+                    ¿Qué sigue?
+                  </h3>
+                  <ul className="space-y-3 text-sm sm:text-base text-gray-300">
+                    <li className="flex items-start gap-3">
+                      <span className="flex-shrink-0 w-6 h-6 bg-cyan-500/20 text-cyan-300 rounded-full flex items-center justify-center text-xs font-bold mt-0.5">1</span>
+                      <span>Revisaremos tu consulta en detalle</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="flex-shrink-0 w-6 h-6 bg-cyan-500/20 text-cyan-300 rounded-full flex items-center justify-center text-xs font-bold mt-0.5">2</span>
+                      <span>Un especialista te contactará para agendar una reunión</span>
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <span className="flex-shrink-0 w-6 h-6 bg-cyan-500/20 text-cyan-300 rounded-full flex items-center justify-center text-xs font-bold mt-0.5">3</span>
+                      <span>Desarrollaremos una propuesta personalizada</span>
+                    </li>
+                  </ul>
                 </div>
 
                 {/* Firma del equipo mejorada */}
@@ -515,11 +489,18 @@ export default function ComingSoonPage() {
                     <p className="text-xs sm:text-sm md:text-base lg:text-lg text-gray-400 leading-relaxed">
                       Con cariño y dedicación,
                     </p>
-                    <div className="mt-2 sm:mt-3 flex items-center justify-center gap-2 sm:gap-3">
+                    <div className="mt-2 sm:mt-3 flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3">
                       <span className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-300">el equipo de</span>
-                      <span className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent">
-                        Informatik-AI
-                      </span>
+                      <div className="flex items-center gap-2 sm:gap-3">
+                        <img
+                          src="/images/logos/logoInformatik-ai2.png"
+                          alt="Informatik-AI"
+                          className="h-6 sm:h-8 md:h-10 lg:h-12 w-auto drop-shadow-lg"
+                        />
+                        <span className="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 bg-clip-text text-transparent">
+                          
+                        </span>
+                      </div>
                       <span className="text-lg sm:text-xl md:text-2xl animate-bounce">🚀</span>
                     </div>
                     <div className="mt-2 sm:mt-3 flex justify-center gap-1 sm:gap-2">

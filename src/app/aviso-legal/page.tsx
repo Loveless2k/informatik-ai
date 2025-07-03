@@ -14,7 +14,7 @@ export default function AvisoLegalPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black py-16">
       <div className="container mx-auto px-4 max-w-4xl">
-        <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-8 md:p-12">
+        <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-4 md:p-12">
           <h1 className="text-4xl font-bold text-white mb-8 text-center">
             Aviso Legal
           </h1>
