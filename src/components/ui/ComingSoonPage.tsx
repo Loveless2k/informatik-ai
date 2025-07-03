@@ -9,27 +9,113 @@ import Link from 'next/link';
  * Presenta un formulario conversacional progresivo para captar leads
  */
 
-type FormStep = 'initial' | 'name' | 'service' | 'contact' | 'company' | 'message' | 'success';
+type FormStep = 'initial' | 'name' | 'service' | 'contact' | 'company' | 'budget' | 'message' | 'review' | 'success';
 
 interface FormData {
   name: string;
   email: string;
   phone: string;
   company: string;
+  budget: string;
   message: string;
-  service: string;
+  services: string[];
 }
 
-const services = [
-  { id: 'strategy',          label: 'Estrategia' },
-  { id: 'avatars',           label: 'Avatares' },
-  { id: 'training',          label: 'Formación' },
-  { id: 'course-development',label: 'Desarrollo de cursos' },
-  { id: 'automation',        label: 'Automatización' },
-  { id: 'custom-software',   label: 'Software a medida' },
-  { id: 'chatbot',           label: 'ChatBot' },
-  { id:'otro',           label: 'Otro' }
+const serviceCategories = [
+  {
+    id: 'training',
+    title: '🧠 Formación en IA',
+    description: 'Capacitación y workshops especializados',
+    services: [
+      { id: 'training.executive-workshop', label: 'Workshop Ejecutivo IA' },
+      { id: 'training.tech-bootcamp', label: 'Bootcamp Técnico IA' },
+      { id: 'training.custom', label: 'Formación Personalizada' }
+    ]
+  },
+  {
+    id: 'strategy',
+    title: '📊 Asesoría Estratégica',
+    description: 'Consultoría y planificación estratégica',
+    services: [
+      { id: 'strategy.viability', label: 'Análisis de Viabilidad' },
+      { id: 'strategy.roadmap', label: 'Estrategia y Roadmap' },
+      { id: 'strategy.implementation', label: 'Implementación Guiada' },
+      { id: 'strategy.optimization', label: 'Medición y Optimización' }
+    ]
+  },
+  {
+    id: 'courses',
+    title: '📚 Desarrollo de Cursos',
+    description: 'Creación de contenido educativo',
+    services: [
+      { id: 'course.basics', label: 'Fundamentos de IA' },
+      { id: 'course.developers', label: 'IA para Desarrolladores' },
+      { id: 'course.deep-learning', label: 'Deep Learning Avanzado' },
+      { id: 'course.business', label: 'IA para Aplicaciones de Negocio' },
+      { id: 'course.others', label: 'Otros cursos' }
+    ]
+  },
+  {
+    id: 'automation',
+    title: '⚙️ Automatización',
+    description: 'Procesos inteligentes y chatbots',
+    services: [
+      { id: 'automation.rpa', label: 'RPA' },
+      { id: 'automation.smart-automation', label: 'Automatizaciones Inteligentes' },
+      { id: 'automation.process-automation', label: 'Automatización de Procesos' },
+      { id: 'automation.chatbots', label: 'Chatbots' },
+      { id: 'automation.agents', label: 'Agentes Personalizados' }
+    ]
+  },
+  {
+    id: 'development',
+    title: '💻 Desarrollo TI con IA',
+    description: 'Aplicaciones y sistemas inteligentes',
+    services: [
+      { id: 'dev.websites', label: 'Sitios Web' },
+      { id: 'dev.webapps', label: 'Aplicaciones Web' },
+      { id: 'dev.webapps-ai', label: 'Aplicaciones Web con IA' },
+      { id: 'dev.platforms', label: 'Plataformas / Productos' },
+      { id: 'dev.mobile-ai', label: 'Apps Móviles Inteligentes' },
+      { id: 'dev.api-microservices', label: 'APIs y Microservicios con IA' },
+      { id: 'dev.data-systems', label: 'Sistemas de Datos con IA' }
+    ]
+  },
+  {
+    id: 'others',
+    title: '🎭 Otros Servicios',
+    description: 'Servicios especializados adicionales',
+    services: [
+      { id: 'avatars', label: 'Avatares' },
+      { id: 'other', label: 'Otro' }
+    ]
+  }
+];
 
+// Lista plana para compatibilidad con el código existente
+const services = serviceCategories.flatMap(category => category.services);
+
+// Códigos de país para teléfonos
+const countryCodes = [
+  { code: '+56', country: 'Chile', flag: '🇨🇱' },
+  { code: '+34', country: 'España', flag: '🇪🇸' },
+  { code: '+54', country: 'Argentina', flag: '🇦🇷' },
+  { code: '+52', country: 'México', flag: '🇲🇽' },
+  { code: '+57', country: 'Colombia', flag: '🇨🇴' },
+  { code: '+51', country: 'Perú', flag: '🇵🇪' },
+  { code: '+58', country: 'Venezuela', flag: '🇻🇪' },
+  { code: '+593', country: 'Ecuador', flag: '🇪🇨' },
+  { code: '+595', country: 'Paraguay', flag: '🇵🇾' },
+  { code: '+598', country: 'Uruguay', flag: '🇺🇾' },
+  { code: '+591', country: 'Bolivia', flag: '🇧🇴' },
+  { code: '+1', country: 'Estados Unidos', flag: '🇺🇸' },
+  { code: '+1', country: 'Canadá', flag: '🇨🇦' },
+  { code: '+55', country: 'Brasil', flag: '🇧🇷' },
+  { code: '+33', country: 'Francia', flag: '🇫🇷' },
+  { code: '+49', country: 'Alemania', flag: '🇩🇪' },
+  { code: '+39', country: 'Italia', flag: '🇮🇹' },
+  { code: '+44', country: 'Reino Unido', flag: '🇬🇧' },
+  { code: 'custom', country: 'Otro código', flag: '🌍' }
 ];
 
 export default function ComingSoonPage() {
@@ -39,11 +125,25 @@ export default function ComingSoonPage() {
     email: '',
     phone: '',
     company: '',
+    budget: '',
     message: '',
-    service: ''
+    services: [] as string[]
   });
+  const [selectedServices, setSelectedServices] = useState<string[]>([]);
+  const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [inputValue, setInputValue] = useState('');
+  const [isEditingFromReview, setIsEditingFromReview] = useState(false);
+  const [emailValidation, setEmailValidation] = useState<{isValid: boolean, isVerifying: boolean, message: string}>({
+    isValid: true,
+    isVerifying: false,
+    message: ''
+  });
+  const [phoneValidation, setPhoneValidation] = useState<{isValid: boolean, message: string}>({
+    isValid: true,
+    message: ''
+  });
+  const [selectedCountryCode, setSelectedCountryCode] = useState('+56'); // Chile por defecto
 
   useEffect(() => {
     // Inicializar EmailJS
@@ -56,24 +156,151 @@ export default function ComingSoonPage() {
     return emailRegex.test(email);
   };
 
+  // Función para verificar si el email existe realmente
+  const verifyEmailExists = async (email: string): Promise<boolean> => {
+    try {
+      // Verificación básica de dominio usando DNS lookup simulado
+      const domain = email.split('@')[1];
+      if (!domain) return false;
+
+      // Lista de dominios comunes que sabemos que existen
+      const commonDomains = [
+        'gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'live.com',
+        'icloud.com', 'me.com', 'mac.com', 'aol.com', 'protonmail.com',
+        'zoho.com', 'yandex.com', 'mail.ru', 'qq.com', '163.com',
+        // Dominios latinoamericanos
+        'terra.com.br', 'uol.com.br', 'bol.com.br', 'ig.com.br',
+        'correo.com', 'latinmail.com', 'ciudad.com.ar', 'fibertel.com.ar',
+        // Dominios españoles
+        'telefonica.net', 'movistar.es', 'orange.es', 'vodafone.es',
+        // Dominios empresariales comunes
+        'company.com', 'empresa.com', 'negocio.com'
+      ];
+
+      if (commonDomains.includes(domain.toLowerCase())) {
+        return true;
+      }
+
+      // Para otros dominios, hacer una verificación básica
+      // En un entorno real, usarías un servicio de verificación de email
+      return domain.includes('.') && domain.length > 3;
+    } catch (error) {
+      console.warn('Error verificando email:', error);
+      return true; // En caso de error, permitir el email
+    }
+  };
+
+  // Función para validar formato de teléfono internacional
+  const isValidPhone = (phone: string): boolean => {
+    if (!phone.trim()) return true; // Teléfono es opcional
+
+    // Remover espacios, guiones y paréntesis para validación
+    const cleanPhone = phone.replace(/[\s\-\(\)]/g, '');
+
+    // Debe empezar con + seguido de 1-4 dígitos (código país) y luego 6-14 dígitos más
+    const phoneRegex = /^\+[1-9]\d{0,3}\d{6,14}$/;
+    return phoneRegex.test(cleanPhone);
+  };
+
   const getProgressPercentage = () => {
     const stepProgress = {
       initial: 0,
-      name: 20,
-      service: 40,
-      contact: 60,
-      company: 80,
-      message: 95,
+      name: 14,
+      service: 28,
+      contact: 42,
+      company: 56,
+      budget: 70,
+      message: 84,
+      review: 95,
       success: 100
     };
     return stepProgress[currentStep];
   };
 
   const handleStartConversation = () => {
+    // Limpiar todos los datos al iniciar una nueva conversación
+    setFormData({
+      name: '',
+      email: '',
+      phone: '',
+      company: '',
+      budget: '',
+      message: '',
+      services: []
+    });
+    setSelectedServices([]);
+    setInputValue('');
     setCurrentStep('name');
   };
 
+  // Función para navegar hacia atrás
+  const handleBack = () => {
+    if (currentStep === 'service') {
+      setCurrentStep('name');
+      setInputValue(formData.name);
+    } else if (currentStep === 'contact') {
+      setCurrentStep('service');
+      setInputValue('');
+    } else if (currentStep === 'company') {
+      setCurrentStep('contact');
+      setInputValue(`${formData.email}|${formData.phone}`);
+    } else if (currentStep === 'budget') {
+      setCurrentStep('company');
+      setInputValue(formData.company);
+    } else if (currentStep === 'message') {
+      setCurrentStep('budget');
+      setInputValue(formData.budget);
+    } else if (currentStep === 'review') {
+      setCurrentStep('message');
+      setInputValue(formData.message);
+    }
+  };
+
+  // Función para editar un campo específico desde la revisión
+  const handleEditField = (field: string) => {
+    setIsEditingFromReview(true);
+    switch (field) {
+      case 'name':
+        setCurrentStep('name');
+        setInputValue(formData.name);
+        break;
+      case 'service':
+        setCurrentStep('service');
+        setSelectedServices(formData.services);
+        setExpandedCategories([]); // Resetear acordeones pero mantener selecciones
+        setInputValue('');
+        break;
+      case 'contact':
+        setCurrentStep('contact');
+        setInputValue(`${formData.email}|${formData.phone}`);
+        break;
+      case 'company':
+        setCurrentStep('company');
+        setInputValue(formData.company);
+        break;
+      case 'budget':
+        setCurrentStep('budget');
+        setInputValue(formData.budget);
+        break;
+      case 'message':
+        setCurrentStep('message');
+        setInputValue(formData.message);
+        break;
+    }
+  };
+
+  // Función para volver a la revisión desde edición
+  const handleBackToReview = () => {
+    setIsEditingFromReview(false);
+    setCurrentStep('review');
+  };
+
   const handleNext = () => {
+    // Si estamos editando desde revisión, no avanzar automáticamente
+    if (isEditingFromReview) {
+      return;
+    }
+
     if (currentStep === 'name') {
       setFormData(prev => ({ ...prev, name: inputValue }));
       setInputValue('');
@@ -89,19 +316,50 @@ export default function ComingSoonPage() {
     } else if (currentStep === 'company') {
       setFormData(prev => ({ ...prev, company: inputValue }));
       setInputValue('');
+      setCurrentStep('budget');
+    } else if (currentStep === 'budget') {
+      setFormData(prev => ({ ...prev, budget: inputValue }));
+      setInputValue('');
       setCurrentStep('message');
     } else if (currentStep === 'message') {
       setFormData(prev => ({ ...prev, message: inputValue }));
+      setInputValue('');
+      setCurrentStep('review');
+    } else if (currentStep === 'review') {
       handleSubmit();
     }
   };
 
   const handleServiceSelect = (serviceId: string) => {
-    const selectedService = services.find(s => s.id === serviceId);
-    setFormData(prev => ({ ...prev, service: selectedService?.label || '' }));
-    setTimeout(() => {
+    setSelectedServices(prev => {
+      const isSelected = prev.includes(serviceId);
+      if (isSelected) {
+        // Deseleccionar servicio
+        return prev.filter(id => id !== serviceId);
+      } else {
+        // Seleccionar servicio
+        return [...prev, serviceId];
+      }
+    });
+  };
+
+  const handleServicesContinue = () => {
+    if (selectedServices.length > 0) {
+      setFormData(prev => ({ ...prev, services: selectedServices }));
       setCurrentStep('contact');
-    }, 300);
+    }
+  };
+
+  const toggleCategory = (categoryId: string) => {
+    setExpandedCategories(prev => {
+      if (prev.includes(categoryId)) {
+        // Si está abierto, lo cerramos
+        return prev.filter(id => id !== categoryId);
+      } else {
+        // Si está cerrado, lo abrimos y cerramos todos los demás
+        return [categoryId];
+      }
+    });
   };
 
   const handleSubmit = async () => {
@@ -117,8 +375,9 @@ export default function ComingSoonPage() {
         { name: 'user_email', value: formData.email },
         { name: 'phone', value: formData.phone },
         { name: 'company', value: formData.company },
-        { name: 'service', value: formData.service },
-        { name: 'message', value: inputValue }
+        { name: 'budget', value: formData.budget },
+        { name: 'services', value: formData.services.map(id => services.find(s => s.id === id)?.label).join(', ') },
+        { name: 'message', value: formData.message }
       ];
 
       fields.forEach(field => {
@@ -159,7 +418,7 @@ export default function ComingSoonPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-gray-800 to-black p-4 sm:p-6 lg:p-8">
-      <div className="w-full max-w-2xl lg:max-w-4xl mx-auto">
+      <div id ="margen-fuera" className="w-full max-w-2xl lg:max-w-4xl mx-auto">
 
         {/* Estado Inicial */}
         {currentStep === 'initial' && (
@@ -224,24 +483,48 @@ export default function ComingSoonPage() {
                 <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-white mb-4 sm:mb-6">
                   <span className="text-cyan-400">1/5</span> ¡Hola! Empecemos por tu nombre.
                 </h2>
-                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                <div className="space-y-3 sm:space-y-4">
                   <input
                     type="text"
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
                     onKeyPress={handleKeyPress}
                     placeholder="Tu nombre completo"
-                    className="flex-1 px-3 sm:px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition-colors text-white placeholder-gray-400 text-sm sm:text-base"
+                    className="w-full px-3 sm:px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition-colors text-white placeholder-gray-400 text-sm sm:text-base"
                     autoFocus
                   />
-                  <button
-                    onClick={handleNext}
-                    disabled={!inputValue.trim()}
-                    className="px-4 sm:px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base font-medium"
-                  >
-                    <span className="hidden sm:inline">→</span>
-                    <span className="sm:hidden">Continuar</span>
-                  </button>
+                  <div className="flex gap-3 sm:gap-4">
+                    {isEditingFromReview ? (
+                      <button
+                        onClick={handleBackToReview}
+                        className="px-4 sm:px-6 py-3 bg-gray-700/50 hover:bg-gray-600/50 text-gray-300 hover:text-white rounded-lg transition-all duration-300 text-sm sm:text-base font-medium border border-gray-600/30 hover:border-gray-500/50"
+                      >
+                        ← Volver a revisión
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => setCurrentStep('initial')}
+                        className="px-4 sm:px-6 py-3 bg-gray-700/50 hover:bg-gray-600/50 text-gray-300 hover:text-white rounded-lg transition-all duration-300 text-sm sm:text-base font-medium border border-gray-600/30 hover:border-gray-500/50"
+                      >
+                        ← Inicio
+                      </button>
+                    )}
+                    <button
+                      onClick={() => {
+                        if (isEditingFromReview) {
+                          // Actualizar el dato y volver a revisión
+                          setFormData(prev => ({ ...prev, name: inputValue }));
+                          handleBackToReview();
+                        } else {
+                          handleNext();
+                        }
+                      }}
+                      disabled={!inputValue.trim()}
+                      className="flex-1 px-4 sm:px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base font-medium"
+                    >
+                      {isEditingFromReview ? 'Guardar cambios' : 'Continuar →'}
+                    </button>
+                  </div>
                 </div>
               </div>
             )}
@@ -249,19 +532,106 @@ export default function ComingSoonPage() {
             {/* Paso 2: Servicio */}
             {currentStep === 'service' && (
               <div className="animate-fade-in">
-                <h2 className="text-2xl font-semibold text-white mb-6">
-                  <span className="text-cyan-400">2/5</span> Perfecto, {formData.name}. ¿Qué servicio te interesa?
+                <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-white mb-4 sm:mb-6">
+                  <span className="text-cyan-400">2/7</span> Perfecto, {formData.name}. ¿Qué servicios te interesan?
                 </h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {services.map((service) => (
+
+                <div className="space-y-4">
+                  {/* Categorías de servicios */}
+                  {serviceCategories.map((category) => {
+                    const isExpanded = expandedCategories.includes(category.id);
+                    const categoryServices = category.services.filter(service => selectedServices.includes(service.id));
+
+                    return (
+                      <div key={category.id} className="border border-gray-600/30 rounded-lg">
+                        {/* Header de categoría */}
+                        <button
+                          onClick={() => toggleCategory(category.id)}
+                          className="w-full p-3 sm:p-4 text-left flex items-center justify-between hover:bg-gray-700/30 transition-colors"
+                        >
+                          <div>
+                            <h3 className="text-sm sm:text-base text-white font-medium">{category.title}</h3>
+                            {categoryServices.length > 0 && (
+                              <p className="text-cyan-400 text-xs sm:text-sm mt-1">
+                                {categoryServices.length} seleccionado{categoryServices.length > 1 ? 's' : ''}
+                              </p>
+                            )}
+                          </div>
+                          <svg
+                            className={`w-5 h-5 text-gray-400 transition-transform ${isExpanded ? 'rotate-180' : ''}`}
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                          </svg>
+                        </button>
+
+                        {/* Servicios de la categoría */}
+                        {isExpanded && (
+                          <div className="px-3 sm:px-4 pb-3 sm:pb-4 space-y-2">
+                            {category.services.map((service) => {
+                              const isSelected = selectedServices.includes(service.id);
+                              return (
+                                <button
+                                  key={service.id}
+                                  onClick={() => handleServiceSelect(service.id)}
+                                  className={`w-full p-2 sm:p-3 text-left rounded-lg transition-colors text-sm sm:text-base ${
+                                    isSelected
+                                      ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/30'
+                                      : 'text-gray-300 hover:bg-gray-700/30 hover:text-white'
+                                  }`}
+                                >
+                                  <div className="flex items-center justify-between">
+                                    <span>{service.label}</span>
+                                    {isSelected && (
+                                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                                      </svg>
+                                    )}
+                                  </div>
+                                </button>
+                              );
+                            })}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+
+                  {/* Botones de navegación */}
+                  <div className="flex gap-3 sm:gap-4 pt-4">
+                    {isEditingFromReview ? (
+                      <button
+                        onClick={handleBackToReview}
+                        className="px-4 sm:px-6 py-3 bg-gray-700/50 hover:bg-gray-600/50 text-gray-300 hover:text-white rounded-lg transition-all duration-300 text-sm sm:text-base font-medium border border-gray-600/30 hover:border-gray-500/50"
+                      >
+                        ← Volver a revisión
+                      </button>
+                    ) : (
+                      <button
+                        onClick={handleBack}
+                        className="px-4 sm:px-6 py-3 bg-gray-700/50 hover:bg-gray-600/50 text-gray-300 hover:text-white rounded-lg transition-all duration-300 text-sm sm:text-base font-medium border border-gray-600/30 hover:border-gray-500/50"
+                      >
+                        ← Atrás
+                      </button>
+                    )}
                     <button
-                      key={service.id}
-                      onClick={() => handleServiceSelect(service.id)}
-                      className="p-4 bg-gray-700/30 border border-gray-600 rounded-lg hover:border-cyan-400 hover:bg-gray-700/50 transition-all duration-300 text-left text-white hover:shadow-lg hover:shadow-cyan-500/10"
+                      onClick={() => {
+                        if (isEditingFromReview) {
+                          // Actualizar servicios y volver a revisión
+                          setFormData(prev => ({ ...prev, services: selectedServices }));
+                          handleBackToReview();
+                        } else {
+                          handleServicesContinue();
+                        }
+                      }}
+                      disabled={selectedServices.length === 0}
+                      className="flex-1 px-4 sm:px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base font-medium"
                     >
-                      {service.label}
+                      {isEditingFromReview ? 'Guardar cambios' : 'Continuar →'}
                     </button>
-                  ))}
+                  </div>
                 </div>
               </div>
             )}
@@ -270,19 +640,46 @@ export default function ComingSoonPage() {
             {currentStep === 'contact' && (
               <div className="animate-fade-in">
                 <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-white mb-4 sm:mb-6 leading-relaxed">
-                  <span className="text-cyan-400">3/5</span> Entendido. ¿Dónde podemos contactarte?
+                  <span className="text-cyan-400">3/7</span> Entendido. ¿Dónde podemos contactarte?
                 </h2>
                 <div className="space-y-3 sm:space-y-4">
                   <input
                     type="email"
                     value={inputValue.split('|')[0] || ''}
-                    onChange={(e) => {
+                    onChange={async (e) => {
                       // Solo permitir caracteres válidos para email: letras, números, @, ., -, _
                       const emailValue = e.target.value.replace(/[^a-zA-Z0-9@.\-_]/g, '');
                       const phone = inputValue.split('|')[1] || '';
                       setInputValue(`${emailValue}|${phone}`);
+
+                      // Validar email en tiempo real
+                      if (emailValue.trim()) {
+                        if (!isValidEmail(emailValue)) {
+                          setEmailValidation({
+                            isValid: false,
+                            isVerifying: false,
+                            message: 'Formato de email inválido'
+                          });
+                        } else {
+                          setEmailValidation({
+                            isValid: true,
+                            isVerifying: true,
+                            message: 'Verificando email...'
+                          });
+
+                          // Verificar si el email existe
+                          const exists = await verifyEmailExists(emailValue);
+                          setEmailValidation({
+                            isValid: exists,
+                            isVerifying: false,
+                            message: exists ? '' : 'Este email no parece existir. Verifica que esté bien escrito.'
+                          });
+                        }
+                      } else {
+                        setEmailValidation({ isValid: true, isVerifying: false, message: '' });
+                      }
                     }}
-                    onKeyPress={(e) => {
+                    onKeyDown={(e) => {
                       // Permitir solo caracteres válidos para email y teclas de control
                       const allowedKeys = /[a-zA-Z0-9@.\-_]/;
                       const isControlKey = e.key === 'Backspace' || e.key === 'Delete' || e.key === 'Tab' || e.key === 'Enter' || e.key === 'ArrowLeft' || e.key === 'ArrowRight';
@@ -292,56 +689,174 @@ export default function ComingSoonPage() {
                       }
 
                       // Mantener funcionalidad original para Enter
-                      if (e.key === 'Enter') {
+                      if (e.key === 'Enter' && emailValidation.isValid && !emailValidation.isVerifying) {
                         handleKeyPress(e);
                       }
                     }}
                     placeholder="tu@email.com"
                     className={`w-full px-3 sm:px-4 py-3 bg-gray-700/50 border rounded-lg focus:outline-none focus:ring-2 transition-colors text-white placeholder-gray-400 text-sm sm:text-base ${
-                      inputValue.split('|')[0]?.trim() && !isValidEmail(inputValue.split('|')[0]?.trim())
+                      !emailValidation.isValid
                         ? 'border-red-500 focus:ring-red-400 focus:border-red-400'
+                        : emailValidation.isVerifying
+                        ? 'border-yellow-500 focus:ring-yellow-400 focus:border-yellow-400'
                         : 'border-gray-600 focus:ring-cyan-400 focus:border-cyan-400'
                     }`}
                     autoFocus
                   />
-                  {inputValue.split('|')[0]?.trim() && !isValidEmail(inputValue.split('|')[0]?.trim()) && (
-                    <p className="text-red-400 text-xs sm:text-sm mt-1">
-                      Por favor, ingresa un email válido
+                  {emailValidation.message && (
+                    <p className={`text-xs sm:text-sm mt-1 ${
+                      emailValidation.isVerifying ? 'text-yellow-400' : 'text-red-400'
+                    }`}>
+                      {emailValidation.isVerifying && (
+                        <span className="inline-block w-3 h-3 border border-yellow-400 border-t-transparent rounded-full animate-spin mr-1"></span>
+                      )}
+                      {emailValidation.message}
                     </p>
                   )}
-                  <input
-                    type="tel"
-                    value={inputValue.split('|')[1] || ''}
-                    onChange={(e) => {
-                      // Solo permitir números, espacios, guiones y paréntesis
-                      const phoneValue = e.target.value.replace(/[^0-9\s\-\(\)\+]/g, '');
-                      const email = inputValue.split('|')[0] || '';
-                      setInputValue(`${email}|${phoneValue}`);
-                    }}
-                    onKeyPress={(e) => {
-                      // Permitir solo números, espacios, guiones, paréntesis, + y teclas de control
-                      const allowedKeys = /[0-9\s\-\(\)\+]/;
-                      const isControlKey = e.key === 'Backspace' || e.key === 'Delete' || e.key === 'Tab' || e.key === 'Enter' || e.key === 'ArrowLeft' || e.key === 'ArrowRight';
+                  {/* Selector de código de país + número de teléfono */}
+                  <div className="space-y-3">
+                    <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
+                      {/* Selector de código de país */}
+                      <select
+                        value={selectedCountryCode}
+                        onChange={(e) => {
+                          setSelectedCountryCode(e.target.value);
+                          // Actualizar el teléfono con el nuevo código
+                          const phoneNumber = inputValue.split('|')[1]?.replace(/^\+\d+\s*/, '') || '';
+                          const email = inputValue.split('|')[0] || '';
+                          if (e.target.value !== 'custom') {
+                            setInputValue(`${email}|${e.target.value} ${phoneNumber}`);
+                          } else {
+                            setInputValue(`${email}|${phoneNumber}`);
+                          }
+                        }}
+                        className="w-full sm:w-auto sm:min-w-[120px] sm:max-w-[140px] px-2 sm:px-3 py-3 bg-gray-700/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition-colors text-white text-sm sm:text-base"
+                      >
+                        {countryCodes.map((country, index) => (
+                          <option key={index} value={country.code}>
+                            {country.flag} {country.code}
+                          </option>
+                        ))}
+                      </select>
 
-                      if (!allowedKeys.test(e.key) && !isControlKey) {
-                        e.preventDefault();
-                      }
+                      {/* Campo de número de teléfono */}
+                      <input
+                        type="tel"
+                        value={(() => {
+                          const phone = inputValue.split('|')[1] || '';
+                          if (selectedCountryCode === 'custom') {
+                            return phone;
+                          }
+                          // Remover el código de país del valor mostrado
+                          return phone.replace(new RegExp(`^\\${selectedCountryCode}\\s*`), '');
+                        })()}
+                        onChange={(e) => {
+                          const email = inputValue.split('|')[0] || '';
+                          let phoneValue = e.target.value.replace(/[^0-9\s\-\(\)]/g, '');
 
-                      // Mantener funcionalidad original para Enter
-                      if (e.key === 'Enter') {
-                        handleKeyPress(e);
+                          let fullPhone;
+                          if (selectedCountryCode === 'custom') {
+                            // Permitir que escriban el código completo
+                            phoneValue = e.target.value.replace(/[^0-9\s\-\(\)\+]/g, '');
+                            fullPhone = phoneValue;
+                          } else {
+                            // Agregar el código de país automáticamente
+                            fullPhone = phoneValue ? `${selectedCountryCode} ${phoneValue}` : '';
+                          }
+
+                          setInputValue(`${email}|${fullPhone}`);
+
+                          // Validar teléfono
+                          if (fullPhone.trim()) {
+                            if (selectedCountryCode === 'custom' && !fullPhone.startsWith('+')) {
+                              setPhoneValidation({
+                                isValid: false,
+                                message: 'Debe incluir el código de país (ej: +56, +34, +1)'
+                              });
+                            } else if (!isValidPhone(fullPhone)) {
+                              setPhoneValidation({
+                                isValid: false,
+                                message: 'Formato de teléfono inválido'
+                              });
+                            } else {
+                              setPhoneValidation({ isValid: true, message: '' });
+                            }
+                          } else {
+                            setPhoneValidation({ isValid: true, message: '' });
+                          }
+                        }}
+                        onKeyDown={(e) => {
+                          const allowedKeys = selectedCountryCode === 'custom'
+                            ? /[0-9\s\-\(\)\+]/
+                            : /[0-9\s\-\(\)]/;
+                          const isControlKey = e.key === 'Backspace' || e.key === 'Delete' || e.key === 'Tab' || e.key === 'Enter' || e.key === 'ArrowLeft' || e.key === 'ArrowRight';
+
+                          if (!allowedKeys.test(e.key) && !isControlKey) {
+                            e.preventDefault();
+                          }
+
+                          if (e.key === 'Enter') {
+                            handleKeyPress(e);
+                          }
+                        }}
+                        placeholder={selectedCountryCode === 'custom' ? '+XX XXXXXXXXX' : '9 1234 5678'}
+                        className={`flex-1 px-3 sm:px-4 py-3 bg-gray-700/50 border rounded-lg focus:outline-none focus:ring-2 transition-colors text-white placeholder-gray-400 text-sm sm:text-base ${
+                          !phoneValidation.isValid
+                            ? 'border-red-500 focus:ring-red-400 focus:border-red-400'
+                            : 'border-gray-600 focus:ring-cyan-400 focus:border-cyan-400'
+                        }`}
+                      />
+                    </div>
+
+                    {phoneValidation.message && (
+                      <p className="text-red-400 text-xs sm:text-sm">
+                        {phoneValidation.message}
+                      </p>
+                    )}
+
+                    <p className="text-xs text-gray-400">
+                      Teléfono opcional. Selecciona tu país o "Otro código" para escribir manualmente.
+                    </p>
+                  </div>
+                  <div className="flex gap-3 sm:gap-4">
+                    {isEditingFromReview ? (
+                      <button
+                        onClick={handleBackToReview}
+                        className="px-4 sm:px-6 py-3 bg-gray-700/50 hover:bg-gray-600/50 text-gray-300 hover:text-white rounded-lg transition-all duration-300 text-sm sm:text-base font-medium border border-gray-600/30 hover:border-gray-500/50"
+                      >
+                        ← Volver a revisión
+                      </button>
+                    ) : (
+                      <button
+                        onClick={handleBack}
+                        className="px-4 sm:px-6 py-3 bg-gray-700/50 hover:bg-gray-600/50 text-gray-300 hover:text-white rounded-lg transition-all duration-300 text-sm sm:text-base font-medium border border-gray-600/30 hover:border-gray-500/50"
+                      >
+                        ← Atrás
+                      </button>
+                    )}
+                    <button
+                      onClick={() => {
+                        if (isEditingFromReview) {
+                          // Actualizar contacto y volver a revisión
+                          const email = inputValue.split('|')[0] || '';
+                          const phone = inputValue.split('|')[1] || '';
+                          setFormData(prev => ({ ...prev, email, phone }));
+                          handleBackToReview();
+                        } else {
+                          handleNext();
+                        }
+                      }}
+                      disabled={
+                        !inputValue.split('|')[0]?.trim() ||
+                        !emailValidation.isValid ||
+                        emailValidation.isVerifying ||
+                        !phoneValidation.isValid
                       }
-                    }}
-                    placeholder="Teléfono (opcional) - ej: +56 9 1234 5678"
-                    className="w-full px-3 sm:px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition-colors text-white placeholder-gray-400 text-sm sm:text-base"
-                  />
-                  <button
-                    onClick={handleNext}
-                    disabled={!inputValue.split('|')[0]?.trim() || !isValidEmail(inputValue.split('|')[0]?.trim())}
-                    className="w-full px-4 sm:px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base font-medium"
-                  >
-                    Continuar →
-                  </button>
+                      className="flex-1 px-4 sm:px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base font-medium"
+                    >
+                      {isEditingFromReview ? 'Guardar cambios' : 'Continuar →'}
+                    </button>
+                  </div>
                 </div>
               </div>
             )}
@@ -350,35 +865,196 @@ export default function ComingSoonPage() {
             {currentStep === 'company' && (
               <div className="animate-fade-in">
                 <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-white mb-4 sm:mb-6 leading-relaxed">
-                  <span className="text-cyan-400">4/5</span> ¿Para qué empresa sería?
+                  <span className="text-cyan-400">4/7</span> ¿Para qué empresa sería?
                 </h2>
-                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                <div className="space-y-3 sm:space-y-4">
                   <input
                     type="text"
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && handleNext()}
+                    onKeyDown={(e) => e.key === 'Enter' && inputValue.trim() && handleNext()}
                     placeholder="Nombre de tu empresa"
-                    className="flex-1 px-3 sm:px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition-colors text-white placeholder-gray-400 text-sm sm:text-base"
+                    className="w-full px-3 sm:px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition-colors text-white placeholder-gray-400 text-sm sm:text-base"
                     autoFocus
                   />
-                  <button
-                    onClick={handleNext}
-                    disabled={!inputValue.trim()}
-                    className="px-4 sm:px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base font-medium min-w-[60px] sm:min-w-[80px]"
-                  >
-                    <span className="hidden sm:inline">→</span>
-                    <span className="sm:hidden">Continuar</span>
-                  </button>
+
+                  {/* Botón "No aplica" */}
+                  <div className="flex justify-center">
+                    <button
+                      onClick={() => {
+                        setInputValue('No aplica');
+                        setTimeout(() => handleNext(), 100);
+                      }}
+                      className="px-4 py-2 text-gray-400 hover:text-cyan-400 text-sm transition-colors underline decoration-dotted underline-offset-4 hover:decoration-solid"
+                    >
+                      No aplica / Proyecto personal
+                    </button>
+                  </div>
+
+                  <div className="flex gap-3 sm:gap-4">
+                    {isEditingFromReview ? (
+                      <button
+                        onClick={handleBackToReview}
+                        className="px-4 sm:px-6 py-3 bg-gray-700/50 hover:bg-gray-600/50 text-gray-300 hover:text-white rounded-lg transition-all duration-300 text-sm sm:text-base font-medium border border-gray-600/30 hover:border-gray-500/50"
+                      >
+                        ← Volver a revisión
+                      </button>
+                    ) : (
+                      <button
+                        onClick={handleBack}
+                        className="px-4 sm:px-6 py-3 bg-gray-700/50 hover:bg-gray-600/50 text-gray-300 hover:text-white rounded-lg transition-all duration-300 text-sm sm:text-base font-medium border border-gray-600/30 hover:border-gray-500/50"
+                      >
+                        ← Atrás
+                      </button>
+                    )}
+                    <button
+                      onClick={() => {
+                        if (isEditingFromReview) {
+                          // Actualizar empresa y volver a revisión
+                          setFormData(prev => ({ ...prev, company: inputValue }));
+                          handleBackToReview();
+                        } else {
+                          handleNext();
+                        }
+                      }}
+                      disabled={!inputValue.trim()}
+                      className="flex-1 px-4 sm:px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base font-medium"
+                    >
+                      {isEditingFromReview ? 'Guardar cambios' : 'Continuar →'}
+                    </button>
+                  </div>
                 </div>
               </div>
             )}
 
-            {/* Paso 5: Mensaje */}
+            {/* Paso 5: Presupuesto */}
+            {currentStep === 'budget' && (
+              <div className="animate-fade-in">
+                <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-white mb-4 sm:mb-6 leading-relaxed">
+                  <span className="text-cyan-400">5/7</span> Para ofrecerte la mejor propuesta, ¿cuál es tu rango de presupuesto aproximado?
+                </h2>
+                <p className="text-sm sm:text-base text-gray-300 mb-4 sm:mb-6">
+                  Esta información nos ayuda a personalizar nuestra propuesta según tus necesidades y posibilidades.
+                </p>
+
+                <div className="space-y-3 sm:space-y-4">
+                  {/* Opciones de presupuesto */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                    {[
+                      { id: 'budget-1', label: 'Menos de $1,000 USD', value: 'Menos de $1,000 USD' },
+                      { id: 'budget-2', label: '$1,000 - $5,000 USD', value: '$1,000 - $5,000 USD' },
+                      { id: 'budget-3', label: '$5,000 - $15,000 USD', value: '$5,000 - $15,000 USD' },
+                      { id: 'budget-4', label: '$15,000 - $50,000 USD', value: '$15,000 - $50,000 USD' },
+                      { id: 'budget-5', label: 'Más de $50,000 USD', value: 'Más de $50,000 USD' },
+                      { id: 'budget-custom', label: 'Prefiero especificar', value: 'custom' }
+                    ].map((budget) => (
+                      <button
+                        key={budget.id}
+                        onClick={() => {
+                          if (budget.value === 'custom') {
+                            setInputValue('');
+                          } else {
+                            setInputValue(budget.value);
+                            // Guardar inmediatamente en formData
+                            setFormData(prev => ({ ...prev, budget: budget.value }));
+                            setTimeout(() => {
+                              if (!isEditingFromReview) {
+                                // Avanzar al siguiente paso
+                                setInputValue('');
+                                setCurrentStep('message');
+                              }
+                            }, 300);
+                          }
+                        }}
+                        className={`p-3 sm:p-4 border rounded-lg transition-all duration-300 text-left text-sm sm:text-base font-medium min-h-[48px] sm:min-h-[56px] flex items-center ${
+                          inputValue === budget.value
+                            ? 'bg-cyan-500/20 border-cyan-400 text-white shadow-lg shadow-cyan-500/20'
+                            : 'bg-gray-700/30 border-gray-600 text-white hover:border-cyan-400 hover:bg-gray-700/50'
+                        }`}
+                      >
+                        {budget.label}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Campo personalizado si selecciona "Prefiero especificar" */}
+                  {inputValue === '' && (
+                    <div className="mt-4">
+                      <input
+                        type="text"
+                        value={inputValue}
+                        onChange={(e) => setInputValue(e.target.value)}
+                        onKeyDown={(e) => e.key === 'Enter' && inputValue.trim() && handleNext()}
+                        placeholder="Especifica tu rango de presupuesto"
+                        className="w-full px-3 sm:px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition-colors text-white placeholder-gray-400 text-sm sm:text-base"
+                        autoFocus
+                      />
+                    </div>
+                  )}
+
+                  {/* Opción "Prefiero no especificar" */}
+                  <div className="flex justify-center pt-2">
+                    <button
+                      onClick={() => {
+                        const budgetValue = 'Prefiero no especificar en este momento';
+                        setInputValue(budgetValue);
+                        setFormData(prev => ({ ...prev, budget: budgetValue }));
+                        setTimeout(() => {
+                          if (!isEditingFromReview) {
+                            // Avanzar al siguiente paso
+                            setInputValue('');
+                            setCurrentStep('message');
+                          }
+                        }, 100);
+                      }}
+                      className="px-4 py-2 text-gray-400 hover:text-cyan-400 text-sm transition-colors underline decoration-dotted underline-offset-4 hover:decoration-solid"
+                    >
+                      Prefiero no especificar en este momento
+                    </button>
+                  </div>
+
+                  {/* Botones de navegación */}
+                  <div className="flex gap-3 sm:gap-4 pt-4">
+                    {isEditingFromReview ? (
+                      <button
+                        onClick={handleBackToReview}
+                        className="px-4 sm:px-6 py-3 bg-gray-700/50 hover:bg-gray-600/50 text-gray-300 hover:text-white rounded-lg transition-all duration-300 text-sm sm:text-base font-medium border border-gray-600/30 hover:border-gray-500/50"
+                      >
+                        ← Volver a revisión
+                      </button>
+                    ) : (
+                      <button
+                        onClick={handleBack}
+                        className="px-4 sm:px-6 py-3 bg-gray-700/50 hover:bg-gray-600/50 text-gray-300 hover:text-white rounded-lg transition-all duration-300 text-sm sm:text-base font-medium border border-gray-600/30 hover:border-gray-500/50"
+                      >
+                        ← Atrás
+                      </button>
+                    )}
+                    <button
+                      onClick={() => {
+                        if (isEditingFromReview) {
+                          // Actualizar presupuesto y volver a revisión
+                          setFormData(prev => ({ ...prev, budget: inputValue }));
+                          handleBackToReview();
+                        } else {
+                          handleNext();
+                        }
+                      }}
+                      disabled={!inputValue.trim()}
+                      className="flex-1 px-4 sm:px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white rounded-lg hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base font-medium"
+                    >
+                      {isEditingFromReview ? 'Guardar cambios' : 'Continuar →'}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Paso 6: Mensaje */}
             {currentStep === 'message' && (
               <div className="animate-fade-in">
                 <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-white mb-4 sm:mb-6 leading-relaxed">
-                  <span className="text-cyan-400">5/5</span> Genial. Por último, cuéntanos un poco sobre tu proyecto o desafío.
+                  <span className="text-cyan-400">6/7</span> Genial. Por último, cuéntanos un poco sobre tu proyecto o desafío.
                 </h2>
                 <div className="space-y-3 sm:space-y-4">
                   <textarea
@@ -389,27 +1065,206 @@ export default function ComingSoonPage() {
                     className="w-full px-3 sm:px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 transition-colors text-white placeholder-gray-400 resize-none text-sm sm:text-base min-h-[100px] sm:min-h-[120px]"
                     autoFocus
                   />
-                  <button
-                    onClick={handleNext}
-                    disabled={!inputValue.trim() || isSubmitting}
-                    className="w-full px-4 sm:px-6 py-3 sm:py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold rounded-lg hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm sm:text-base"
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <div className="w-4 h-4 sm:w-5 sm:h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                        <span className="hidden sm:inline">Enviando...</span>
-                        <span className="sm:hidden">Enviando</span>
-                      </>
+                  <div className="flex gap-3 sm:gap-4">
+                    {isEditingFromReview ? (
+                      <button
+                        onClick={handleBackToReview}
+                        className="px-4 sm:px-6 py-3 bg-gray-700/50 hover:bg-gray-600/50 text-gray-300 hover:text-white rounded-lg transition-all duration-300 text-sm sm:text-base font-medium border border-gray-600/30 hover:border-gray-500/50"
+                      >
+                        ← Volver a revisión
+                      </button>
                     ) : (
-                      <>
-                        <span className="hidden sm:inline">Enviar Consulta →</span>
-                        <span className="sm:hidden">Enviar →</span>
-                      </>
+                      <button
+                        onClick={handleBack}
+                        className="px-4 sm:px-6 py-3 bg-gray-700/50 hover:bg-gray-600/50 text-gray-300 hover:text-white rounded-lg transition-all duration-300 text-sm sm:text-base font-medium border border-gray-600/30 hover:border-gray-500/50"
+                      >
+                        ← Atrás
+                      </button>
                     )}
-                  </button>
+                    <button
+                      onClick={() => {
+                        if (isEditingFromReview) {
+                          // Actualizar mensaje y volver a revisión
+                          setFormData(prev => ({ ...prev, message: inputValue }));
+                          handleBackToReview();
+                        } else {
+                          handleNext();
+                        }
+                      }}
+                      disabled={!inputValue.trim()}
+                      className="flex-1 px-4 sm:px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold rounded-lg hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed text-sm sm:text-base"
+                    >
+                      {isEditingFromReview ? 'Guardar cambios' : 'Continuar a Revisión →'}
+                    </button>
+                  </div>
                 </div>
               </div>
             )}
+          </div>
+        )}
+
+        {/* Paso de Revisión */}
+        {currentStep === 'review' && (
+          <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-2xl p-4 sm:p-6 lg:p-8 animate-slide-up mx-2 sm:mx-0">
+            {/* Header con logo pequeño */}
+            <div className="flex items-center justify-center mb-4 sm:mb-6">
+              <img
+                src="/images/logos/logoInformatik-ai2.png"
+                alt="Informatik-AI"
+                className="h-6 sm:h-8 md:h-10 w-auto opacity-80 hover:opacity-100 transition-opacity duration-300"
+              />
+            </div>
+
+            <div className="animate-fade-in">
+              <h2 className="text-lg sm:text-xl lg:text-2xl font-semibold text-white mb-4 sm:mb-6">
+                <span className="text-cyan-400">7/7</span> Revisa tu información antes de enviar
+              </h2>
+
+              {/* Resumen de datos */}
+              <div className="space-y-3 sm:space-y-4 mb-6">
+                {/* Nombre */}
+                <div className="bg-gray-700/30 rounded-lg p-3 sm:p-4 border border-gray-600/30">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4">
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-sm font-medium text-cyan-300 mb-1">Nombre</h3>
+                      <p className="text-white text-sm sm:text-base break-words">{formData.name}</p>
+                    </div>
+                    <button
+                      onClick={() => handleEditField('name')}
+                      className="self-start sm:self-center px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm bg-cyan-500/20 text-cyan-300 rounded-md hover:bg-cyan-500/30 transition-colors flex-shrink-0 font-medium"
+                    >
+                      Editar
+                    </button>
+                  </div>
+                </div>
+
+                {/* Servicios */}
+                <div className="bg-gray-700/30 rounded-lg p-3 sm:p-4 border border-gray-600/30">
+                  <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4">
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-sm font-medium text-cyan-300 mb-2">Servicios de interés</h3>
+                      <div className="space-y-1.5 sm:space-y-1">
+                        {formData.services.map(serviceId => {
+                          const service = services.find(s => s.id === serviceId);
+                          return (
+                            <div key={serviceId} className="flex items-start sm:items-center gap-2">
+                              <svg className="w-4 h-4 text-cyan-400 flex-shrink-0 mt-0.5 sm:mt-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                              </svg>
+                              <span className="text-white text-sm sm:text-base leading-relaxed break-words">{service?.label}</span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => handleEditField('service')}
+                      className="self-start px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm bg-cyan-500/20 text-cyan-300 rounded-md hover:bg-cyan-500/30 transition-colors flex-shrink-0 font-medium"
+                    >
+                      Editar
+                    </button>
+                  </div>
+                </div>
+
+                {/* Contacto */}
+                <div className="bg-gray-700/30 rounded-lg p-3 sm:p-4 border border-gray-600/30">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4">
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-sm font-medium text-cyan-300 mb-1">Información de contacto</h3>
+                      <p className="text-white text-sm sm:text-base break-words">{formData.email}</p>
+                      {formData.phone && (
+                        <p className="text-gray-300 text-sm mt-1 break-words">Tel: {formData.phone}</p>
+                      )}
+                    </div>
+                    <button
+                      onClick={() => handleEditField('contact')}
+                      className="self-start sm:self-center px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm bg-cyan-500/20 text-cyan-300 rounded-md hover:bg-cyan-500/30 transition-colors flex-shrink-0 font-medium"
+                    >
+                      Editar
+                    </button>
+                  </div>
+                </div>
+
+                {/* Empresa */}
+                <div className="bg-gray-700/30 rounded-lg p-3 sm:p-4 border border-gray-600/30">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4">
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-sm font-medium text-cyan-300 mb-1">Empresa</h3>
+                      <p className="text-white text-sm sm:text-base break-words">{formData.company}</p>
+                    </div>
+                    <button
+                      onClick={() => handleEditField('company')}
+                      className="self-start sm:self-center px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm bg-cyan-500/20 text-cyan-300 rounded-md hover:bg-cyan-500/30 transition-colors flex-shrink-0 font-medium"
+                    >
+                      Editar
+                    </button>
+                  </div>
+                </div>
+
+                {/* Presupuesto */}
+                <div className="bg-gray-700/30 rounded-lg p-3 sm:p-4 border border-gray-600/30">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4">
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-sm font-medium text-cyan-300 mb-1">Presupuesto aproximado</h3>
+                      <p className="text-white text-sm sm:text-base break-words">{formData.budget}</p>
+                    </div>
+                    <button
+                      onClick={() => handleEditField('budget')}
+                      className="self-start sm:self-center px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm bg-cyan-500/20 text-cyan-300 rounded-md hover:bg-cyan-500/30 transition-colors flex-shrink-0 font-medium"
+                    >
+                      Editar
+                    </button>
+                  </div>
+                </div>
+
+                {/* Mensaje */}
+                <div className="bg-gray-700/30 rounded-lg p-3 sm:p-4 border border-gray-600/30">
+                  <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4">
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-sm font-medium text-cyan-300 mb-1">Mensaje</h3>
+                      <p className="text-white text-sm sm:text-base leading-relaxed break-words whitespace-pre-wrap">{formData.message}</p>
+                    </div>
+                    <button
+                      onClick={() => handleEditField('message')}
+                      className="self-start px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm bg-cyan-500/20 text-cyan-300 rounded-md hover:bg-cyan-500/30 transition-colors flex-shrink-0 font-medium"
+                    >
+                      Editar
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Botones de acción */}
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                <button
+                  onClick={handleBack}
+                  className="order-2 sm:order-1 px-4 sm:px-6 py-3 bg-gray-700/50 hover:bg-gray-600/50 text-gray-300 hover:text-white rounded-lg transition-all duration-300 text-sm sm:text-base font-medium border border-gray-600/30 hover:border-gray-500/50"
+                >
+                  ← Atrás
+                </button>
+                <button
+                  onClick={handleNext}
+                  disabled={isSubmitting}
+                  className="order-1 sm:order-2 flex-1 px-4 sm:px-6 py-3 bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold rounded-lg hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 text-sm sm:text-base"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <div className="w-4 h-4 sm:w-5 sm:h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      <span className="hidden sm:inline">Enviando...</span>
+                      <span className="sm:hidden">Enviando</span>
+                    </>
+                  ) : (
+                    <>
+                      <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                      </svg>
+                      <span className="hidden sm:inline">Enviar Consulta</span>
+                      <span className="sm:hidden">Enviar</span>
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
           </div>
         )}
 
@@ -449,7 +1304,9 @@ export default function ComingSoonPage() {
                   <div className="bg-gray-700/30 rounded-xl p-4 sm:p-6 border border-gray-600/30">
                     <p className="text-base sm:text-lg text-gray-200 leading-relaxed mb-4">
                       Hemos recibido tu consulta sobre{' '}
-                      <span className="text-cyan-400 font-semibold">{formData.service}</span>.
+                      <span className="text-cyan-400 font-semibold">
+                        {formData.services.map(id => services.find(s => s.id === id)?.label).join(', ')}
+                      </span>.
                     </p>
                     <p className="text-sm sm:text-base text-gray-300">
                       Un especialista se pondrá en contacto contigo en{' '}

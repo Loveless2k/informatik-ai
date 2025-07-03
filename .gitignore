@@ -1,6 +1,4 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
+# 📦 Dependencias
 /node_modules
 /.pnp
 .pnp.*
@@ -10,32 +8,47 @@
 !.yarn/releases
 !.yarn/versions
 
-# testing
+# 🧪 Pruebas
 /coverage
 
-# next.js
+# ⚙️ Compilación Next.js / Vite / Webpack
 /.next/
 /out/
+/dist/
+build/
+*.tsbuildinfo
+next-env.d.ts
 
-# production
-/build
+# 🌀 Hot Update Artifacts (Webpack HMR)
+**/*.hot-update.js
+**/*.hot-update.json
 
-# misc
-.DS_Store
-*.pem
-
-# debug
+# ⚠️ Dumps y logs de errores
+bash.exe.stackdump
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
+# 🧪 Archivos temporales del sistema o editores
+.DS_Store
+*.pem
 
-# vercel
+# 🔐 Entornos (puedes eliminar esta regla si versionas .env.example)
+/.env*
+!.env.example
+
+# ☁️ Plataformas
 .vercel
+.netlify
+firebase.json
+firebase-debug.log
 
-# typescript
-*.tsbuildinfo
-next-env.d.ts
+# 📝 IDEs y herramientas de desarrollo
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-project
+*.sublime-workspace
+*.log
