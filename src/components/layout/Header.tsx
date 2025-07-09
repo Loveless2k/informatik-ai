@@ -26,6 +26,7 @@ const NAV_LINKS: NavLink[] = [
   { href: '/about', label: 'Nosotros' },
   { href: '/services', label: 'Servicios' },
   { href: '/success-cases', label: 'Casos de Éxito' },
+  { href: '/calendario-informatik-ai', label: 'Calendario' },
   // Commented out as per user preferences
   // { href: '/blog', label: 'Blog' },
   // { href: '/resources', label: 'Recursos' },

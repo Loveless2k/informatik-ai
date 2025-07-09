@@ -206,6 +206,21 @@ const Footer = () => {
               */}
               <li>
                 <Link
+                  href='/calendario-informatik-ai'
+                  className={`hover:text-white transition-colors flex items-center group ${
+                    isDarkMode ? 'text-gray-300' : 'text-[#E0FBFF]'
+                  }`}
+                >
+                  <span
+                    className={`w-1.5 h-1.5 rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity ${
+                      isDarkMode ? 'bg-[#00F0FF]' : 'bg-[#E0FBFF]'
+                    }`}
+                  ></span>
+                  Calendario
+                </Link>
+              </li>
+              <li>
+                <Link
                   href='/contact'
                   className={`hover:text-white transition-colors flex items-center group ${
                     isDarkMode ? 'text-gray-300' : 'text-[#E0FBFF]'

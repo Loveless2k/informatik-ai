@@ -9,7 +9,7 @@ const ContentSecurityPolicy = `
   style-src 'self' 'unsafe-inline';
   img-src 'self' data: blob: https:;
   font-src 'self' data:;
-  connect-src 'self' https://api.emailjs.com;
+  connect-src 'self' ws://localhost:* ws://127.0.0.1:* https://api.emailjs.com https://accounts.google.com https://oauth2.googleapis.com https://www.googleapis.com;
   frame-src 'self';
   object-src 'none';
   base-uri 'self';
@@ -21,15 +21,21 @@ const ContentSecurityPolicy = `
 const nextConfig = {
   trailingSlash: true,
   reactStrictMode: true,
-  output: 'export',
+  // Comentado temporalmente para permitir API routes dinámicas (Google Calendar)
+  // output: 'export',
   distDir: 'dist',
 
   images: {
     unoptimized: true,
   },
 
-  // ✅ Cabeceras HTTP con CSP
+  // ✅ Cabeceras HTTP con CSP (deshabilitado en desarrollo)
   async headers() {
+    // Deshabilitar CSP en desarrollo para evitar problemas con WebSocket
+    if (process.env.NODE_ENV === 'development') {
+      return [];
+    }
+
     return [
       {
         source: '/(.*)',
