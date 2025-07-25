@@ -60,6 +60,77 @@ const CalendarioAdmin: React.FC = () => {
     setModalConfig(prev => ({ ...prev, isOpen: false }));
   };
 
+  // Función para validar y ajustar horas
+  const handleStartTimeChange = (startTime: string) => {
+    setNewSlot(prev => {
+      const newSlot = { ...prev, startTime };
+
+      // Si la hora de fin es menor o igual a la hora de inicio, ajustarla
+      if (newSlot.endTime <= startTime) {
+        const startHour = parseInt(startTime.split(':')[0]);
+        const startMinute = parseInt(startTime.split(':')[1]);
+
+        // Agregar 30 minutos por defecto
+        let endHour = startHour;
+        let endMinute = startMinute + 30;
+
+        if (endMinute >= 60) {
+          endHour += 1;
+          endMinute -= 60;
+        }
+
+        // Asegurar que no pase de 23:59
+        if (endHour > 23) {
+          endHour = 23;
+          endMinute = 59;
+        }
+
+        const endTime = `${endHour.toString().padStart(2, '0')}:${endMinute.toString().padStart(2, '0')}`;
+        return { ...newSlot, endTime };
+      }
+
+      return newSlot;
+    });
+  };
+
+  const handleEndTimeChange = (endTime: string) => {
+    // Validar que la hora de fin no sea menor que la hora de inicio
+    if (endTime <= newSlot.startTime) {
+      showModal(
+        'Hora Inválida',
+        'La hora de fin debe ser posterior a la hora de inicio.',
+        'warning'
+      );
+      return;
+    }
+
+    setNewSlot(prev => ({ ...prev, endTime }));
+  };
+
+  // Función para calcular la duración en minutos
+  const calculateDuration = (startTime: string, endTime: string): number => {
+    if (!startTime || !endTime) return 0;
+
+    const startMinutes = parseInt(startTime.split(':')[0]) * 60 + parseInt(startTime.split(':')[1]);
+    const endMinutes = parseInt(endTime.split(':')[0]) * 60 + parseInt(endTime.split(':')[1]);
+
+    return endMinutes - startMinutes;
+  };
+
+  // Función para formatear la duración
+  const formatDuration = (minutes: number): string => {
+    if (minutes <= 0) return '';
+
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+
+    if (hours > 0) {
+      return `${hours}h ${mins}min`;
+    } else {
+      return `${mins}min`;
+    }
+  };
+
   // Cargar datos del calendario desde API
   useEffect(() => {
     loadCalendarData();
@@ -322,7 +393,31 @@ const CalendarioAdmin: React.FC = () => {
 
   const addNewSlot = () => {
     if (!isAdmin) return;
-    
+
+    // Validar que la hora de fin sea posterior a la hora de inicio
+    if (newSlot.endTime <= newSlot.startTime) {
+      showModal(
+        'Error de Validación',
+        'La hora de fin debe ser posterior a la hora de inicio.',
+        'error'
+      );
+      return;
+    }
+
+    // Validar que la duración sea al menos de 15 minutos
+    const startMinutes = parseInt(newSlot.startTime.split(':')[0]) * 60 + parseInt(newSlot.startTime.split(':')[1]);
+    const endMinutes = parseInt(newSlot.endTime.split(':')[0]) * 60 + parseInt(newSlot.endTime.split(':')[1]);
+    const duration = endMinutes - startMinutes;
+
+    if (duration < 15) {
+      showModal(
+        'Duración Mínima',
+        'La duración mínima de un slot debe ser de 15 minutos.',
+        'warning'
+      );
+      return;
+    }
+
     const newSlotData: TimeSlot = {
       id: `${newSlot.date}-${newSlot.startTime}`,
       date: newSlot.date,
@@ -361,7 +456,31 @@ const CalendarioAdmin: React.FC = () => {
 
   const updateSlot = () => {
     if (!isAdmin || !editingSlot) return;
-    
+
+    // Validar que la hora de fin sea posterior a la hora de inicio
+    if (newSlot.endTime <= newSlot.startTime) {
+      showModal(
+        'Error de Validación',
+        'La hora de fin debe ser posterior a la hora de inicio.',
+        'error'
+      );
+      return;
+    }
+
+    // Validar que la duración sea al menos de 15 minutos
+    const startMinutes = parseInt(newSlot.startTime.split(':')[0]) * 60 + parseInt(newSlot.startTime.split(':')[1]);
+    const endMinutes = parseInt(newSlot.endTime.split(':')[0]) * 60 + parseInt(newSlot.endTime.split(':')[1]);
+    const duration = endMinutes - startMinutes;
+
+    if (duration < 15) {
+      showModal(
+        'Duración Mínima',
+        'La duración mínima de un slot debe ser de 15 minutos.',
+        'warning'
+      );
+      return;
+    }
+
     setCalendarData(prev => ({
       ...prev,
       slots: prev.slots.map(slot => 
@@ -890,7 +1009,7 @@ const CalendarioAdmin: React.FC = () => {
                       type="time"
                       required
                       value={newSlot.startTime}
-                      onChange={(e) => setNewSlot(prev => ({ ...prev, startTime: e.target.value }))}
+                      onChange={(e) => handleStartTimeChange(e.target.value)}
                       className="w-full px-3 py-2 bg-slate-700/50 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 text-white"
                     />
                   </div>
@@ -903,11 +1022,29 @@ const CalendarioAdmin: React.FC = () => {
                       type="time"
                       required
                       value={newSlot.endTime}
-                      onChange={(e) => setNewSlot(prev => ({ ...prev, endTime: e.target.value }))}
+                      onChange={(e) => handleEndTimeChange(e.target.value)}
+                      min={newSlot.startTime}
                       className="w-full px-3 py-2 bg-slate-700/50 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 text-white"
                     />
                   </div>
                 </div>
+
+                {/* Mostrar duración calculada */}
+                {newSlot.startTime && newSlot.endTime && (
+                  <div className="p-3 bg-cyan-500/10 border border-cyan-500/30 rounded-lg">
+                    <div className="flex items-center gap-2">
+                      <span className="text-cyan-400">⏱️</span>
+                      <span className="text-cyan-300 text-sm">
+                        <strong>Duración:</strong> {formatDuration(calculateDuration(newSlot.startTime, newSlot.endTime))}
+                      </span>
+                      {calculateDuration(newSlot.startTime, newSlot.endTime) < 15 && (
+                        <span className="text-red-400 text-xs ml-2">
+                          ⚠️ Mínimo 15 minutos
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                )}
 
                 <div>
                   <label className="block text-sm font-medium text-slate-300 mb-2">
@@ -920,6 +1057,34 @@ const CalendarioAdmin: React.FC = () => {
                     className="w-full px-3 py-2 bg-slate-700/50 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 text-white placeholder-slate-400"
                     placeholder="Título del horario"
                   />
+                </div>
+
+                {/* Sugerencias de horarios comunes */}
+                <div className="p-3 bg-slate-700/30 border border-slate-600 rounded-lg">
+                  <p className="text-slate-300 text-sm mb-2">💡 Horarios sugeridos:</p>
+                  <div className="flex flex-wrap gap-2">
+                    {[
+                      { start: '19:00', end: '19:30', label: '19:00-19:30' },
+                      { start: '19:30', end: '20:00', label: '19:30-20:00' },
+                      { start: '20:00', end: '20:30', label: '20:00-20:30' },
+                      { start: '20:30', end: '21:00', label: '20:30-21:00' }
+                    ].map((suggestion) => (
+                      <button
+                        key={suggestion.label}
+                        type="button"
+                        onClick={() => {
+                          setNewSlot(prev => ({
+                            ...prev,
+                            startTime: suggestion.start,
+                            endTime: suggestion.end
+                          }));
+                        }}
+                        className="px-3 py-1 text-xs bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 rounded-md transition-colors"
+                      >
+                        {suggestion.label}
+                      </button>
+                    ))}
+                  </div>
                 </div>
 
                 <div className="flex gap-3 pt-4">
