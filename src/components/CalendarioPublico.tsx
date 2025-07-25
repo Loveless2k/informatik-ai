@@ -2,17 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import { sendBookingToMake, validateBookingData } from '@/lib/makeWebhook';
+import { calendarDataService, type TimeSlot, type CalendarData } from '@/lib/calendarDataService';
 
-// Interfaces para el sistema
-interface TimeSlot {
-  id: string;
-  date: string; // YYYY-MM-DD
-  startTime: string; // HH:MM
-  endTime: string; // HH:MM
-  available: boolean;
-  title?: string;
-}
-
+// Interfaces adicionales para el formulario
 interface BookingForm {
   name: string;
   email: string;
@@ -20,11 +12,6 @@ interface BookingForm {
   company: string;
   topic: string;
   message: string;
-}
-
-interface CalendarData {
-  slots: TimeSlot[];
-  lastUpdated: string;
 }
 
 const CalendarioPublico: React.FC = () => {
@@ -46,21 +33,37 @@ const CalendarioPublico: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
-  // Cargar datos del calendario desde localStorage
+  // Cargar datos del calendario desde API
   useEffect(() => {
-    const savedData = localStorage.getItem('informatik-calendar-data');
-    if (savedData) {
-      try {
-        const data = JSON.parse(savedData);
-        setCalendarData(data);
-      } catch (error) {
-        console.error('Error loading calendar data:', error);
+    loadCalendarData();
+  }, []);
+
+  const loadCalendarData = async () => {
+    try {
+      const data = await calendarDataService.getCalendarData();
+      setCalendarData(data);
+
+      // Si no hay datos, inicializar por defecto
+      if (data.slots.length === 0) {
         initializeDefaultData();
       }
-    } else {
-      initializeDefaultData();
+    } catch (error) {
+      console.error('❌ Error cargando datos del calendario:', error);
+      // Fallback: intentar localStorage
+      const savedData = localStorage.getItem('informatik-calendar-data');
+      if (savedData) {
+        try {
+          const data = JSON.parse(savedData);
+          setCalendarData(data);
+        } catch (parseError) {
+          console.error('Error parsing localStorage data:', parseError);
+          initializeDefaultData();
+        }
+      } else {
+        initializeDefaultData();
+      }
     }
-  }, []);
+  };
 
   // Inicializar datos por defecto
   const initializeDefaultData = () => {
@@ -70,6 +73,7 @@ const CalendarioPublico: React.FC = () => {
       lastUpdated: new Date().toISOString()
     };
     setCalendarData(defaultData);
+    // Solo actualizar localStorage como cache, no como fuente principal
     localStorage.setItem('informatik-calendar-data', JSON.stringify(defaultData));
   };
 
@@ -117,7 +121,16 @@ const CalendarioPublico: React.FC = () => {
 
   const getAvailableDates = (): Date[] => {
     const uniqueDates = [...new Set(calendarData.slots.map(slot => slot.date))];
-    return uniqueDates.map(dateStr => new Date(dateStr));
+
+    // Crear fechas correctamente evitando problemas de zona horaria
+    const availableDates = uniqueDates.map(dateStr => {
+      const [year, month, day] = dateStr.split('-').map(Number);
+      return new Date(year, month - 1, day); // month - 1 porque Date usa 0-11 para meses
+    });
+
+
+
+    return availableDates;
   };
 
   const formatTime = (time: string): string => {
@@ -172,7 +185,7 @@ const CalendarioPublico: React.FC = () => {
         throw new Error(`Datos inválidos: ${validationErrors.join(', ')}`);
       }
 
-      console.log('📤 Enviando reserva a Make.com...', bookingData);
+
 
       // Enviar a Make.com
       const makeResponse = await sendBookingToMake(bookingData);
@@ -180,23 +193,35 @@ const CalendarioPublico: React.FC = () => {
       if (!makeResponse.success) {
         // Si Make falla, aún podemos continuar con el proceso local
         console.warn('⚠️ Make.com falló, pero continuando con reserva local:', makeResponse.error);
-      } else {
-        console.log('✅ Reserva procesada exitosamente en Make.com:', makeResponse);
       }
 
-      // Marcar el slot como ocupado
-      const updatedData = {
-        ...calendarData,
-        slots: calendarData.slots.map(slot =>
-          slot.id === selectedSlot?.id
-            ? { ...slot, available: false }
-            : slot
-        ),
-        lastUpdated: new Date().toISOString()
-      };
+      // Marcar el slot como ocupado en la API
+      try {
+        const updatedData = await calendarDataService.updateSlotAvailability(
+          selectedSlot.id,
+          false
+        );
+        setCalendarData(updatedData);
 
-      setCalendarData(updatedData);
-      localStorage.setItem('informatik-calendar-data', JSON.stringify(updatedData));
+        // Actualizar localStorage como cache
+        localStorage.setItem('informatik-calendar-data', JSON.stringify(updatedData));
+      } catch (error) {
+        console.error('⚠️ Error actualizando slot en API, usando fallback local:', error);
+
+        // Fallback: actualizar solo localmente
+        const updatedData = {
+          ...calendarData,
+          slots: calendarData.slots.map(slot =>
+            slot.id === selectedSlot?.id
+              ? { ...slot, available: false }
+              : slot
+          ),
+          lastUpdated: new Date().toISOString()
+        };
+
+        setCalendarData(updatedData);
+        localStorage.setItem('informatik-calendar-data', JSON.stringify(updatedData));
+      }
 
       // Mostrar éxito
       setSubmitSuccess(true);
@@ -342,11 +367,22 @@ const CalendarioPublico: React.FC = () => {
                   const isCurrentMonth = date.getMonth() === currentMonth;
                   const isToday = date.toDateString() === today.toDateString();
                   const isSelected = date.toDateString() === selectedDate.toDateString();
-                  const isPast = date < today && !isToday;
+
+                  // Mejorar comparación de fechas - solo comparar la fecha, no la hora
+                  const todayDateOnly = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+                  const dateOnly = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+                  const isPast = dateOnly < todayDateOnly;
+
                   const isWeekend = date.getDay() === 0 || date.getDay() === 6;
-                  const isAvailable = availableDates.some((availableDate: Date) =>
-                    availableDate.toDateString() === date.toDateString()
-                  );
+
+                  // Mejorar comparación de fechas disponibles
+                  const isAvailable = availableDates.some((availableDate: Date) => {
+                    const availableDateOnly = new Date(availableDate.getFullYear(), availableDate.getMonth(), availableDate.getDate());
+                    const currentDateOnly = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+                    return availableDateOnly.getTime() === currentDateOnly.getTime();
+                  });
+
+
 
                   days.push({
                     date,

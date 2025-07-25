@@ -1,21 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-
-// Interfaces para el sistema
-interface TimeSlot {
-  id: string;
-  date: string; // YYYY-MM-DD
-  startTime: string; // HH:MM
-  endTime: string; // HH:MM
-  available: boolean;
-  title?: string;
-}
-
-interface CalendarData {
-  slots: TimeSlot[];
-  lastUpdated: string;
-}
+import { calendarDataService, type TimeSlot, type CalendarData } from '@/lib/calendarDataService';
 
 interface AdminUser {
   email: string;
@@ -47,21 +33,85 @@ const CalendarioAdmin: React.FC = () => {
 
   const isAdmin = user?.email === 'camidevai@gmail.com';
 
-  // Cargar datos del calendario desde localStorage
+  // Cargar datos del calendario desde API
   useEffect(() => {
-    const savedData = localStorage.getItem('informatik-calendar-data');
-    if (savedData) {
-      try {
-        const data = JSON.parse(savedData);
-        setCalendarData(data);
-      } catch (error) {
-        console.error('Error loading calendar data:', error);
-        initializeDefaultData();
+    loadCalendarData();
+  }, []);
+
+  // Manejar código de autorización de Google OAuth
+  useEffect(() => {
+    const handleGoogleCallback = async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const code = urlParams.get('code');
+
+      if (code && !user) {
+        setAuthLoading(true);
+
+        try {
+          // Intercambiar código por tokens
+          const response = await fetch('/api/auth/google', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ code }),
+          });
+
+          if (!response.ok) {
+            throw new Error('Error en autenticación');
+          }
+
+          const { tokens } = await response.json();
+
+          // Obtener información del usuario
+          const userResponse = await fetch(`https://www.googleapis.com/oauth2/v2/userinfo?access_token=${tokens.access_token}`);
+          const userData = await userResponse.json();
+
+          // Verificar que sea el admin autorizado
+          if (userData.email === 'camidevai@gmail.com') {
+            const adminUser = {
+              email: userData.email,
+              name: userData.name,
+              picture: userData.picture
+            };
+
+            setUser(adminUser);
+            setIsAuthenticated(true);
+            localStorage.setItem('informatik-admin-user', JSON.stringify(adminUser));
+
+            // Limpiar URL
+            window.history.replaceState({}, document.title, window.location.pathname);
+          } else {
+            alert('❌ Acceso denegado. Solo camidevai@gmail.com puede administrar este calendario.');
+          }
+
+        } catch (error) {
+          console.error('Error en autenticación:', error);
+          alert('❌ Error en la autenticación. Por favor intenta nuevamente.');
+        } finally {
+          setAuthLoading(false);
+        }
       }
-    } else {
+    };
+
+    handleGoogleCallback();
+  }, [user]);
+
+  const loadCalendarData = async () => {
+    try {
+      const data = await calendarDataService.getCalendarData();
+      setCalendarData(data);
+
+      // Si es admin y hay datos en localStorage, intentar migrar
+      if (isAdmin && user?.email) {
+        await calendarDataService.migrateFromLocalStorage(user.email);
+      }
+    } catch (error) {
+      console.error('❌ Error cargando datos del calendario:', error);
+      // Fallback: inicializar datos por defecto
       initializeDefaultData();
     }
-  }, []);
+  };
 
   // Inicializar datos por defecto
   const initializeDefaultData = () => {
@@ -125,23 +175,25 @@ const CalendarioAdmin: React.FC = () => {
     }
   }, []);
 
-  // Simular autenticación con Google (para demo)
+  // Autenticación real con Google OAuth
   const handleGoogleAuth = () => {
     setAuthLoading(true);
-    
-    // Simular proceso de autenticación
-    setTimeout(() => {
-      const adminUser = {
-        email: 'camidevai@gmail.com',
-        name: 'Cami Dev AI',
-        picture: 'https://via.placeholder.com/40/00bcd4/ffffff?text=CA'
-      };
-      
-      setUser(adminUser);
-      setIsAuthenticated(true);
-      localStorage.setItem('informatik-admin-user', JSON.stringify(adminUser));
-      setAuthLoading(false);
-    }, 1500);
+
+    // Crear URL de autenticación de Google
+    const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
+    const redirectUri = encodeURIComponent(window.location.origin + '/admin-calendario');
+    const scope = encodeURIComponent('openid email profile');
+
+    const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?` +
+      `client_id=${clientId}&` +
+      `redirect_uri=${redirectUri}&` +
+      `response_type=code&` +
+      `scope=${scope}&` +
+      `access_type=offline&` +
+      `prompt=consent`;
+
+    // Redirigir a Google para autenticación
+    window.location.href = authUrl;
   };
 
   // Cerrar sesión
@@ -196,18 +248,27 @@ const CalendarioAdmin: React.FC = () => {
     }
   };
 
-  const saveChanges = () => {
-    if (!isAdmin || !hasUnsavedChanges) return;
-    
-    const updatedData = {
-      ...calendarData,
-      lastUpdated: new Date().toISOString()
-    };
-    
-    localStorage.setItem('informatik-calendar-data', JSON.stringify(updatedData));
-    setCalendarData(updatedData);
-    setHasUnsavedChanges(false);
-    alert('✅ Cambios guardados exitosamente');
+  const saveChanges = async () => {
+    if (!isAdmin || !hasUnsavedChanges || !user?.email) {
+      if (!user?.email) alert('❌ Error: No tienes permisos para guardar cambios');
+      return;
+    }
+
+    try {
+      const updatedData = {
+        ...calendarData,
+        lastUpdated: new Date().toISOString()
+      };
+
+      await calendarDataService.saveCalendarData(updatedData, user.email);
+      setCalendarData(updatedData);
+      setHasUnsavedChanges(false);
+      alert('✅ Cambios guardados exitosamente');
+
+    } catch (error) {
+      console.error('❌ Error guardando cambios:', error);
+      alert('❌ Error guardando cambios. Por favor intenta nuevamente.');
+    }
   };
 
   const addNewSlot = () => {
@@ -327,6 +388,13 @@ const CalendarioAdmin: React.FC = () => {
           <p className="text-slate-300 mb-6">
             Acceso restringido. Solo <strong>camidevai@gmail.com</strong> puede administrar el calendario.
           </p>
+
+          <div className="mb-4 p-3 bg-blue-500/10 border border-blue-500/30 rounded-lg">
+            <p className="text-blue-300 text-sm">
+              🔐 <strong>Autenticación Real con Google OAuth</strong><br/>
+              Se verificará tu identidad con Google y solo se permitirá acceso a camidevai@gmail.com
+            </p>
+          </div>
 
           <button
             onClick={handleGoogleAuth}
@@ -641,7 +709,14 @@ const CalendarioAdmin: React.FC = () => {
                     {editMode && (
                       <button
                         onClick={() => {
-                          setNewSlot(prev => ({ ...prev, date: selectedDate.toISOString().split('T')[0] }));
+                          const dateStr = selectedDate.toISOString().split('T')[0];
+                          setNewSlot({
+                            date: dateStr,
+                            startTime: '19:00',
+                            endTime: '19:30',
+                            title: 'Reunión Informatik-AI'
+                          });
+                          setEditingSlot(null); // Asegurar que no estamos editando
                           setShowSlotForm(true);
                         }}
                         className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
@@ -721,6 +796,120 @@ const CalendarioAdmin: React.FC = () => {
             })()}
           </div>
         </div>
+
+        {/* Modal para crear/editar slots */}
+        {showSlotForm && (
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+            <div className="bg-slate-800 rounded-2xl border border-slate-700 p-6 w-full max-w-md">
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-xl font-semibold text-white">
+                  {editingSlot ? '✏️ Editar Horario' : '➕ Nuevo Horario'}
+                </h3>
+                <button
+                  onClick={() => {
+                    setShowSlotForm(false);
+                    setEditingSlot(null);
+                    setNewSlot({
+                      date: '',
+                      startTime: '19:00',
+                      endTime: '19:30',
+                      title: 'Reunión Informatik-AI'
+                    });
+                  }}
+                  className="text-slate-400 hover:text-white transition-colors"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+
+              <form onSubmit={(e) => {
+                e.preventDefault();
+                editingSlot ? updateSlot() : addNewSlot();
+              }} className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-slate-300 mb-2">
+                    📅 Fecha *
+                  </label>
+                  <input
+                    type="date"
+                    required
+                    value={newSlot.date}
+                    onChange={(e) => setNewSlot(prev => ({ ...prev, date: e.target.value }))}
+                    className="w-full px-3 py-2 bg-slate-700/50 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 text-white"
+                  />
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-slate-300 mb-2">
+                      🕒 Hora inicio *
+                    </label>
+                    <input
+                      type="time"
+                      required
+                      value={newSlot.startTime}
+                      onChange={(e) => setNewSlot(prev => ({ ...prev, startTime: e.target.value }))}
+                      className="w-full px-3 py-2 bg-slate-700/50 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 text-white"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-slate-300 mb-2">
+                      🕒 Hora fin *
+                    </label>
+                    <input
+                      type="time"
+                      required
+                      value={newSlot.endTime}
+                      onChange={(e) => setNewSlot(prev => ({ ...prev, endTime: e.target.value }))}
+                      className="w-full px-3 py-2 bg-slate-700/50 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 text-white"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-slate-300 mb-2">
+                    📝 Título
+                  </label>
+                  <input
+                    type="text"
+                    value={newSlot.title}
+                    onChange={(e) => setNewSlot(prev => ({ ...prev, title: e.target.value }))}
+                    className="w-full px-3 py-2 bg-slate-700/50 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 text-white placeholder-slate-400"
+                    placeholder="Título del horario"
+                  />
+                </div>
+
+                <div className="flex gap-3 pt-4">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowSlotForm(false);
+                      setEditingSlot(null);
+                      setNewSlot({
+                        date: '',
+                        startTime: '19:00',
+                        endTime: '19:30',
+                        title: 'Reunión Informatik-AI'
+                      });
+                    }}
+                    className="flex-1 px-4 py-2 bg-slate-700 hover:bg-slate-600 text-slate-300 hover:text-white rounded-lg transition-colors"
+                  >
+                    Cancelar
+                  </button>
+                  <button
+                    type="submit"
+                    className="flex-1 px-4 py-2 bg-gradient-to-r from-cyan-500 to-cyan-600 text-white font-semibold rounded-lg hover:shadow-lg transition-all duration-300"
+                  >
+                    {editingSlot ? '💾 Actualizar' : '➕ Crear'}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

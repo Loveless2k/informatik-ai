@@ -38,6 +38,10 @@ yarn-error.log*
 /.env*
 !.env.example
 
+# 📊 Datos del calendario (no versionar datos de producción)
+/data/
+*.json
+
 # ☁️ Plataformas
 .vercel
 .netlify
