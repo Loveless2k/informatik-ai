@@ -30,6 +30,22 @@ interface MakeWebhookResponse {
 // URL del webhook de Make.com (se configurará después)
 const MAKE_WEBHOOK_URL = process.env.NEXT_PUBLIC_MAKE_WEBHOOK_URL || '';
 
+// Función helper para categorizar temas
+const getTopicCategory = (topic: string): string => {
+  const categories: { [key: string]: string } = {
+    'Desarrollo de Sitios Web': 'Desarrollo TI',
+    'Chatbot con IA': 'Automatización',
+    'Cursos de IA': 'Formación',
+    'Talleres y Formaciones': 'Formación',
+    'Asesoría Estratégica': 'Consultoría',
+    'Automatización de Procesos': 'Automatización',
+    'Consultoría General': 'Consultoría',
+    'Otro tema': 'Consultoría General'
+  };
+
+  return categories[topic] || 'Consultoría General';
+};
+
 export const sendBookingToMake = async (bookingData: BookingData): Promise<MakeWebhookResponse> => {
   try {
     console.log('🚀 Enviando reserva a Make.com...', bookingData);
@@ -52,6 +68,7 @@ export const sendBookingToMake = async (bookingData: BookingData): Promise<MakeW
       // Información de la reunión
       meeting: {
         topic: bookingData.meetingTopic,
+        topicCategory: getTopicCategory(bookingData.meetingTopic),
         message: bookingData.meetingMessage || 'Sin mensaje adicional',
         date: bookingData.meetingDate,
         startTime: bookingData.meetingStartTime,

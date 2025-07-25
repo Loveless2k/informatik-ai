@@ -96,7 +96,6 @@ class CalendarDataService {
    */
   async updateSlotAvailability(slotId: string, available: boolean): Promise<CalendarData> {
     try {
-      console.log(`🔄 Actualizando slot ${slotId}: available = ${available}`);
 
       const response = await fetch(this.baseUrl, {
         method: 'PUT',
@@ -115,7 +114,6 @@ class CalendarDataService {
         throw new Error(result.error || 'Error actualizando slot');
       }
 
-      console.log('✅ Slot actualizado exitosamente');
       return result.data;
 
     } catch (error) {
@@ -129,25 +127,21 @@ class CalendarDataService {
    */
   async migrateFromLocalStorage(userEmail: string): Promise<boolean> {
     try {
-      console.log('🔄 Iniciando migración desde localStorage...');
 
       // Verificar si hay datos en localStorage
       const localData = localStorage.getItem('informatik-calendar-data');
       if (!localData) {
-        console.log('ℹ️ No hay datos en localStorage para migrar');
         return true;
       }
 
       // Parsear datos locales
       const parsedData: CalendarData = JSON.parse(localData);
-      console.log('📦 Datos encontrados en localStorage:', parsedData.slots.length, 'slots');
 
       // Obtener datos actuales de la API
       const apiData = await this.getCalendarData();
       
       // Si la API ya tiene datos más recientes, no migrar
       if (apiData.slots.length > 0 && apiData.lastUpdated > parsedData.lastUpdated) {
-        console.log('ℹ️ La API ya tiene datos más recientes, no se migra');
         return true;
       }
 
@@ -156,7 +150,6 @@ class CalendarDataService {
 
       // Limpiar localStorage después de migración exitosa
       localStorage.removeItem('informatik-calendar-data');
-      console.log('✅ Migración completada y localStorage limpiado');
 
       return true;
 
@@ -183,7 +176,6 @@ class CalendarDataService {
       // Fallback: usar localStorage si la API falla
       const localData = localStorage.getItem('informatik-calendar-data');
       if (localData) {
-        console.log('⚠️ Usando datos de localStorage como fallback');
         return JSON.parse(localData);
       }
       

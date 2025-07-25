@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { calendarDataService, type TimeSlot, type CalendarData } from '@/lib/calendarDataService';
+import Modal from './Modal';
 
 interface AdminUser {
   email: string;
@@ -31,7 +32,33 @@ const CalendarioAdmin: React.FC = () => {
     title: 'Reunión Informatik-AI'
   });
 
+  // Estados para modales
+  const [modalConfig, setModalConfig] = useState({
+    isOpen: false,
+    title: '',
+    message: '',
+    type: 'info' as 'success' | 'error' | 'warning' | 'info',
+    onConfirm: null as (() => void) | null,
+    showCancel: false
+  });
+
   const isAdmin = user?.email === 'camidevai@gmail.com';
+
+  // Funciones helper para modales
+  const showModal = (title: string, message: string, type: 'success' | 'error' | 'warning' | 'info' = 'info', onConfirm?: () => void, showCancel: boolean = false) => {
+    setModalConfig({
+      isOpen: true,
+      title,
+      message,
+      type,
+      onConfirm: onConfirm || null,
+      showCancel
+    });
+  };
+
+  const closeModal = () => {
+    setModalConfig(prev => ({ ...prev, isOpen: false }));
+  };
 
   // Cargar datos del calendario desde API
   useEffect(() => {
@@ -82,12 +109,20 @@ const CalendarioAdmin: React.FC = () => {
             // Limpiar URL
             window.history.replaceState({}, document.title, window.location.pathname);
           } else {
-            alert('❌ Acceso denegado. Solo camidevai@gmail.com puede administrar este calendario.');
+            showModal(
+              'Acceso Denegado',
+              'Solo camidevai@gmail.com puede administrar este calendario.',
+              'error'
+            );
           }
 
         } catch (error) {
           console.error('Error en autenticación:', error);
-          alert('❌ Error en la autenticación. Por favor intenta nuevamente.');
+          showModal(
+            'Error de Autenticación',
+            'Error en la autenticación. Por favor intenta nuevamente.',
+            'error'
+          );
         } finally {
           setAuthLoading(false);
         }
@@ -250,7 +285,13 @@ const CalendarioAdmin: React.FC = () => {
 
   const saveChanges = async () => {
     if (!isAdmin || !hasUnsavedChanges || !user?.email) {
-      if (!user?.email) alert('❌ Error: No tienes permisos para guardar cambios');
+      if (!user?.email) {
+        showModal(
+          'Error de Permisos',
+          'No tienes permisos para guardar cambios.',
+          'error'
+        );
+      }
       return;
     }
 
@@ -263,11 +304,19 @@ const CalendarioAdmin: React.FC = () => {
       await calendarDataService.saveCalendarData(updatedData, user.email);
       setCalendarData(updatedData);
       setHasUnsavedChanges(false);
-      alert('✅ Cambios guardados exitosamente');
+      showModal(
+        'Cambios Guardados',
+        'Los cambios se han guardado exitosamente.',
+        'success'
+      );
 
     } catch (error) {
       console.error('❌ Error guardando cambios:', error);
-      alert('❌ Error guardando cambios. Por favor intenta nuevamente.');
+      showModal(
+        'Error al Guardar',
+        'Error guardando cambios. Por favor intenta nuevamente.',
+        'error'
+      );
     }
   };
 
@@ -386,15 +435,10 @@ const CalendarioAdmin: React.FC = () => {
           </h1>
 
           <p className="text-slate-300 mb-6">
-            Acceso restringido. Solo <strong>camidevai@gmail.com</strong> puede administrar el calendario.
+            Acceso restringido. 
           </p>
 
-          <div className="mb-4 p-3 bg-blue-500/10 border border-blue-500/30 rounded-lg">
-            <p className="text-blue-300 text-sm">
-              🔐 <strong>Autenticación Real con Google OAuth</strong><br/>
-              Se verificará tu identidad con Google y solo se permitirá acceso a camidevai@gmail.com
-            </p>
-          </div>
+      
 
           <button
             onClick={handleGoogleAuth}
@@ -416,11 +460,7 @@ const CalendarioAdmin: React.FC = () => {
             )}
           </button>
 
-          <div className="mt-6 p-3 bg-orange-500/10 border border-orange-500/30 rounded-lg">
-            <p className="text-orange-300 text-sm">
-              ⚠️ Solo el administrador autorizado puede acceder a este panel
-            </p>
-          </div>
+        
         </div>
       </div>
     );
@@ -910,6 +950,17 @@ const CalendarioAdmin: React.FC = () => {
             </div>
           </div>
         )}
+
+        {/* Modal para mensajes */}
+        <Modal
+          isOpen={modalConfig.isOpen}
+          onClose={closeModal}
+          title={modalConfig.title}
+          message={modalConfig.message}
+          type={modalConfig.type}
+          onConfirm={modalConfig.onConfirm ? modalConfig.onConfirm : undefined}
+          showCancel={modalConfig.showCancel}
+        />
       </div>
     </div>
   );
