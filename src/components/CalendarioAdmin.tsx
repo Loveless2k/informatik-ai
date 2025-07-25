@@ -131,6 +131,52 @@ const CalendarioAdmin: React.FC = () => {
     }
   };
 
+  // Función para limpiar horarios pasados manualmente
+  const cleanPastSlots = async () => {
+    if (!isAdmin || !user?.email) return;
+
+    const today = new Date().toISOString().split('T')[0];
+    const pastSlots = calendarData.slots.filter(slot => slot.date < today);
+
+    if (pastSlots.length === 0) {
+      showModal(
+        'Sin Horarios Pasados',
+        'No hay horarios de fechas pasadas para limpiar.',
+        'info'
+      );
+      return;
+    }
+
+    showModal(
+      'Confirmar Limpieza',
+      `¿Estás seguro de que quieres eliminar ${pastSlots.length} horario(s) de fechas pasadas?`,
+      'warning',
+      async () => {
+        const filteredSlots = calendarData.slots.filter(slot => slot.date >= today);
+        const cleanedData = { ...calendarData, slots: filteredSlots, lastUpdated: new Date().toISOString() };
+
+        try {
+          await calendarDataService.saveCalendarData(cleanedData, user.email);
+          setCalendarData(cleanedData);
+          setHasUnsavedChanges(false);
+
+          showModal(
+            'Limpieza Completada',
+            `Se eliminaron ${pastSlots.length} horario(s) de fechas pasadas.`,
+            'success'
+          );
+        } catch (error) {
+          showModal(
+            'Error',
+            'Error al limpiar los horarios pasados.',
+            'error'
+          );
+        }
+      },
+      true
+    );
+  };
+
   // Cargar datos del calendario desde API
   useEffect(() => {
     loadCalendarData();
@@ -206,7 +252,20 @@ const CalendarioAdmin: React.FC = () => {
   const loadCalendarData = async () => {
     try {
       const data = await calendarDataService.getCalendarData();
-      setCalendarData(data);
+
+      // Limpiar slots de fechas pasadas automáticamente
+      const today = new Date().toISOString().split('T')[0];
+      const filteredSlots = data.slots.filter(slot => slot.date >= today);
+
+      // Si se eliminaron slots, actualizar los datos
+      if (filteredSlots.length !== data.slots.length && isAdmin && user?.email) {
+        const cleanedData = { ...data, slots: filteredSlots, lastUpdated: new Date().toISOString() };
+        await calendarDataService.saveCalendarData(cleanedData, user.email);
+        setCalendarData(cleanedData);
+        setHasUnsavedChanges(false);
+      } else {
+        setCalendarData(data);
+      }
 
       // Si es admin y hay datos en localStorage, intentar migrar
       if (isAdmin && user?.email) {
@@ -394,6 +453,19 @@ const CalendarioAdmin: React.FC = () => {
   const addNewSlot = () => {
     if (!isAdmin) return;
 
+    // Validar que no sea una fecha pasada
+    const today = new Date();
+    const todayStr = today.toISOString().split('T')[0];
+
+    if (newSlot.date < todayStr) {
+      showModal(
+        'Fecha Inválida',
+        'No se pueden crear horarios en fechas pasadas.',
+        'error'
+      );
+      return;
+    }
+
     // Validar que la hora de fin sea posterior a la hora de inicio
     if (newSlot.endTime <= newSlot.startTime) {
       showModal(
@@ -456,6 +528,19 @@ const CalendarioAdmin: React.FC = () => {
 
   const updateSlot = () => {
     if (!isAdmin || !editingSlot) return;
+
+    // Validar que no sea una fecha pasada
+    const today = new Date();
+    const todayStr = today.toISOString().split('T')[0];
+
+    if (newSlot.date < todayStr) {
+      showModal(
+        'Fecha Inválida',
+        'No se pueden modificar horarios en fechas pasadas.',
+        'error'
+      );
+      return;
+    }
 
     // Validar que la hora de fin sea posterior a la hora de inicio
     if (newSlot.endTime <= newSlot.startTime) {
@@ -692,12 +777,22 @@ const CalendarioAdmin: React.FC = () => {
               </button>
 
               {editMode && (
-                <button
-                  onClick={() => setShowSlotForm(true)}
-                  className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
-                >
-                  ➕ Nuevo Horario
-                </button>
+                <div className="flex gap-2">
+                  <button
+                    onClick={() => setShowSlotForm(true)}
+                    className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-colors"
+                  >
+                    ➕ Nuevo Horario
+                  </button>
+
+                  <button
+                    onClick={cleanPastSlots}
+                    className="px-3 py-2 bg-orange-500 text-white rounded-lg hover:bg-orange-600 transition-colors text-sm"
+                    title="Limpiar horarios de fechas pasadas"
+                  >
+                    🧹 Limpiar
+                  </button>
+                </div>
               )}
             </div>
 
@@ -792,7 +887,12 @@ const CalendarioAdmin: React.FC = () => {
                   const isCurrentMonth = date.getMonth() === currentMonth;
                   const isToday = date.toDateString() === today.toDateString();
                   const isSelected = date.toDateString() === selectedDate.toDateString();
-                  const isPast = date < today && !isToday;
+
+                  // Mejorar comparación de fechas - solo comparar la fecha, no la hora
+                  const todayDateOnly = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+                  const dateOnly = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+                  const isPast = dateOnly < todayDateOnly;
+
                   const isWeekend = date.getDay() === 0 || date.getDay() === 6;
                   const isAvailable = availableDates.some((availableDate: Date) =>
                     availableDate.toDateString() === date.toDateString()
@@ -814,17 +914,22 @@ const CalendarioAdmin: React.FC = () => {
                   <button
                     key={index}
                     onClick={() => {
-                      setSelectedDate(dayInfo.date);
+                      if (!dayInfo.isPast) {
+                        setSelectedDate(dayInfo.date);
+                      }
                     }}
+                    disabled={dayInfo.isPast}
                     className={`
                       aspect-square p-1 rounded-lg text-sm font-medium transition-all duration-200 relative
                       ${!dayInfo.isCurrentMonth
                         ? 'text-slate-600 cursor-pointer hover:text-slate-500'
-                        : dayInfo.isSelected
-                          ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/25'
-                          : dayInfo.isToday
-                            ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/50 hover:bg-cyan-500/30'
-                            : 'bg-slate-700/30 text-slate-300 hover:bg-slate-700/50 hover:text-white border border-slate-600/30'
+                        : dayInfo.isPast
+                          ? 'text-slate-600 cursor-not-allowed opacity-50 bg-slate-800/50'
+                          : dayInfo.isSelected
+                            ? 'bg-cyan-500 text-white shadow-lg shadow-cyan-500/25'
+                            : dayInfo.isToday
+                              ? 'bg-cyan-500/20 text-cyan-300 border border-cyan-500/50 hover:bg-cyan-500/30'
+                              : 'bg-slate-700/30 text-slate-300 hover:bg-slate-700/50 hover:text-white border border-slate-600/30'
                       }
                     `}
                   >
@@ -995,9 +1100,13 @@ const CalendarioAdmin: React.FC = () => {
                     type="date"
                     required
                     value={newSlot.date}
+                    min={new Date().toISOString().split('T')[0]}
                     onChange={(e) => setNewSlot(prev => ({ ...prev, date: e.target.value }))}
                     className="w-full px-3 py-2 bg-slate-700/50 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400 text-white"
                   />
+                  <p className="text-xs text-slate-400 mt-1">
+                    Solo se pueden crear horarios para fechas futuras
+                  </p>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
