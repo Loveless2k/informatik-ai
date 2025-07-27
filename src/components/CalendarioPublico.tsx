@@ -75,7 +75,6 @@ const CalendarioPublico: React.FC = () => {
         initializeDefaultData();
       }
     } catch (error) {
-      console.error('❌ Error cargando datos del calendario:', error);
       // Fallback: intentar localStorage
       const savedData = localStorage.getItem('informatik-calendar-data');
       if (savedData) {
@@ -83,7 +82,6 @@ const CalendarioPublico: React.FC = () => {
           const data = JSON.parse(savedData);
           setCalendarData(data);
         } catch (parseError) {
-          console.error('Error parsing localStorage data:', parseError);
           initializeDefaultData();
         }
       } else {
@@ -109,7 +107,7 @@ const CalendarioPublico: React.FC = () => {
     const slots: TimeSlot[] = [];
     const today = new Date();
     let daysAdded = 0;
-    let currentDate = new Date(today);
+    const currentDate = new Date(today);
 
     while (daysAdded < 14) {
       // Solo días laborales (lunes a viernes)
@@ -229,7 +227,7 @@ const CalendarioPublico: React.FC = () => {
 
       if (!makeResponse.success) {
         // Si Make falla, aún podemos continuar con el proceso local
-        console.warn('⚠️ Make.com falló, pero continuando con reserva local:', makeResponse.error);
+        // Continuar silenciosamente con el proceso local
       }
 
       // Marcar el slot como ocupado en la API
@@ -243,7 +241,7 @@ const CalendarioPublico: React.FC = () => {
         // Actualizar localStorage como cache
         localStorage.setItem('informatik-calendar-data', JSON.stringify(updatedData));
       } catch (error) {
-        console.error('⚠️ Error actualizando slot en API, usando fallback local:', error);
+        // Error actualizando slot en API, usando fallback local
 
         // Fallback: actualizar solo localmente
         const updatedData = {
@@ -279,7 +277,6 @@ const CalendarioPublico: React.FC = () => {
       setTimeout(() => setSubmitSuccess(false), 8000);
 
     } catch (error) {
-      console.error('❌ Error al enviar reserva:', error);
       showModal(
         'Error al Procesar Reserva',
         `Error al procesar la reserva: ${error instanceof Error ? error.message : 'Error desconocido'}\n\nPor favor intenta nuevamente o contacta directamente a info@informatik-ai.com`,

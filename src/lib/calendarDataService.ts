@@ -50,7 +50,6 @@ class CalendarDataService {
       return result.data;
 
     } catch (error) {
-      console.error('❌ Error obteniendo datos del calendario:', error);
       
       // Fallback: devolver datos vacíos
       return {
@@ -86,7 +85,6 @@ class CalendarDataService {
       return true;
 
     } catch (error) {
-      console.error('❌ Error guardando datos del calendario:', error);
       throw error;
     }
   }
@@ -117,7 +115,6 @@ class CalendarDataService {
       return result.data;
 
     } catch (error) {
-      console.error('❌ Error actualizando slot:', error);
       throw error;
     }
   }
@@ -154,7 +151,6 @@ class CalendarDataService {
       return true;
 
     } catch (error) {
-      console.error('❌ Error en migración:', error);
       return false;
     }
   }
@@ -171,7 +167,6 @@ class CalendarDataService {
       
       return apiData;
     } catch (error) {
-      console.error('❌ Error sincronizando datos:', error);
       
       // Fallback: usar localStorage si la API falla
       const localData = localStorage.getItem('informatik-calendar-data');

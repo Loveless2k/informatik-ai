@@ -48,7 +48,6 @@ const getTopicCategory = (topic: string): string => {
 
 export const sendBookingToMake = async (bookingData: BookingData): Promise<MakeWebhookResponse> => {
   try {
-    console.log('🚀 Enviando reserva a Make.com...', bookingData);
 
     // Verificar que tenemos la URL del webhook
     if (!MAKE_WEBHOOK_URL) {
@@ -90,7 +89,7 @@ export const sendBookingToMake = async (bookingData: BookingData): Promise<MakeW
       }
     };
 
-    console.log('📤 Payload para Make:', payload);
+
 
     // Enviar a Make.com
     const response = await fetch(MAKE_WEBHOOK_URL, {
@@ -112,22 +111,18 @@ export const sendBookingToMake = async (bookingData: BookingData): Promise<MakeW
     try {
       // Intentar parsear como JSON
       result = JSON.parse(responseText);
-      console.log('✅ Respuesta JSON de Make:', result);
     } catch (jsonError) {
       // Si no es JSON, usar el texto como respuesta
       result = { message: responseText, status: 'accepted' };
-      console.log('✅ Respuesta de texto de Make:', responseText);
     }
 
     return {
       success: true,
       message: 'Reserva enviada exitosamente a Make.com',
-      eventId: result.eventId || undefined,
-      makeResponse: result
+      eventId: result.eventId || undefined
     };
 
   } catch (error) {
-    console.error('❌ Error enviando a Make:', error);
     
     return {
       success: false,

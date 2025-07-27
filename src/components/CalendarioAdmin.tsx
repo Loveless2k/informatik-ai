@@ -234,7 +234,6 @@ const CalendarioAdmin: React.FC = () => {
           }
 
         } catch (error) {
-          console.error('Error en autenticación:', error);
           showModal(
             'Error de Autenticación',
             'Error en la autenticación. Por favor intenta nuevamente.',
@@ -272,7 +271,6 @@ const CalendarioAdmin: React.FC = () => {
         await calendarDataService.migrateFromLocalStorage(user.email);
       }
     } catch (error) {
-      console.error('❌ Error cargando datos del calendario:', error);
       // Fallback: inicializar datos por defecto
       initializeDefaultData();
     }
@@ -294,7 +292,7 @@ const CalendarioAdmin: React.FC = () => {
     const slots: TimeSlot[] = [];
     const today = new Date();
     let daysAdded = 0;
-    let currentDate = new Date(today);
+    const currentDate = new Date(today);
 
     while (daysAdded < 14) {
       // Solo días laborales (lunes a viernes)
@@ -334,7 +332,6 @@ const CalendarioAdmin: React.FC = () => {
         setUser(userData);
         setIsAuthenticated(true);
       } catch (error) {
-        console.error('Error parsing saved user:', error);
         localStorage.removeItem('informatik-admin-user');
       }
     }
@@ -441,7 +438,6 @@ const CalendarioAdmin: React.FC = () => {
       );
 
     } catch (error) {
-      console.error('❌ Error guardando cambios:', error);
       showModal(
         'Error al Guardar',
         'Error guardando cambios. Por favor intenta nuevamente.',

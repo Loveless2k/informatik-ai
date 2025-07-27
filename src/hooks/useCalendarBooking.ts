@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { TimeSlot, CalendarEvent, checkSlotAvailability, createCalendarEvent } from '@/lib/googleCalendar';
 
 interface BookingForm {

@@ -43,7 +43,6 @@ async function ensureDataFile(): Promise<void> {
       await fs.writeFile(CALENDAR_DATA_PATH, JSON.stringify(initialData, null, 2));
     }
   } catch (error) {
-    console.error('Error ensuring data file:', error);
     throw error;
   }
 }
@@ -61,7 +60,6 @@ export async function GET() {
       data: calendarData
     });
   } catch (error) {
-    console.error('Error reading calendar data:', error);
     
     // Si hay error, devolver datos por defecto
     const defaultData: CalendarData = {
@@ -107,8 +105,7 @@ export async function POST(request: NextRequest) {
     await ensureDataFile();
     await fs.writeFile(CALENDAR_DATA_PATH, JSON.stringify(dataToSave, null, 2));
 
-    console.log('✅ Calendario actualizado por:', userEmail);
-    console.log('📅 Slots guardados:', dataToSave.slots.length);
+
 
     return NextResponse.json({
       success: true,
@@ -116,7 +113,6 @@ export async function POST(request: NextRequest) {
       data: dataToSave
     });
   } catch (error) {
-    console.error('Error saving calendar data:', error);
     
     return NextResponse.json({
       success: false,
@@ -160,7 +156,7 @@ export async function PUT(request: NextRequest) {
     // Guardar cambios
     await fs.writeFile(CALENDAR_DATA_PATH, JSON.stringify(calendarData, null, 2));
 
-    console.log(`✅ Slot ${slotId} actualizado: available = ${available}`);
+
 
     return NextResponse.json({
       success: true,
@@ -168,7 +164,6 @@ export async function PUT(request: NextRequest) {
       data: calendarData
     });
   } catch (error) {
-    console.error('Error updating slot:', error);
     
     return NextResponse.json({
       success: false,

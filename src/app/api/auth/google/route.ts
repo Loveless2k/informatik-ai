@@ -11,25 +11,18 @@ const oauth2Client = new google.auth.OAuth2(
 // POST - Intercambiar código por tokens
 export async function POST(request: NextRequest) {
   try {
-    console.log('POST /api/auth/google - Request received');
-
     const body = await request.json();
     const { code } = body;
 
-    console.log('Authorization code received:', code ? 'Yes' : 'No');
-
     if (!code) {
-      console.log('Error: No authorization code provided');
       return NextResponse.json(
         { error: 'Authorization code is required' },
         { status: 400 }
       );
     }
 
-    console.log('Exchanging code for tokens...');
     // Intercambiar código por tokens
     const { tokens } = await oauth2Client.getToken(code);
-    console.log('Tokens received successfully');
     
     // Verificar que tenemos los tokens necesarios
     if (!tokens.access_token) {
@@ -50,7 +43,6 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('Error exchanging code for tokens:', error);
     return NextResponse.json(
       { error: `Failed to exchange authorization code: ${error instanceof Error ? error.message : 'Unknown error'}` },
       { status: 500 }
@@ -90,7 +82,6 @@ export async function GET(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('Error refreshing access token:', error);
     return NextResponse.json(
       { error: 'Failed to refresh access token' },
       { status: 500 }

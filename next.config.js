@@ -25,6 +25,18 @@ const nextConfig = {
   // output: 'export',
   distDir: 'dist',
 
+  // Configuración ESLint para build
+  eslint: {
+    // Permitir warnings pero no errores
+    ignoreDuringBuilds: false,
+    dirs: ['src'],
+  },
+
+  // Configuración TypeScript
+  typescript: {
+    ignoreBuildErrors: false,
+  },
+
   images: {
     unoptimized: true,
   },

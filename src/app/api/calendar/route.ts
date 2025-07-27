@@ -41,7 +41,6 @@ export async function GET(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('Error fetching calendar events:', error);
     return NextResponse.json(
       { error: 'Failed to fetch calendar events' },
       { status: 500 }
@@ -104,7 +103,6 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('Error creating calendar event:', error);
     return NextResponse.json(
       { error: 'Failed to create calendar event' },
       { status: 500 }
@@ -142,7 +140,6 @@ export async function PUT(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('Error updating calendar event:', error);
     return NextResponse.json(
       { error: 'Failed to update calendar event' },
       { status: 500 }
@@ -180,7 +177,6 @@ export async function DELETE(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('Error deleting calendar event:', error);
     return NextResponse.json(
       { error: 'Failed to delete calendar event' },
       { status: 500 }

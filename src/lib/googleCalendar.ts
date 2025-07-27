@@ -240,7 +240,7 @@ export const checkSlotAvailability = async (date: Date): Promise<TimeSlot[]> => 
       const slotStart = new Date(slot.start);
       const slotEnd = new Date(slot.end);
 
-      const isOccupied = events.some(event => {
+      const isOccupied = events.some((event: any) => {
         if (!event.start?.dateTime || !event.end?.dateTime) return false;
 
         const eventStart = new Date(event.start.dateTime);
