@@ -75,8 +75,8 @@ const Modal: React.FC<ModalProps> = ({
   const styles = getTypeStyles();
 
   return (
-    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-      <div className="bg-slate-800 rounded-2xl border border-slate-700 p-6 w-full max-w-md shadow-2xl">
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50 overflow-y-auto">
+      <div className="bg-slate-800 rounded-2xl border border-slate-700 p-6 w-full max-w-md shadow-2xl my-8 max-h-[90vh] overflow-y-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
@@ -94,8 +94,8 @@ const Modal: React.FC<ModalProps> = ({
         </div>
 
         {/* Content */}
-        <div className={`p-4 rounded-lg ${styles.bgColor} ${styles.borderColor} border mb-6`}>
-          <p className={`${styles.textColor} leading-relaxed`}>
+        <div className={`p-4 rounded-lg ${styles.bgColor} ${styles.borderColor} border mb-6 max-h-60 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-600 scrollbar-track-slate-800`}>
+          <p className={`${styles.textColor} leading-relaxed whitespace-pre-wrap break-words`}>
             {message}
           </p>
         </div>

@@ -70,5 +70,36 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    // Plugin para scrollbars personalizadas
+    function({ addUtilities }) {
+      const newUtilities = {
+        '.scrollbar-thin': {
+          'scrollbar-width': 'thin',
+          'scrollbar-color': '#475569 #1e293b',
+        },
+        '.scrollbar-thin::-webkit-scrollbar': {
+          width: '6px',
+        },
+        '.scrollbar-thin::-webkit-scrollbar-track': {
+          background: '#1e293b',
+          'border-radius': '3px',
+        },
+        '.scrollbar-thin::-webkit-scrollbar-thumb': {
+          background: '#475569',
+          'border-radius': '3px',
+        },
+        '.scrollbar-thin::-webkit-scrollbar-thumb:hover': {
+          background: '#64748b',
+        },
+        '.scrollbar-thumb-slate-600::-webkit-scrollbar-thumb': {
+          background: '#475569',
+        },
+        '.scrollbar-track-slate-800::-webkit-scrollbar-track': {
+          background: '#1e293b',
+        },
+      }
+      addUtilities(newUtilities)
+    }
+  ],
 };

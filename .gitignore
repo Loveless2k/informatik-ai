@@ -14,7 +14,7 @@
 # ⚙️ Compilación Next.js / Vite / Webpack
 /.next/
 /out/
-/dist/
+/dist/  
 build/
 *.tsbuildinfo
 next-env.d.ts
